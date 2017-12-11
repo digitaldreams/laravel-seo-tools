@@ -15,7 +15,7 @@ class CreateSeoSettingsTable extends Migration
     {
         Schema::create('seo_settings', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('key')->unique();
+            $table->string('key', 100)->unique();
             $table->string('value')->nullable();
             // either active or inactive
             $table->string('status')->default('active');
