@@ -4,6 +4,14 @@ namespace SEO\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use SEO\Http\Requests\Pages\Create;
+use SEO\Http\Requests\Pages\Destroy;
+use SEO\Http\Requests\Pages\Edit;
+use SEO\Http\Requests\Pages\Index;
+use SEO\Http\Requests\Pages\Show;
+use SEO\Http\Requests\Pages\Store;
+use SEO\Http\Requests\Pages\Update;
 use SEO\Models\Page;
 
 /**
@@ -17,9 +25,9 @@ class PageController extends Controller
      * Display a listing of the resource.
      *
      * @param  Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function index(Request $request)
+    public function index(Index $request)
     {
         return view('page.index', ['records' => Page::paginate(10)]);
     }
@@ -29,9 +37,9 @@ class PageController extends Controller
      *
      * @param  Request $request
      * @param  Page $page
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function show(Request $request, Page $page)
+    public function show(Show $request, Page $page)
     {
         return view('page.show', [
             'record' => $page,
@@ -42,9 +50,9 @@ class PageController extends Controller
      * Show the form for creating a new resource.
      *
      * @param  Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function create(Request $request)
+    public function create(Create $request)
     {
         return view('page.create', [
             'model' => new Page,
@@ -56,9 +64,9 @@ class PageController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(Store $request)
     {
         $model = new Page;
         $model->fill($request->all());
@@ -77,9 +85,9 @@ class PageController extends Controller
      *
      * @param  Request $request
      * @param  Page $page
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function edit(Request $request, Page $page)
+    public function edit(Edit $request, Page $page)
     {
         return view('page.edit', [
             'model' => $page,
@@ -91,9 +99,9 @@ class PageController extends Controller
      *
      * @param  Request $request
      * @param  Page $page
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function update(Request $request, Page $page)
+    public function update(Update $request, Page $page)
     {
         $page->fill($request->all());
 
@@ -111,10 +119,10 @@ class PageController extends Controller
      *
      * @param  Request $request
      * @param  Page $page
-     * @return \Illuminate\Http\Response
+     * @return Response
      * @throws \Exception
      */
-    public function destroy(Request $request, Page $page)
+    public function destroy(Destroy $request, Page $page)
     {
         if ($page->delete()) {
             session()->flash('app_message', 'Page successfully deleted');

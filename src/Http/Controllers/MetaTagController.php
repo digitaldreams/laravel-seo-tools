@@ -4,6 +4,14 @@ namespace SEO\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use SEO\Http\Requests\MetaTags\Create;
+use SEO\Http\Requests\MetaTags\Destroy;
+use SEO\Http\Requests\MetaTags\Edit;
+use SEO\Http\Requests\MetaTags\Index;
+use SEO\Http\Requests\MetaTags\Show;
+use SEO\Http\Requests\MetaTags\Store;
+use SEO\Http\Requests\MetaTags\Update;
 use SEO\Models\MetaTag;
 
 /**
@@ -16,10 +24,10 @@ class MetaTagController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  Request $request
-     * @return \Illuminate\Http\Response
+     * @param  Index $request
+     * @return Response
      */
-    public function index(Request $request)
+    public function index(Index $request)
     {
         return view('metatag.index', ['records' => MetaTag::paginate(10)]);
     }
@@ -28,10 +36,10 @@ class MetaTagController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param  Request $request
-     * @return \Illuminate\Http\Response
+     * @param  Create $request
+     * @return Response
      */
-    public function create(Request $request)
+    public function create(Create $request)
     {
 
         return view('metatag.create', [
@@ -43,10 +51,10 @@ class MetaTagController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request $request
-     * @return \Illuminate\Http\Response
+     * @param  Store $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(Store $request)
     {
         $model = new MetaTag;
         $model->fill($request->all());
@@ -64,11 +72,11 @@ class MetaTagController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Request $request
+     * @param  Edit $request
      * @param  MetaTag $metatag
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function edit(Request $request, MetaTag $metatag)
+    public function edit(Edit $request, MetaTag $metatag)
     {
 
         return view('metatag.edit', [
@@ -80,11 +88,11 @@ class MetaTagController extends Controller
     /**
      * Update a existing resource in storage.
      *
-     * @param  Request $request
+     * @param  Update $request
      * @param  MetaTag $metatag
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function update(Request $request, MetaTag $metatag)
+    public function update(Update $request, MetaTag $metatag)
     {
         $metatag->fill($request->all());
 
@@ -101,12 +109,12 @@ class MetaTagController extends Controller
     /**
      * Delete a  resource from  storage.
      *
-     * @param  Request $request
+     * @param  Destroy $request
      * @param  MetaTag $metatag
-     * @return \Illuminate\Http\Response
+     * @return Response
      * @throws \Exception
      */
-    public function destroy(Request $request, MetaTag $metatag)
+    public function destroy(Destroy $request, MetaTag $metatag)
     {
         if ($metatag->delete()) {
             session()->flash('app_message', 'MetaTag successfully deleted');

@@ -3,7 +3,10 @@
 namespace SEO\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use SEO\Http\Requests\Settings\Edit;
+use SEO\Http\Requests\Settings\Index;
+use SEO\Http\Requests\Settings\Update;
 use SEO\Models\Setting;
 
 /**
@@ -16,10 +19,10 @@ class SettingController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  Request $request
-     * @return \Illuminate\Http\Response
+     * @param  Index $request
+     * @return Response
      */
-    public function index(Request $request)
+    public function index(Index $request)
     {
         return view('setting.index', ['records' => Setting::paginate(10)]);
 
@@ -29,11 +32,11 @@ class SettingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Request $request
+     * @param  Edit $request
      * @param  Setting $setting
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function edit(Request $request, Setting $setting)
+    public function edit(Edit $request, Setting $setting)
     {
         return view('setting.edit', [
             'model' => $setting,
@@ -43,11 +46,11 @@ class SettingController extends Controller
     /**
      * Update a existing resource in storage.
      *
-     * @param  Request $request
+     * @param  Update $request
      * @param  Setting $setting
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function update(Request $request, Setting $setting)
+    public function update(Update $request, Setting $setting)
     {
         $setting->fill($request->all());
 

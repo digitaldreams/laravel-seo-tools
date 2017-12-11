@@ -3,7 +3,13 @@
 namespace SEO\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use SEO\Http\Requests\LinkTags\Create;
+use SEO\Http\Requests\LinkTags\Destroy;
+use SEO\Http\Requests\LinkTags\Edit;
+use SEO\Http\Requests\LinkTags\Index;
+use SEO\Http\Requests\LinkTags\Show;
+use SEO\Http\Requests\LinkTags\Store;
+use SEO\Http\Requests\LinkTags\Update;
 use SEO\Models\LinkTag;
 
 /**
@@ -16,10 +22,10 @@ class LinkTagController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  Request $request
+     * @param  Index $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Index $request)
     {
         return view('linktag.index', ['records' => LinkTag::paginate(10)]);
     }
@@ -27,10 +33,10 @@ class LinkTagController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param  Request $request
+     * @param  Create $request
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Create $request)
     {
         return view('linktag.create', [
             'model' => new LinkTag,
@@ -40,10 +46,10 @@ class LinkTagController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request $request
+     * @param  Store $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Store $request)
     {
         $model = new LinkTag;
         $model->fill($request->all());
@@ -61,11 +67,11 @@ class LinkTagController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Request $request
+     * @param  Edit $request
      * @param  LinkTag $linktag
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, LinkTag $linktag)
+    public function edit(Edit $request, LinkTag $linktag)
     {
 
         return view('linktag.edit', [
@@ -77,11 +83,11 @@ class LinkTagController extends Controller
     /**
      * Update a existing resource in storage.
      *
-     * @param  Request $request
+     * @param  Update $request
      * @param  LinkTag $linktag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LinkTag $linktag)
+    public function update(Update $request, LinkTag $linktag)
     {
         $linktag->fill($request->all());
 
@@ -98,12 +104,12 @@ class LinkTagController extends Controller
     /**
      * Delete a  resource from  storage.
      *
-     * @param  Request $request
+     * @param  Destroy $request
      * @param  LinkTag $linktag
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Request $request, LinkTag $linktag)
+    public function destroy(Destroy $request, LinkTag $linktag)
     {
         if ($linktag->delete()) {
             session()->flash('app_message', 'LinkTag successfully deleted');
