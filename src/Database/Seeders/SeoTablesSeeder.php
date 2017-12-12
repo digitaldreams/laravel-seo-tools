@@ -13,8 +13,8 @@ class SeoTablesSeeder extends Seeder
      */
     public function run()
     {
-       # $this->call(MetaTagsTableSeeder::class);
-       # $this->call(LinkTagsTableSeeder::class);
+        $this->call(MetaTagsTableSeeder::class);
+        $this->call(LinkTagsTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
     }
 }

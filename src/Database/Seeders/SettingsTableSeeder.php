@@ -104,7 +104,7 @@ class SettingsTableSeeder extends Seeder
                 'description' => '',
                 'key' => 'instagram_url',
                 'value' => '',
-                'status' => 'active',
+                'status' => 'inactive',
                 'group' => 'social_media_links'
             ],
             [
@@ -112,7 +112,7 @@ class SettingsTableSeeder extends Seeder
                 'description' => '',
                 'key' => 'linkedin_url',
                 'value' => '',
-                'status' => 'active',
+                'status' => 'inactive',
                 'group' => 'social_media_links'
             ],
             [
@@ -120,7 +120,7 @@ class SettingsTableSeeder extends Seeder
                 'description' => '',
                 'key' => 'youtube_url',
                 'value' => '',
-                'status' => 'active',
+                'status' => 'inactive',
                 'group' => 'social_media_links'
             ],
             [
@@ -128,7 +128,7 @@ class SettingsTableSeeder extends Seeder
                 'description' => '',
                 'key' => 'google_plus_url',
                 'value' => '',
-                'status' => 'active',
+                'status' => 'inactive',
                 'group' => 'site'
             ],
 

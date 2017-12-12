@@ -15,13 +15,12 @@ class CreateSeoMetaTagsTable extends Migration
     {
         Schema::create('seo_meta_tags', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 50)->unique()->nullable();
-            $table->string('property', 100)->unique()->nullable();
+            $table->string('name', 50)->nullable();
+            $table->string('property', 100)->nullable();
             // either active or inactive
             $table->string('status', 50)->default('active');
             $table->string('group', 50)->nullable();
             $table->string('input_type', 50)->default('text');
-            $table->string('input_help_text')->nullable();
             $table->string('input_placeholder')->nullable();
             $table->string('input_label')->nullable();
             $table->string('input_info')->nullable();

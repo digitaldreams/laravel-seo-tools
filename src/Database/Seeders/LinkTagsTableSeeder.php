@@ -13,6 +13,5 @@ class LinkTagsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
     }
 }

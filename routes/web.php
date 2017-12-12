@@ -1,7 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Tuhin
- * Date: 12/11/2017
- * Time: 6:07 PM
- */
+Route::group(['prefix' => 'seo', 'as' => 'seo', 'namespace' => '\SEO\Http\Controllers'], function () {
+
+    Route::resource('pages', 'PageController');
+    Route::resource('meta-tags', 'MetaTagController');
+    Route::resource('settings', 'SettingController', ['only' => ['index', 'edit', 'update']]);
+
+});

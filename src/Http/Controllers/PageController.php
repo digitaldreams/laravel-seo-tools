@@ -29,7 +29,7 @@ class PageController extends Controller
      */
     public function index(Index $request)
     {
-        return view('page.index', ['records' => Page::paginate(10)]);
+        return view('seo::pages.pages.index', ['records' => Page::paginate(10)]);
     }
 
     /**
@@ -41,7 +41,7 @@ class PageController extends Controller
      */
     public function show(Show $request, Page $page)
     {
-        return view('page.show', [
+        return view('seo::pages.pages.show', [
             'record' => $page,
         ]);
     }
@@ -54,7 +54,7 @@ class PageController extends Controller
      */
     public function create(Create $request)
     {
-        return view('page.create', [
+        return view('seo::pages.pages.create', [
             'model' => new Page,
 
         ]);
@@ -89,7 +89,7 @@ class PageController extends Controller
      */
     public function edit(Edit $request, Page $page)
     {
-        return view('page.edit', [
+        return view('seo::pages.pages.edit', [
             'model' => $page,
         ]);
     }
@@ -107,7 +107,7 @@ class PageController extends Controller
 
         if ($page->save()) {
             session()->flash('app_message', 'Page successfully updated');
-            return redirect()->route('seo_pages.index');
+            return redirect()->route('pages.index');
         } else {
             session()->flash('app_error', 'Something is wrong while updating Page');
         }
