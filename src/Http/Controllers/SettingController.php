@@ -24,9 +24,8 @@ class SettingController extends Controller
      */
     public function index(Index $request)
     {
-        return view('setting.index', ['records' => Setting::paginate(10)]);
 
-
+        return view('seo::pages.settings.index', ['records' => Setting::paginate(10)]);
     }
 
     /**
@@ -38,7 +37,7 @@ class SettingController extends Controller
      */
     public function edit(Edit $request, Setting $setting)
     {
-        return view('setting.edit', [
+        return view('seo::pages.settings.edit', [
             'model' => $setting,
         ]);
     }
@@ -57,7 +56,7 @@ class SettingController extends Controller
         if ($setting->save()) {
 
             session()->flash('app_message', 'Setting successfully updated');
-            return redirect()->route('seo_settings.index');
+            return redirect()->route('seo::settings.index');
         } else {
             session()->flash('app_error', 'Something is wrong while updating Setting');
         }
