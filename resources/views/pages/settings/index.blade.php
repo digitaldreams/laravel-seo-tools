@@ -27,7 +27,7 @@
         </a>
 
     </nav>
-    <div class="tab-content" id="nav-tabContent">
+    <div class="tab-content mt-3" id="nav-tabContent">
         @include('seo::pages.settings.tabs.global')
         @include('seo::pages.settings.tabs.page')
         @include('seo::pages.settings.tabs.social')
@@ -36,18 +36,7 @@
         @include('seo::pages.settings.tabs.robot')
 
     </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <h4>Settings</h4>
-        </div>
-        <div class="col-sm-6">
 
-        </div>
-        <div class="col-sm-1">
-        </div>
-    </div>
-    @include('seo::tables.setting',[])
-    {!! $records->render() !!}
 @endSection
 @section('scripts')
     <script type="text/javascript">

@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use SEO\Http\Requests\Settings\Edit;
 use SEO\Http\Requests\Settings\Index;
 use SEO\Http\Requests\Settings\Update;
+use SEO\Models\MetaTag;
 use SEO\Models\Setting;
 
 /**
@@ -25,7 +26,11 @@ class SettingController extends Controller
     public function index(Index $request)
     {
 
-        return view('seo::pages.settings.index', ['records' => Setting::paginate(10)]);
+        return view('seo::pages.settings.index', [
+                'records' => Setting::paginate(10),
+                'metaTags' => MetaTag::all()
+            ]
+        );
     }
 
     /**
