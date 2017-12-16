@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use SEO\Http\Requests\Settings\Edit;
 use SEO\Http\Requests\Settings\Index;
+use SEO\Http\Requests\Settings\Store;
 use SEO\Http\Requests\Settings\Update;
 use SEO\Models\MetaTag;
 use SEO\Models\Setting;
@@ -25,10 +26,10 @@ class SettingController extends Controller
      */
     public function index(Index $request)
     {
-
         return view('seo::pages.settings.index', [
                 'records' => Setting::paginate(10),
-                'metaTags' => MetaTag::all()
+                'metaTags' => MetaTag::all(),
+                'model' => new Setting()
             ]
         );
     }
@@ -68,4 +69,20 @@ class SettingController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Update a existing resource in storage.
+     *
+     * @param  Store $request
+     * @param  Setting $setting
+     * @return Response
+     */
+    public function store(Store $request)
+    {
+        $settings = $request->get('settings', []);
+        foreach ($settings as $key => $value) {
+            Setting::where('key', $key)->update(['value' => $value]);
+        }
+        session()->flash('app_message', 'Setting successfully updated');
+        return redirect()->back();
+    }
 }

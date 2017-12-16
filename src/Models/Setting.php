@@ -24,5 +24,14 @@ class Setting extends Model
      */
     protected $guarded = ['id'];
 
+    /**
+     * @param $key
+     * @return bool
+     */
+    public function getValueByKey($key)
+    {
+        $settings = static::where('key', $key)->select(['key','value'])->first();
+        return is_object($settings) ? $settings->value : false;
+    }
 
 }

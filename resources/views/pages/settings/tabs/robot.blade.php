@@ -1,8 +1,12 @@
 <div class="tab-pane fade" id="nav-robot-txt" role="tabpanel" aria-labelledby="nav-robot-txt-tab">
-    <form action="" name="post">
+    <form action="{{route('seo::settings.store')}}" method="post">
+        {{csrf_field()}}
         <div class="form-group">
-            <textarea name="" class="form-control" placeholder="Content of your robot.txt"></textarea>
-            <small id="site-title-help" class="form-text text-muted">Please write content here carefully. It will read by Google bot. </small>
+            <textarea name="settings[robot_txt]" class="form-control"
+                      placeholder="Content of your robot.txt">{{$model->getValueByKey('robot_txt')}}</textarea>
+            <small id="site-title-help" class="form-text text-muted">Please write content here carefully. It will read
+                by Google bot.
+            </small>
 
         </div>
         <div class="form-group text-right">

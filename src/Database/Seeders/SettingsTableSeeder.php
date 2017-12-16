@@ -24,19 +24,10 @@ class SettingsTableSeeder extends Seeder
                 'group' => 'site'
             ],
             [
-                'label' => 'Title Separator',
-                'description' => 'Choose the symbol to use as your title separator.
-                 This will display, for instance, between your post title and site name. 
-                 Symbols are shown in the size they\'ll appear in the search results',
-                'key' => 'title_separator',
-                'value' => '',
-                'status' => 'active',
-                'group' => 'site'
-            ],
-            [
-                'label' => 'Site Description',
-                'description' => 'Site Description must be below 150 words',
-                'key' => 'site_description',
+                'label' => 'Robot Txt',
+                'description' => ' 
+                    Robot txt file content',
+                'key' => 'robot_txt',
                 'value' => '',
                 'status' => 'active',
                 'group' => 'site'
