@@ -61,8 +61,18 @@
     <div class="row">
         <div class="form-group col-sm-3">
             <label for="status">Status</label>
-            <input type="text" class="form-control" name="status" id="status" value="{{old('status',$model->status)}}"
-                   placeholder="" maxlength="50" required="required">
+            <br/>
+
+            <div class="btn-group btn-group-sm" data-toggle="buttons">
+                <label class="btn btn-secondary {{old('status',$model->status)=='active'?'active':''}}">
+                    <input type="radio" name="status" id="option1"
+                           autocomplete="off" {{old('status',$model->status)=='active'?'checked':''}} value="active"> Active
+                </label>
+                <label class="btn btn-secondary {{old('status',$model->status)=='inactive'?'checked':''}}">
+                    <input type="radio" name="status" id="option2"
+                           autocomplete="off" {{old('status',$model->status)=='inactive'?'checked':''}} value="inactive"> Inactive
+                </label>
+            </div>
             @if($errors->has('status'))
                 <div class="invalid-feedback">
                     <strong>{{ $errors->first('status') }}</strong>
@@ -83,8 +93,18 @@
 
         <div class="form-group col-sm-3">
             <label for="input_type">Input Type</label>
-            <input type="text" class="form-control" name="input_type" id="input_type"
-                   value="{{old('input_type',$model->input_type)}}" placeholder="" maxlength="50" required="required">
+            <select class="form-control" name="input_type" id="input_type">
+                <option value="text" {{old('input_type',$model->input_type)=='text'?'selected':''}}>Text</option>
+                <option value="textarea" {{old('input_type',$model->input_type)=='textarea'?'selected':''}}>Text Area
+                </option>
+                <option value="number" {{old('input_type',$model->input_type)=='number'?'selected':''}}>Number</option>
+                <option value="url" {{old('input_type',$model->input_type)=='url'?'selected':''}}>URL</option>
+                <option value="email" {{old('input_type',$model->input_type)=='email'?'selected':''}}>Email</option>
+                <option value="date" {{old('input_type',$model->input_type)=='date'?'selected':''}}>Date</option>
+                <option value="datetime" {{old('input_type',$model->input_type)=='datetime'?'selected':''}}>Date Time
+                </option>
+                <option value="time" {{old('input_type',$model->input_type)=='time'?'selected':''}}>Time</option>
+            </select>
             @if($errors->has('input_type'))
                 <div class="invalid-feedback">
                     <strong>{{ $errors->first('input_type') }}</strong>
@@ -95,25 +115,26 @@
 
         <div class="form-group col-sm-3">
             <label for="visibility">Visibility</label>
-            <input type="text" class="form-control" name="visibility" id="visibility"
-                   value="{{old('visibility',$model->visibility)}}" placeholder="" maxlength="50" required="required">
-            @if($errors->has('visibility'))
-                <div class="invalid-feedback">
-                    <strong>{{ $errors->first('visibility') }}</strong>
-                </div>
-            @endif
+            <br/>
+            <div class="btn-group btn-group-sm" data-toggle="buttons">
+                <label class="btn btn-secondary {{old('status',$model->visibility)=='page'?'active':''}}">
+                    <input type="radio" name="visibility" id="option1"
+                           autocomplete="off" {{old('status',$model->visibility)=='page'?'checked':''}} value="page">
+                    Page
+                </label>
+                <label class="btn btn-secondary {{old('status',$model->visibility)=='global'?'active':''}}">
+                    <input type="radio" name="visibility" id="option2"
+                           autocomplete="off"
+                           {{old('status',$model->visibility)=='global'?'checked':''}} value="global"> Global
+                </label>
+            </div>
+
+            <div class="invalid-feedback">
+                <strong>{{ $errors->first('visibility') }}</strong>
+            </div>
         </div>
 
     </div>
-
-
-
-
-
-
-
-
-
 
 
     <div class="form-group text-right ">
