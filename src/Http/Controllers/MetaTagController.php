@@ -29,7 +29,7 @@ class MetaTagController extends Controller
      */
     public function index(Index $request)
     {
-        return view('metatag.index', ['records' => MetaTag::paginate(10)]);
+        return view('seo::pages.meta_tags.index', ['records' => MetaTag::paginate(10)]);
     }
 
 
@@ -41,10 +41,8 @@ class MetaTagController extends Controller
      */
     public function create(Create $request)
     {
-
-        return view('metatag.create', [
+        return view('seo::pages.meta_tags.create', [
             'model' => new MetaTag,
-
         ]);
     }
 
@@ -73,15 +71,13 @@ class MetaTagController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  Edit $request
-     * @param  MetaTag $metatag
+     * @param  MetaTag $meta_tag
      * @return Response
      */
-    public function edit(Edit $request, MetaTag $metatag)
+    public function edit(Edit $request, MetaTag $meta_tag)
     {
-
-        return view('metatag.edit', [
-            'model' => $metatag,
-
+        return view('seo::pages.meta_tags.edit', [
+            'model' => $meta_tag,
         ]);
     }
 
@@ -89,14 +85,14 @@ class MetaTagController extends Controller
      * Update a existing resource in storage.
      *
      * @param  Update $request
-     * @param  MetaTag $metatag
+     * @param  MetaTag $meta_tag
      * @return Response
      */
-    public function update(Update $request, MetaTag $metatag)
+    public function update(Update $request, MetaTag $meta_tag)
     {
-        $metatag->fill($request->all());
+        $meta_tag->fill($request->all());
 
-        if ($metatag->save()) {
+        if ($meta_tag->save()) {
 
             session()->flash('app_message', 'MetaTag successfully updated');
             return redirect()->route('seo_meta_tags.index');
@@ -110,13 +106,13 @@ class MetaTagController extends Controller
      * Delete a  resource from  storage.
      *
      * @param  Destroy $request
-     * @param  MetaTag $metatag
+     * @param  MetaTag $meta_tag
      * @return Response
      * @throws \Exception
      */
-    public function destroy(Destroy $request, MetaTag $metatag)
+    public function destroy(Destroy $request, MetaTag $meta_tag)
     {
-        if ($metatag->delete()) {
+        if ($meta_tag->delete()) {
             session()->flash('app_message', 'MetaTag successfully deleted');
         } else {
             session()->flash('app_error', 'Error occurred while deleting MetaTag');
