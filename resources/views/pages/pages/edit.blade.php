@@ -1,25 +1,18 @@
-@extends('seo::layouts.app')
+@extends(config('seo.layout'))
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{route('seo::pages.index')}}">Pages</a></li>
+    <li class="breadcrumb-item">{{$model->path}}</li>
+@endsection
+@section('tools')
+    <a href="{{route('seo::pages.create')}}"><i class="fa fa-plus"></i></a>
+@endsection
 @section('content')
     <div class="row">
         <div class='col-md-12'>
             <div class='panel panel-default'>
-                <div class='panel-heading'>
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <h4>
-                                Edit {{$model->path}}
-                            </h4>
-                        </div>
-                        <div class="col-sm-4 text-right">
-                            <a href="{{route('pages.create')}}">
-                                <span class="glyphicon glyphicon-plus"></span> seo_pages
-                            </a>
-                        </div>
-                    </div>
-                </div>
                 <div class="panel-body">
-                    @include('seo::forms.pages',[
-                    'route'=>route('pages.update',$model->id),
+                    @include('seo::forms.page',[
+                    'route'=>route('seo::pages.update',$model->id),
                     'method'=>'PUT'
                     ])
                 </div>

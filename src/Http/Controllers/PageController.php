@@ -24,7 +24,7 @@ class PageController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  Request $request
+     * @param  Index $request
      * @return Response
      */
     public function index(Index $request)
@@ -35,7 +35,7 @@ class PageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  Request $request
+     * @param  Show $request
      * @param  Page $page
      * @return Response
      */
@@ -49,7 +49,7 @@ class PageController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param  Request $request
+     * @param  Create $request
      * @return Response
      */
     public function create(Create $request)
@@ -63,7 +63,7 @@ class PageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request $request
+     * @param  Store $request
      * @return Response
      */
     public function store(Store $request)
@@ -73,7 +73,7 @@ class PageController extends Controller
 
         if ($model->save()) {
             session()->flash('app_message', 'Page saved successfully');
-            return redirect()->route('seo_pages.index');
+            return redirect()->route('seo::pages.index');
         } else {
             session()->flash('app_message', 'Something is wrong while saving Page');
         }
@@ -83,7 +83,7 @@ class PageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Request $request
+     * @param  Edit $request
      * @param  Page $page
      * @return Response
      */
@@ -107,7 +107,7 @@ class PageController extends Controller
 
         if ($page->save()) {
             session()->flash('app_message', 'Page successfully updated');
-            return redirect()->route('pages.index');
+            return redirect()->route('seo::pages.index');
         } else {
             session()->flash('app_error', 'Something is wrong while updating Page');
         }

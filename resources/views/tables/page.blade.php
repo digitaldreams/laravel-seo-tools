@@ -2,7 +2,6 @@
     <thead>
     <tr>
         <th>Path</th>
-        <th>Route Name</th>
         <th>Robot Index</th>
         <th>Robot Follow</th>
         <th>Canonical Url</th>
@@ -12,25 +11,24 @@
     </thead>
     <tbody>
     @foreach($records as $record)
-        <td> {{$record->path }} </td>
-        <td> {{$record->route_name }} </td>
+        <td> <a href="{{route('seo::pages.show',$record->id)}}"> {{$record->path }} </a></td>
         <td> {{$record->robot_index }} </td>
         <td> {{$record->robot_follow }} </td>
         <td> {{$record->canonical_url }} </td>
         <td> {{$record->title }} </td>
-        <td><a href="{{'pages.edit',$record->id}}">
+        <td><a href="{{route('seo::pages.edit',$record->id)}}">
                 <span class="fa fa-pencil"></span>
             </a>
-            <a href="{{'pages.show'}}">
+            <a href="{{route('seo::pages.show',$record->id)}}">
                 <span class="fa fa-eye"></span>
-            </a>}}
+            </a>
         </td>
 
     @endforeach
     </tbody>
     <tfoot>
     <tr>
-        <td colspan="3">
+        <td colspan="7">
             {{{$records->render()}}}
         </td>
     </tr>

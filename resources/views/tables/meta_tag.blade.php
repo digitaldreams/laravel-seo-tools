@@ -9,26 +9,25 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>Meta keywords</td>
-        <td>keywords</td>
-        <td></td>
-        <td>inactive</td>
-        <td>
-            <a href="#">
-                <i class="fa fa-pencil"></i>
-            </a>
-            <a href="">
-                <i class="fa fa-remove text-danger"></i>
-            </a>
-        </td>
-    </tr>
+    @foreach($metaTags as $record)
+        <tr>
+            <td> {{$record->input_info }} </td>
+            <td> {{$record->name }} </td>
+            <td> {{$record->property }} </td>
+            <td> {{$record->status }} </td>
+            <td>
+                <a href="{{route('seo::meta-tags.edit',$record->id)}}">
+                    <span class="fa fa-pencil"></span>
+                </a>
+            </td>
+        </tr>
+    @endforeach
 
     </tbody>
     <tfoot>
     <tr>
-        <td colspan="3">
-
+        <td colspan="5">
+            {!! $metaTags->render() !!}
         </td>
     </tr>
     </tfoot>

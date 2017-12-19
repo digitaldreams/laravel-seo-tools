@@ -28,7 +28,7 @@ class SettingController extends Controller
     {
         return view('seo::pages.settings.index', [
                 'records' => Setting::paginate(10),
-                'metaTags' => MetaTag::all(),
+                'metaTags' => MetaTag::paginate(10),
                 'model' => new Setting()
             ]
         );

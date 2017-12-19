@@ -1,16 +1,10 @@
-@extends('seo::layouts.app')
+@extends(config('seo.layout'))
+@section('breadcrumb')
+    <li class="breadcrumb-item">Pages</li>
+@endsection
+@section('tools')
+    <a href="{{route('seo::pages.create')}}"><i class="fa fa-plus"></i></a>
+@endsection
 @section('content')
-    <div class="row">
-        <div class="col-sm-3">
-            <h4>Pages</h4>
-        </div>
-        <div class="col-sm-6">
-
-        </div>
-        <div class="col-sm-1">
-            <a href="{{route('pages.create')}}"><span class="glyphicon glyphicon-plus"></span></a>
-        </div>
-    </div>
-    @include('seo::tables.pages')
-    {!! $records->render() !!}
+    @include('seo::tables.page')
 @endSection
