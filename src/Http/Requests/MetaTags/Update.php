@@ -25,16 +25,16 @@ class Update extends FormRequest
     public function rules()
     {
         return [
-            'name ' => 'nullable|unique:seo_meta_tags,name|max:50',
-            'property ' => 'nullable|unique:seo_meta_tags,property|max:100',
-            'status ' => 'required|max:50',
-            'group ' => 'nullable|max:50',
-            'input_type ' => 'required|max:50',
-            'input_help_text ' => 'nullable|max:255',
-            'input_placeholder ' => 'nullable|max:255',
-            'input_label ' => 'nullable|max:255',
-            'input_info ' => 'nullable|max:255',
-            'visibility ' => 'required|max:50',
+            'name' => 'nullable|max:50|unique:seo_meta_tags,name,'.$this->route('meta_tag')->id,
+            'property' => 'nullable|unique:seo_meta_tags,property|max:100',
+            'status' => 'required|max:50',
+            'group' => 'nullable|max:50',
+            'input_type' => 'required|max:50',
+            'input_help_text' => 'nullable|max:255',
+            'input_placeholder' => 'nullable|max:255',
+            'input_label' => 'nullable|max:255',
+            'input_info' => 'nullable|max:255',
+            'visibility' => 'required|max:50',
         ];
     }
 

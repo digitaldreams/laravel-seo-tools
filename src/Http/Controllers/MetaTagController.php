@@ -60,7 +60,7 @@ class MetaTagController extends Controller
         if ($model->save()) {
 
             session()->flash('app_message', 'MetaTag saved successfully');
-            return redirect()->route('seo_meta_tags.index');
+            return redirect()->route('seo::meta-tags.index');
         } else {
             session()->flash('app_message', 'Something is wrong while saving MetaTag');
         }
@@ -95,7 +95,7 @@ class MetaTagController extends Controller
         if ($meta_tag->save()) {
 
             session()->flash('app_message', 'MetaTag successfully updated');
-            return redirect()->route('seo_meta_tags.index');
+            return redirect()->route('seo::meta-tags.index');
         } else {
             session()->flash('app_error', 'Something is wrong while updating MetaTag');
         }
