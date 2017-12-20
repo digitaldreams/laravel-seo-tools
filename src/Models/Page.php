@@ -50,9 +50,9 @@ class Page extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function seoPageMetaTags()
+    public function pageMetaTags()
     {
-        return $this->hasMany(PageMetaTag::class, 'seo_page_id');
+        return $this->hasMany(PageMetaTag::class, 'page_id');
     }
 
     /**
@@ -89,6 +89,9 @@ class Page extends Model
         $results = DB::select($sql, $params);
 
         foreach ($results as $meta) {
+
+            $meta = $this->assignDefaultValueToMeta($meta);
+
             if (!empty($meta->group)) {
                 $metaTags[$meta->group][] = $meta;
             } elseif ($meta->visibility == 'global') {
@@ -100,6 +103,24 @@ class Page extends Model
             }
         }
         return $metaTags;
+    }
+
+    protected function assignDefaultValueToMeta($meta)
+    {
+        if (empty($meta->content)) {
+            $fieldMap = MetaTag::fieldMap();
+            if (!empty($meta->name) && isset($fieldMap['name'][$meta->name])) {
+                $pageFieldName = $fieldMap['name'][$meta->name];
+                $meta->content = $this->$pageFieldName;
+            } elseif (!empty($meta->property) && isset($fieldMap['property'][$meta->property])) {
+                $pageFieldName = $fieldMap['property'][$meta->property];
+                $meta->content = $this->$pageFieldName;
+            } elseif (!empty($meta->property) && in_array($meta->property, ['og:image', 'twitter:image'])) {
+                $img = $this->pageImages->first();
+                $meta->content = is_object($img) ? url($img->src) : null;
+            }
+        }
+        return $meta;
     }
 
 }

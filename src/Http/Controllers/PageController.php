@@ -15,6 +15,7 @@ use SEO\Http\Requests\Pages\Store;
 use SEO\Http\Requests\Pages\Update;
 use SEO\Models\Page;
 use SEO\Models\PageImage;
+use SEO\Models\PageMetaTag;
 
 /**
  * Description of PageController
@@ -188,5 +189,21 @@ class PageController extends Controller
             'record' => $page,
             'metaTags' => $page->metaTags()
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param Page $page
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function saveMeta(Request $request, Page $page)
+    {
+        $metaValues = $request->get('meta', []);
+        foreach ($metaValues as $id => $content) {
+            $pageMeta = PageMetaTag::firstOrCreate(['seo_page_id' => $page->id, 'seo_meta_tag_id' => $id]);
+            $pageMeta->content = $content;
+            $pageMeta->save();
+        }
+        return redirect()->back()->with('app_message', 'Page meta tags saved successfully');
     }
 }

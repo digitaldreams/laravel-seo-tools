@@ -42,12 +42,28 @@ class MetaTag extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function seoPageMetaTags()
+    public function pageMetaTags()
     {
         return $this->hasMany(PageMetaTag::class, 'seo_meta_tag_id');
     }
 
 
+    public static function fieldMap()
+    {
+        return [
+            'name' => [
+
+            ],
+            'property' => [
+                'og:title' => 'title',
+                'og:description' => 'description',
+                'og:url' => 'path',
+                'twitter:title' => 'title',
+                'twitter:description' => 'description',
+                'twitter:url' => 'path',
+            ]
+        ];
+    }
 
 
 }
