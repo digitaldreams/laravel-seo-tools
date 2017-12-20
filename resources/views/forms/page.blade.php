@@ -5,7 +5,7 @@
         <div class="form-group col-sm-6">
             <div class="input-group input-group-sm">
                 <div class="input-group-addon">Title</div>
-                <input type="text" class="form-control" name="title" id="title" value="{{old('title',$model->title)}}"
+                <input type="text" class="form-control" name="title" id="title" value="{{old('title',$model->getTitle())}}"
                        placeholder="" maxlength="100">
             </div>
 
@@ -84,7 +84,20 @@
 
 
     </div>
+    <div class="form-group">
+        <div class="input-group input-group-sm">
+            <div class="input-group-addon">Description</div>
+            <input type="text" class="form-control" name="description" id="description"
+                   value="{{old('title',$model->getDescription())}}"
+                   placeholder="Meta description" maxlength="170">
+        </div>
 
+        @if($errors->has('description'))
+            <span class="form-control-feedback">
+                 <strong>{{ $errors->first('description') }}</strong>
+            </span>
+        @endif
+    </div>
     <div class="form-group text-right ">
         <input type="reset" class="btn btn-default" value="Clear"/>
         <input type="submit" class="btn btn-primary" value="Save"/>

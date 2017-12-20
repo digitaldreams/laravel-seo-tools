@@ -5,6 +5,7 @@ namespace SEO\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use SEO\Contracts\LinkProvider;
 use SEO\Http\Requests\Pages\Create;
 use SEO\Http\Requests\Pages\Destroy;
 use SEO\Http\Requests\Pages\Edit;
@@ -13,6 +14,7 @@ use SEO\Http\Requests\Pages\Show;
 use SEO\Http\Requests\Pages\Store;
 use SEO\Http\Requests\Pages\Update;
 use SEO\Models\Page;
+use SEO\Models\PageImage;
 
 /**
  * Description of PageController
@@ -29,7 +31,7 @@ class PageController extends Controller
      */
     public function index(Index $request)
     {
-        return view('seo::pages.pages.index', ['records' => Page::paginate(10)]);
+        return view('seo::pages.pages.index', ['records' => Page::withCount(['pageImages'])->paginate(10)]);
     }
 
     /**
@@ -131,5 +133,44 @@ class PageController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function generate(Request $request)
+    {
+        $linkProviders = config('seo.linkProviders', []);
+
+        foreach ($linkProviders as $linkProvider) {
+
+            $obj = new $linkProvider;
+            if ($obj instanceof LinkProvider) {
+                $links = $obj->all();
+
+                foreach ($links as $link) {
+                    $path = parse_url($link['link'], PHP_URL_PATH);
+                    $page = Page::firstOrCreate(['path' => $path]);
+
+                    $page->canonical_url = $path;
+                    $page->title_source = isset($link['title']) ? $link['title'] : '';
+                    $page->description_source = isset($link['description']) ? $link['description'] : '';
+                    $page->title_source = isset($link['title']) ? $link['title'] : '';
+                    $page->created_at = isset($link['created_at']) ? $link['created_at'] : '';
+                    $page->updated_at = isset($link['updated_at']) ? $link['updated_at'] : '';
+
+                    if ($page->save()) {
+                        PageImage::where('page_id', $page->id)->delete();
+
+                        if (isset($link['images']) && !empty($link['images']) && is_array($link['images'])) {
+                            foreach ($link['images'] as $image) {
+                                PageImage::create(['src' => $image, 'page_id' => $page->id]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return redirect()->route('seo::pages.index')->with('app_message', 'Pages generated successfully');
     }
 }

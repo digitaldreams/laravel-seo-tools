@@ -17,8 +17,8 @@ class CreateSeoPagesTable extends Migration
             $table->increments('id');
             $table->string('path')->unique();
             $table->string('route_name', 150)->nullable();
-            $table->string('robot_index', 50)->nullable();
-            $table->string('robot_follow', 50)->nullable();
+            $table->string('robot_index', 50)->default('noindex')->nullable();
+            $table->string('robot_follow', 50)->default('nofollow')->nullable();
             $table->string('canonical_url')->nullable();
             $table->string('title', 100)->nullable();
             $table->timestamps();

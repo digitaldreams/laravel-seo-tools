@@ -29,13 +29,7 @@
                 <a href="{{route('seo::meta-tags.edit',$record->id)}}">
                     <span class="fa fa-pencil"></span>
                 </a>
-                <form onsubmit="return confirm('Are you sure you want to delete?')"
-                      action="{{route('seo::meta-tags.destroy',$record->id)}}" method="post" style="display: inline">
-                    {{csrf_field()}}
-                    {{method_field('DELETE')}}
-                    <button type="submit" class="btn btn-default cursor-pointer  btn-sm"><i
-                                class="text-danger fa fa-remove"></i></button>
-                </form>
+                @include('seo::forms.destroy',['route'=>route('seo::meta-tags.destroy',$record->id)])
             </td>
         </tr>
 

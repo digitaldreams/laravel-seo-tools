@@ -30,7 +30,9 @@ class Update extends FormRequest
             'robot_index' => 'nullable|max:50',
             'robot_follow' => 'nullable|max:50',
             'canonical_url' => 'nullable|max:255',
-            'title' => 'required|max:100',
+            'title' => 'required|max:70',
+            'description' => 'required|max:170',
+
         ];
     }
 

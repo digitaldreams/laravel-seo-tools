@@ -2,28 +2,37 @@
     <thead>
     <tr>
         <th>Path</th>
-        <th>Robot Index</th>
-        <th>Robot Follow</th>
+        <th>Robot</th>
         <th>Canonical Url</th>
         <th>Title</th>
+        <th>Description</th>
+        <th>Images</th>
         <th>&nbsp;</th>
     </tr>
     </thead>
     <tbody>
     @foreach($records as $record)
-        <td> <a href="{{route('seo::pages.show',$record->id)}}"> {{$record->path }} </a></td>
-        <td> {{$record->robot_index }} </td>
-        <td> {{$record->robot_follow }} </td>
-        <td> {{$record->canonical_url }} </td>
-        <td> {{$record->title }} </td>
-        <td><a href="{{route('seo::pages.edit',$record->id)}}">
-                <span class="fa fa-pencil"></span>
-            </a>
-            <a href="{{route('seo::pages.show',$record->id)}}">
-                <span class="fa fa-eye"></span>
-            </a>
-        </td>
+        <tr>
+            <td><a href="{{route('seo::pages.show',$record->id)}}"> {{$record->path }} </a></td>
+            <td>
+                <label class="badge badge-secondary">{{$record->robot_index }}</label>
+                <label class="badge badge-secondary">{{$record->robot_follow }}</label>
+            </td>
+            <td> {{$record->canonical_url }} </td>
+            <td> {{$record->getTitle() }} </td>
+            <td> {{$record->getDescription() }} </td>
+            <td> {{$record->page_images_count }} </td>
+            <td>
+                <a href="{{route('seo::pages.edit',$record->id)}}">
+                    <span class="fa fa-pencil"></span>
+                </a>
+                <a href="{{route('seo::pages.show',$record->id)}}">
+                    <span class="fa fa-eye"></span>
+                </a>
+                @include('seo::forms.destroy',['route'=>route('seo::pages.destroy',$record->id)])
 
+            </td>
+        </tr>
     @endforeach
     </tbody>
     <tfoot>

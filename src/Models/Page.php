@@ -39,9 +39,9 @@ class Page extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function seoPageImages()
+    public function pageImages()
     {
-        return $this->hasMany(SeoPageImage::class, 'page_id');
+        return $this->hasMany(PageImage::class, 'page_id');
     }
 
     /**
@@ -54,5 +54,22 @@ class Page extends Model
         return $this->hasMany(SeoPageMetaTag::class, 'seo_page_id');
     }
 
+    /**
+     * Get Page Title
+     * @return mixed|varchar
+     */
+    public function getTitle()
+    {
+        return !empty($this->title) ? $this->title : $this->title_source;
+    }
+
+    /**
+     * Get Meta Description
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return !empty($this->description) ? $this->description : $this->description_source;
+    }
 
 }
