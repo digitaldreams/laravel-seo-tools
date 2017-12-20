@@ -4,7 +4,7 @@
         <div class="form-row">
             <div class="form-group col-sm-6">
                 <label for="site-tittle">Site Title</label>
-                <input type="text" class="form-control" name="settings[site_title]" id="site-tittle"
+                <input type="text" class="form-control" name="settings[site_title][value]" id="site-tittle"
                        aria-describedby="site-title-help"
                        placeholder="Site title must be below 80 words" max="80"
                        value="{{$model->getValueByKey('site_title')}}">
@@ -14,7 +14,7 @@
         <div class="form-row">
             <div class="form-group col-sm-4">
                 <label for="robot-index">Robot Index</label>
-                <select name="settings[robot_index]" id="robot-index" class="form-control">
+                <select name="settings[robot_index][value]" id="robot-index" class="form-control">
                     <option value="index" {{$model->getValueByKey('robot_index')=='index'?'selected':''}}>Index</option>
                     <option value="noindex" {{$model->getValueByKey('robot_index')=='noindex'?'selected':''}}>
                         No Index
@@ -27,7 +27,7 @@
 
             <div class="form-group col-sm-4">
                 <label for="robot-follow">Robot follow</label>
-                <select name="settings[robot_follow]" id="robot-follow" class="form-control">
+                <select name="settings[robot_follow][value]" id="robot-follow" class="form-control">
                     <option value="follow" {{$model->getValueByKey('robot_follow')=='follow'?'selected':''}}>Follow
                     </option>
                     <option value="nofollow" {{$model->getValueByKey('robot_follow')=='nofollow'?'selected':''}}>

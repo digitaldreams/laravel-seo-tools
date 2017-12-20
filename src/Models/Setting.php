@@ -26,12 +26,13 @@ class Setting extends Model
 
     /**
      * @param $key
+     * @param string $column
      * @return bool
      */
-    public function getValueByKey($key)
+    public function getValueByKey($key, $column = 'value')
     {
-        $settings = static::where('key', $key)->select(['key','value'])->first();
-        return is_object($settings) ? $settings->value : false;
+        $settings = static::where('key', $key)->first();
+        return is_object($settings) ? $settings->$column : false;
     }
 
 }

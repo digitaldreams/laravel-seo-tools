@@ -82,7 +82,7 @@
                            autocomplete="off" {{old('status',$model->status)=='active'?'checked':''}} value="active">
                     Active
                 </label>
-                <label class="btn btn-secondary {{old('status',$model->status)=='inactive'?'checked':''}}">
+                <label class="btn btn-secondary {{old('status',$model->status)=='inactive'?'active':''}}">
                     <input type="radio" name="status" id="option2"
                            autocomplete="off"
                            {{old('status',$model->status)=='inactive'?'checked':''}} value="inactive"> Inactive
@@ -138,12 +138,12 @@
         <div class="form-group col-sm-3">
             <label for="visibility">Visibility</label>
             <div class="btn-group btn-group-sm" data-toggle="buttons">
-                <label class="btn btn-secondary {{old('status',$model->visibility)=='page'?'active':''}}">
+                <label class="btn btn-secondary {{old('visibility',$model->visibility)=='page'?'active':''}}">
                     <input type="radio" name="visibility" id="option1"
                            autocomplete="off" {{old('status',$model->visibility)=='page'?'checked':''}} value="page">
                     Page
                 </label>
-                <label class="btn btn-secondary {{old('status',$model->visibility)=='global'?'active':''}}">
+                <label class="btn btn-secondary {{old('visibility',$model->visibility)=='global'?'active':''}}">
                     <input type="radio" name="visibility" id="option2"
                            autocomplete="off"
                            {{old('status',$model->visibility)=='global'?'checked':''}} value="global"> Global
@@ -156,7 +156,6 @@
         </div>
 
     </div>
-
 
     <div class="form-group text-right ">
         <input type="reset" class="btn btn-default" value="Clear"/>

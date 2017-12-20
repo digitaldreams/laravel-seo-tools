@@ -9,7 +9,7 @@
 @section('content')
     <div class="row">
         <div class="col-sm-8">
-            @include('seo::cards.page',['route'=>route('seo::pages.destroy',$record->id)])
+            @include('seo::forms.page_meta_tag')
         </div>
     </div>
 @endSection

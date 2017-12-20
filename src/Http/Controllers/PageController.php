@@ -45,6 +45,7 @@ class PageController extends Controller
     {
         return view('seo::pages.pages.show', [
             'record' => $page,
+            'metaTags' => $page->metaTags()
         ]);
     }
 
@@ -93,6 +94,7 @@ class PageController extends Controller
     {
         return view('seo::pages.pages.edit', [
             'model' => $page,
+            'metaTags' => $page->metaTags()
         ]);
     }
 
@@ -137,6 +139,7 @@ class PageController extends Controller
 
     /**
      * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function generate(Request $request)
     {
@@ -172,5 +175,18 @@ class PageController extends Controller
             }
         }
         return redirect()->route('seo::pages.index')->with('app_message', 'Pages generated successfully');
+    }
+
+    /**
+     * @param Request $request
+     * @param Page $page
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function meta(Request $request, Page $page)
+    {
+        return view('seo::pages.pages.meta_tags', [
+            'record' => $page,
+            'metaTags' => $page->metaTags()
+        ]);
     }
 }

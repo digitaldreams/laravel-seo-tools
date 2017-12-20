@@ -23,7 +23,7 @@
             <td> {{$record->getDescription() }} </td>
             <td> {{$record->page_images_count }} </td>
             <td>
-                <a href="{{route('seo::pages.edit',$record->id)}}">
+                <a href="{{route('seo::pages.meta',$record->id)}}">
                     <span class="fa fa-pencil"></span>
                 </a>
                 <a href="{{route('seo::pages.show',$record->id)}}">

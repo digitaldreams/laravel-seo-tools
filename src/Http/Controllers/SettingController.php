@@ -79,8 +79,8 @@ class SettingController extends Controller
     public function store(Store $request)
     {
         $settings = $request->get('settings', []);
-        foreach ($settings as $key => $value) {
-            Setting::where('key', $key)->update(['value' => $value]);
+        foreach ($settings as $key => $fields) {
+            Setting::where('key', $key)->update($fields);
         }
         session()->flash('app_message', 'Setting successfully updated');
         return redirect()->back();

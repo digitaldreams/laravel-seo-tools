@@ -2,7 +2,7 @@
     <form action="{{route('seo::settings.store')}}" method="post">
         {{csrf_field()}}
         <div class="form-group">
-            <textarea name="settings[robot_txt]" class="form-control"
+            <textarea name="settings[robot_txt][value]" class="form-control"
                       placeholder="Content of your robot.txt">{{$model->getValueByKey('robot_txt')}}</textarea>
             <small id="site-title-help" class="form-text text-muted">Please write content here carefully. It will read
                 by Google bot.
