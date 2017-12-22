@@ -7,6 +7,7 @@
             <small id="site-title-help" class="form-text text-muted">Please write content here carefully. It will read
                 by Google bot.
             </small>
+            <a class="lead text-primary" href="https://moz.com/learn/seo/robotstxt">Learn more about Robot.txt</a>
 
         </div>
         <div class="form-group text-right">
