@@ -5,7 +5,11 @@
     <li class="breadcrumb-item">{{$record->path}}</li>
 @endsection
 @section('tools')
+    &nbsp;
     <a href="{{route('seo::pages.create')}}"><i class="fa fa-plus"></i></a>
+    &nbsp;
+    <a target="_blank" href="{{url($record->path)}}">Visit Page</a>
+
 @endsection
 @section('content')
     <div class="row">

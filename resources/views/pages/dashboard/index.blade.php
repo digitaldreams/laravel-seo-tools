@@ -60,13 +60,13 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text lead"><span style="font-size: 60px"><b>{{$meta_tag_total or 0 }}</b></span> Meta
-                        Tags that are ready to use </p>
+                        Tags </p>
                 </div>
             </div>
         </div>
 
     </div>
-    <h3 class="mt-lg-3">Social Meida</h3>
+    <h3 class="mt-lg-3">Social Media</h3>
     <div class="row">
         <div class="col-sm-4">
             <div class="card">

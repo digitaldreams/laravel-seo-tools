@@ -25,8 +25,7 @@ class SettingsTableSeeder extends Seeder
             ],
             [
                 'label' => 'Robot Txt',
-                'description' => ' 
-                    Robot txt file content',
+                'description' => 'Robot txt file content',
                 'key' => 'robot_txt',
                 'value' => '',
                 'status' => 'active',

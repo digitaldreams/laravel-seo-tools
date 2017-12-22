@@ -145,7 +145,7 @@ class MetaTagsTableSeeder extends Seeder
                 'input_type' => 'number',
                 'input_placeholder' => 'Facebook numeric ID',
                 'input_label' => 'Facebook Admin Id',
-                'input_info' => 'Facebook Admin Id',
+                'input_info' => 'Visit: https://developers.facebook.com/tools/debug/accesstoken to get your id',
             ],
             [
                 'name' => '',
@@ -280,6 +280,30 @@ class MetaTagsTableSeeder extends Seeder
                 'input_placeholder' => 'e.g. @tuhinbepari12',
                 'input_label' => 'Twitter account holder',
                 'input_info' => '@username for the content creator / author.',
+            ],
+            [
+                'name' => 'google-site-verification',
+                'property' => '',
+                'status' => 'active',
+                'group' => 'webmaster_tools',
+                'default_value'=>'',
+                'visibility' => 'global',
+                'input_type' => 'text',
+                'input_placeholder' => 'e.g. 46CfjAikO4_0A9rp1...',
+                'input_label' => 'Google Site Verification Token',
+                'input_info' => 'Google Webmaster Tools',
+            ],
+            [
+                'name' => 'msvalidate.01',
+                'property' => '',
+                'status' => 'active',
+                'group' => 'webmaster_tools',
+                'default_value'=>'',
+                'visibility' => 'global',
+                'input_type' => 'text',
+                'input_placeholder' => 'e.g. F69E1D33598A85...',
+                'input_label' => 'Bing Site Verification Token',
+                'input_info' => 'Bing Webmaster Tools',
             ]
         ]);
     }

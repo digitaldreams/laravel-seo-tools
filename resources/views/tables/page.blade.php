@@ -25,6 +25,8 @@
                 <a href="{{route('seo::pages.meta',$record->id)}}">
                     <span class="fa fa-pencil"></span>
                 </a>
+                &nbsp;
+                <a target="_blank" href="{{url($record->path)}}">Visit Page</a>
                 @include('seo::forms.destroy',['route'=>route('seo::pages.destroy',$record->id)])
 
             </td>
