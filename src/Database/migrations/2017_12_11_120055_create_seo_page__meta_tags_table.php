@@ -15,10 +15,10 @@ class CreateSeoPageMetaTagsTable extends Migration
     {
         Schema::create('seo_page_meta_tags', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('seo_page_id')->unsigned();
+            $table->integer('seo_page_id')->unsigned()->nullable();
             $table->integer('seo_meta_tag_id')->unsigned();
             $table->text('content')->nullable();
-            $table->foreign('seo_page_id')->references('id')->on('seo_pages')->onDelete('cascade');
+            $table->foreign('seo_page_id')->references('id')->on('seo_pages')->onDelete('set null');
             $table->foreign('seo_meta_tag_id')->references('id')->on('seo_meta_tags')->onDelete('cascade');
             $table->timestamps();
         });

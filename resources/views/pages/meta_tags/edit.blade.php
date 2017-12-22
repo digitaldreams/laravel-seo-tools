@@ -1,5 +1,6 @@
 @extends(config('seo.layout'))
 @section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{route('seo::dashboard.index')}}"> Dashboard</a></li>
     <li class="breadcrumb-item"><a href="{{route('seo::meta-tags.index')}}">Meta Tags</a></li>
     <li class="breadcrumb-item">{{$model->id}}</li>
 @endsection

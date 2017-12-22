@@ -1,4 +1,8 @@
 @extends(config('seo.layout'))
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{route('seo::dashboard.index')}}"> Dashboard</a></li>
+    <li class="breadcrumb-item">Settings</li>
+@endsection
 @section('content')
     <nav class="nav nav-tabs" id="seo-settings-tab" role="tablist">
         <a class="nav-item nav-link active" id="nav-global-tab" data-toggle="tab" href="#nav-global" role="tab"
@@ -7,7 +11,7 @@
 
         <a class="nav-item nav-link" id="nav--page-meta-tags-tab" data-toggle="tab" href="#nav-page-meta-tags"
            role="tab"
-           aria-controls="nav-page-meta-tags" aria-selected="false">Page Meta
+           aria-controls="nav-page-meta-tags" aria-selected="false">Global Meta
         </a>
 
         <a class="nav-item nav-link" id="nav-social-tab" data-toggle="tab" href="#nav-social" role="tab"

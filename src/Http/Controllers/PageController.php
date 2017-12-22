@@ -76,10 +76,10 @@ class PageController extends Controller
         $model->fill($request->all());
 
         if ($model->save()) {
-            session()->flash('app_message', 'Page saved successfully');
+            session()->flash(config('seo.flash_message'), 'Page saved successfully');
             return redirect()->route('seo::pages.index');
         } else {
-            session()->flash('app_message', 'Something is wrong while saving Page');
+            session()->flash(config('seo.flash_error'), 'Something is wrong while saving Page');
         }
         return redirect()->back();
     }
@@ -111,10 +111,10 @@ class PageController extends Controller
         $page->fill($request->all());
 
         if ($page->save()) {
-            session()->flash('app_message', 'Page successfully updated');
+            session()->flash(config('seo.flash_message'), 'Page successfully updated');
             return redirect()->route('seo::pages.index');
         } else {
-            session()->flash('app_error', 'Something is wrong while updating Page');
+            session()->flash(config('seo.flash_error'), 'Something is wrong while updating Page');
         }
         return redirect()->back();
     }
@@ -130,9 +130,9 @@ class PageController extends Controller
     public function destroy(Destroy $request, Page $page)
     {
         if ($page->delete()) {
-            session()->flash('app_message', 'Page successfully deleted');
+            session()->flash(config('seo.flash_message'), 'Page successfully deleted');
         } else {
-            session()->flash('app_error', 'Error occurred while deleting Page');
+            session()->flash(config('seo.flash_error'), 'Error occurred while deleting Page');
         }
 
         return redirect()->back();
@@ -145,7 +145,7 @@ class PageController extends Controller
     public function generate(Request $request)
     {
         $linkProviders = config('seo.linkProviders', []);
-
+        $total = 0;
         foreach ($linkProviders as $linkProvider) {
 
             $obj = new $linkProvider;
@@ -154,8 +154,9 @@ class PageController extends Controller
 
                 foreach ($links as $link) {
                     $path = parse_url($link['link'], PHP_URL_PATH);
-                    $page = Page::firstOrCreate(['path' => $path]);
+                    $page = Page::firstOrNew(['object' => $link['object'], 'id' => $link['id']]);
 
+                    $page->path = $path;
                     $page->canonical_url = $path;
                     $page->title_source = isset($link['title']) ? $link['title'] : '';
                     $page->description_source = isset($link['description']) ? $link['description'] : '';
@@ -164,6 +165,7 @@ class PageController extends Controller
                     $page->updated_at = isset($link['updated_at']) ? $link['updated_at'] : '';
 
                     if ($page->save()) {
+                        $total++;
                         PageImage::where('page_id', $page->id)->delete();
 
                         if (isset($link['images']) && !empty($link['images']) && is_array($link['images'])) {
@@ -175,7 +177,7 @@ class PageController extends Controller
                 }
             }
         }
-        return redirect()->route('seo::pages.index')->with('app_message', 'Pages generated successfully');
+        return redirect()->route('seo::pages.index')->with(config('seo.flash_message'), $total . ' Pages saved successfully');
     }
 
     /**
@@ -204,6 +206,6 @@ class PageController extends Controller
             $pageMeta->content = $content;
             $pageMeta->save();
         }
-        return redirect()->back()->with('app_message', 'Page meta tags saved successfully');
+        return redirect()->back()->with(config('seo.flash_message'), 'Page meta tags saved successfully');
     }
 }

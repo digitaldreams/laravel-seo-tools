@@ -21,6 +21,7 @@ class CreateSeoMetaTagsTable extends Migration
             $table->string('status', 50)->default('active');
             $table->string('group', 50)->nullable();
             $table->string('input_type', 50)->default('text');
+            $table->string('default_value')->nullable();
             $table->string('input_placeholder')->nullable();
             $table->string('input_label')->nullable();
             $table->string('input_info')->nullable();

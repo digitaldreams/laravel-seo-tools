@@ -28,7 +28,7 @@ class SettingController extends Controller
     {
         return view('seo::pages.settings.index', [
                 'records' => Setting::paginate(10),
-                'metaTags' => MetaTag::paginate(10),
+                'metaTags' => MetaTag::withGroupBy('', 'global'),
                 'model' => new Setting()
             ]
         );
@@ -61,10 +61,10 @@ class SettingController extends Controller
 
         if ($setting->save()) {
 
-            session()->flash('app_message', 'Setting successfully updated');
+            session()->flash(config('seo.flash_message'), 'Setting successfully updated');
             return redirect()->route('seo::settings.index');
         } else {
-            session()->flash('app_error', 'Something is wrong while updating Setting');
+            session()->flash(config('seo.flash_error'), 'Something is wrong while updating Setting');
         }
         return redirect()->back();
     }
@@ -82,7 +82,7 @@ class SettingController extends Controller
         foreach ($settings as $key => $fields) {
             Setting::where('key', $key)->update($fields);
         }
-        session()->flash('app_message', 'Setting successfully updated');
+        session()->flash(config('seo.flash_error'), 'Setting successfully updated');
         return redirect()->back();
     }
 }

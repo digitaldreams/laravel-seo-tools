@@ -57,20 +57,36 @@
         </div>
 
     </div>
-
-    <div class="form-group {{ $errors->has('input_info') ? ' has-danger' : '' }}">
-        <div class="input-group input-group-sm">
-            <span class="input-group-addon" id=" sizing-addon1">Info</span>
-            <input type="text" class="form-control" name="input_info" id="input_info"
-                   value="{{old('input_info',$model->input_info)}}" placeholder="General description of your tag"
-                   maxlength="255">
-        </div>
-        @if($errors->has('input_info'))
-            <div class="invalid-feedback">
-                <strong>{{ $errors->first('input_info') }}</strong>
+    <div class="row">
+        <div class="form-group col-sm-6">
+            <div class="input-group input-group-sm">
+                <span class="input-group-addon" id=" sizing-addon1">Info</span>
+                <input type="text" class="form-control" name="input_info" id="input_info"
+                       value="{{old('input_info',$model->input_info)}}" placeholder="General description of your tag"
+                       maxlength="255">
             </div>
-        @endif
+            @if($errors->has('input_info'))
+                <div class="invalid-feedback">
+                    <strong>{{ $errors->first('input_info') }}</strong>
+                </div>
+            @endif
+        </div>
+        <div class="form-group col-sm-6">
+            <div class="input-group input-group-sm">
+                <span class="input-group-addon" id=" sizing-addon1">Default Value</span>
+                <input type="text" class="form-control" name="default_value" id="default_value"
+                       value="{{old('default_value',$model->default_value)}}" placeholder="Default value"
+                       maxlength="255">
+                <span class="input-group-addon" id=" sizing-addon1"><i class="fa fa-info-circle" title="If you want a dropdown selection then seperate each option with | "></i></span>
+            </div>
+            @if($errors->has('default_value'))
+                <div class="invalid-feedback">
+                    <strong>{{ $errors->first('default_value') }}</strong>
+                </div>
+            @endif
+        </div>
     </div>
+
 
     <div class="row">
         <div class="form-group col-sm-3">

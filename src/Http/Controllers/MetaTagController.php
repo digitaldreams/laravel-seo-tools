@@ -13,6 +13,7 @@ use SEO\Http\Requests\MetaTags\Show;
 use SEO\Http\Requests\MetaTags\Store;
 use SEO\Http\Requests\MetaTags\Update;
 use SEO\Models\MetaTag;
+use SEO\Models\PageMetaTag;
 
 /**
  * Description of MetaTagController
@@ -59,10 +60,10 @@ class MetaTagController extends Controller
 
         if ($model->save()) {
 
-            session()->flash('app_message', 'MetaTag saved successfully');
+            session()->flash(config('seo.flash_message'), 'MetaTag saved successfully');
             return redirect()->route('seo::meta-tags.index');
         } else {
-            session()->flash('app_message', 'Something is wrong while saving MetaTag');
+            session()->flash(config('seo.flash_error'), 'Something is wrong while saving MetaTag');
         }
         return redirect()->back();
     }
@@ -94,12 +95,27 @@ class MetaTagController extends Controller
 
         if ($meta_tag->save()) {
 
-            session()->flash('app_message', 'MetaTag successfully updated');
+            session()->flash(config('seo.flash_message'), 'MetaTag successfully updated');
             return redirect()->route('seo::meta-tags.index');
         } else {
-            session()->flash('app_error', 'Something is wrong while updating MetaTag');
+            session()->flash(config('seo.flash_error'), 'Something is wrong while updating MetaTag');
         }
         return redirect()->back();
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function global(Request $request)
+    {
+        $metaValues = $request->get('meta', []);
+        foreach ($metaValues as $id => $content) {
+            $pageMeta = PageMetaTag::firstOrCreate(['seo_page_id' => null, 'seo_meta_tag_id' => $id]);
+            $pageMeta->content = $content;
+            $pageMeta->save();
+        }
+        return redirect()->back()->with(config('seo.flash_message'), 'Global Meta Tags saved successfully');
     }
 
     /**
@@ -113,9 +129,9 @@ class MetaTagController extends Controller
     public function destroy(Destroy $request, MetaTag $meta_tag)
     {
         if ($meta_tag->delete()) {
-            session()->flash('app_message', 'MetaTag successfully deleted');
+            session()->flash(config('seo.flash_message'), 'MetaTag successfully deleted');
         } else {
-            session()->flash('app_error', 'Error occurred while deleting MetaTag');
+            session()->flash(config('seo.flash_error'), 'Error occurred while deleting MetaTag');
         }
 
         return redirect()->back();

@@ -2,10 +2,9 @@
     <thead>
     <tr>
         <th>Path</th>
-        <th>Robot</th>
-        <th>Canonical Url</th>
         <th>Title</th>
         <th>Description</th>
+        <th>Robot</th>
         <th>Images</th>
         <th>&nbsp;</th>
     </tr>
@@ -14,20 +13,17 @@
     @foreach($records as $record)
         <tr>
             <td><a href="{{route('seo::pages.show',$record->id)}}"> {{$record->path }} </a></td>
+
+            <td> {{$record->getTitle() }} </td>
+            <td> {{$record->getDescription() }} </td>
             <td>
                 <label class="badge badge-secondary">{{$record->robot_index }}</label>
                 <label class="badge badge-secondary">{{$record->robot_follow }}</label>
             </td>
-            <td> {{$record->canonical_url }} </td>
-            <td> {{$record->getTitle() }} </td>
-            <td> {{$record->getDescription() }} </td>
             <td> {{$record->page_images_count }} </td>
             <td>
                 <a href="{{route('seo::pages.meta',$record->id)}}">
                     <span class="fa fa-pencil"></span>
-                </a>
-                <a href="{{route('seo::pages.show',$record->id)}}">
-                    <span class="fa fa-eye"></span>
                 </a>
                 @include('seo::forms.destroy',['route'=>route('seo::pages.destroy',$record->id)])
 

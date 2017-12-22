@@ -3,6 +3,7 @@
 namespace SEO\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @property varchar $name name
@@ -47,6 +48,26 @@ class MetaTag extends Model
         return $this->hasMany(PageMetaTag::class, 'seo_meta_tag_id');
     }
 
+    /**
+     * @param string $default_value
+     * @return bool|int
+     */
+    public static function hasOptions($default_value = '')
+    {
+        return !empty($default_value) ? stripos($default_value, "|") : false;
+    }
+
+    /**
+     * @param string $default_value
+     * @return array|mixed
+     */
+    public static function getDefaultValue($default_value = '')
+    {
+        if (static::hasOptions($default_value) !== false) {
+            return explode("|", $default_value);
+        }
+        return $default_value;
+    }
 
     public static function fieldMap()
     {
@@ -63,6 +84,55 @@ class MetaTag extends Model
                 'twitter:url' => 'path',
             ]
         ];
+    }
+
+    public static function withContent($page_id = '', $visibility = 'page')
+    {
+        $params = [];
+
+        $sql = 'select m.*,pm.content from seo_meta_tags as m 
+                left join seo_page_meta_tags as pm on m.id=pm.seo_meta_tag_id 
+                ';
+        if (!empty($page_id)) {
+            $sql .= 'and pm.seo_page_id=:id';
+            $params['id'] = $page_id;
+        }
+        $sql .= ' where m.status=:status and m.visibility=:visibility';
+        $params['status'] = 'active';
+        $params['visibility'] = $visibility;
+        return DB::select($sql, $params);
+
+
+    }
+
+    /**
+     * @param string $page_id
+     * @param string $visibility
+     * @param string $page
+     * @return array
+     */
+    public static function withGroupBy($page_id = '', $visibility = 'page', $page = '')
+    {
+        $metaTags = [];
+        $results = static::withContent($page_id, $visibility);
+
+        foreach ($results as $meta) {
+
+            if ($page instanceof Page) {
+                $meta = $page->assignDefaultValueToMeta($meta);
+            }
+
+            if (!empty($meta->group)) {
+                $metaTags[$meta->group][] = $meta;
+            } elseif ($meta->visibility == 'global') {
+                $metaTags['global'][] = $meta;
+            } elseif ($meta->visibility == 'page') {
+                $metaTags['page'][] = $meta;
+            } else {
+                $metaTags['others'][] = $meta;
+            }
+        }
+        return $metaTags;
     }
 
 
