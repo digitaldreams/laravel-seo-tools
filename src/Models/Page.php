@@ -73,6 +73,15 @@ class Page extends Model
     }
 
     /**
+     * Get Meta Description
+     * @return mixed
+     */
+    public function getCanonical()
+    {
+        return !empty($this->canonical_url) ? $this->canonical_url : $this->path;
+    }
+
+    /**
      * @return array
      */
     public function metaTags()
