@@ -24,14 +24,6 @@ class SettingsTableSeeder extends Seeder
                 'group' => 'site'
             ],
             [
-                'label' => 'Robot Txt',
-                'description' => 'Robot txt file content',
-                'key' => 'robot_txt',
-                'value' => '',
-                'status' => 'active',
-                'group' => 'site'
-            ],
-            [
                 'label' => 'Robot Index',
                 'description' => 'Change global settings for Robot index. 
                 If value presents then it will overwrite all of the page robot_index.',
@@ -48,30 +40,6 @@ class SettingsTableSeeder extends Seeder
                 'value' => '',
                 'status' => 'active',
                 'group' => 'site'
-            ],
-            [
-                'label' => 'Bing Webmaster Tools',
-                'description' => 'Bing Webmaster Tools',
-                'key' => 'bing_webmaster_tools',
-                'value' => '',
-                'status' => 'active',
-                'group' => 'webmaster_tools'
-            ],
-            [
-                'label' => 'Google Webmaster Tools',
-                'description' => 'Google Webmaster Tools',
-                'key' => 'google_webmaster_tools',
-                'value' => '',
-                'status' => 'active',
-                'group' => 'webmaster_tools'
-            ],
-            [
-                'label' => 'Yandex Webmaster Tools',
-                'description' => 'Yandex Webmaster Tools',
-                'key' => 'yandex_webmaster_tools',
-                'value' => '',
-                'status' => 'active',
-                'group' => 'webmaster_tools'
             ],
             [
                 'label' => 'Facebook Page URL',

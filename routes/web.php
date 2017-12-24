@@ -9,6 +9,7 @@ Route::group(['prefix' => 'seo', 'as' => 'seo::', 'middleware' => ['web', config
 
     Route::post('meta-tags/global', ['uses' => 'MetaTagController@global', 'as' => 'meta-tags.global']);
     Route::resource('meta-tags', 'MetaTagController');
+    Route::post('settings/robot-txt', ['uses' => 'SettingController@robotTxt', 'as' => 'settings.robot_txt']);
     Route::resource('settings', 'SettingController', ['only' => ['index', 'store']]);
 
 });

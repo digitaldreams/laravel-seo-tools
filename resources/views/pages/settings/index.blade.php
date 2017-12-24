@@ -18,10 +18,6 @@
            aria-controls="nav-social" aria-selected="false">Social
         </a>
 
-        <a class="nav-item nav-link" id="nav-webmaster-tab" data-toggle="tab" href="#nav-webmaster" role="tab"
-           aria-controls="nav-webmaster" aria-selected="false">Webmaster
-        </a>
-
         <a class="nav-item nav-link" id="nav-sitemap-tab" data-toggle="tab" href="#nav-sitemap" role="tab"
            aria-controls="nav-sitemap" aria-selected="false">Sitemap
         </a>
@@ -35,7 +31,6 @@
         @include('seo::pages.settings.tabs.global')
         @include('seo::pages.settings.tabs.page')
         @include('seo::pages.settings.tabs.social')
-        @include('seo::pages.settings.tabs.webmaster')
         @include('seo::pages.settings.tabs.sitemap')
         @include('seo::pages.settings.tabs.robot')
 

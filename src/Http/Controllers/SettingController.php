@@ -3,6 +3,7 @@
 namespace SEO\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use SEO\Http\Requests\Settings\Edit;
 use SEO\Http\Requests\Settings\Index;
@@ -10,6 +11,7 @@ use SEO\Http\Requests\Settings\Store;
 use SEO\Http\Requests\Settings\Update;
 use SEO\Models\MetaTag;
 use SEO\Models\Setting;
+use SEO\Services\RobotTxt;
 
 /**
  * Description of SettingController
@@ -84,5 +86,20 @@ class SettingController extends Controller
         }
         session()->flash(config('seo.flash_error'), 'Setting successfully updated');
         return redirect()->back();
+    }
+
+    /**
+     * Update robot.txt file
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function robotTxt(Request $request)
+    {
+        $robotValue = $request->get('robot_txt');
+        $robotTxt = new RobotTxt();
+        $robotTxt->save($robotValue);
+        return redirect()->back()->with(config('seo.flash_message'), 'Robot.txt file updated successfully');
+
     }
 }

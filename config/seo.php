@@ -22,5 +22,10 @@ return [
     /**
      * Name of the flash variable that holds error message
      */
-    'flash_error' => 'permit_error'
+    'flash_error' => 'permit_error',
+
+    /**
+     * Full path where robot.txt file will be saved.
+     */
+    'robot_txt' => public_path('robots.txt'),
 ];
