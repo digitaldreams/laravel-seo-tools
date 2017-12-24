@@ -55,7 +55,8 @@ class Tag
     public function __construct()
     {
         $this->request = app('request');
-        $this->page = Page::where('path', $this->request->path())->first();
+        $path = $this->request->path();
+        $this->page = Page::whereIn('path', [trim($path, "/"), "/" . $path, url($path)])->first();
         $this->setting = new Setting();
         $this->makeMeta();
     }

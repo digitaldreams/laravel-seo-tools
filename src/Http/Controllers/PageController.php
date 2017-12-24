@@ -3,16 +3,20 @@
 namespace SEO\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use DataConverter\FileCsv;
+use DataConverter\FileManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use SEO\Contracts\LinkProvider;
 use SEO\Http\Requests\Pages\Create;
 use SEO\Http\Requests\Pages\Destroy;
+use SEO\Http\Requests\Pages\Download;
 use SEO\Http\Requests\Pages\Edit;
 use SEO\Http\Requests\Pages\Index;
 use SEO\Http\Requests\Pages\Show;
 use SEO\Http\Requests\Pages\Store;
 use SEO\Http\Requests\Pages\Update;
+use SEO\Http\Requests\Pages\Upload;
 use SEO\Models\Page;
 use SEO\Models\PageImage;
 use SEO\Models\PageMetaTag;
@@ -207,5 +211,103 @@ class PageController extends Controller
             $pageMeta->save();
         }
         return redirect()->back()->with(config('seo.flash_message'), 'Page meta tags saved successfully');
+    }
+
+    /**
+     * Upload pages from csv,excel
+     * @param Upload $upload
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function upload(Upload $upload)
+    {
+        $totalPage = 0;
+        if ($upload->hasFile('file') && $upload->file('file')->isValid()) {
+            $filePath = $upload->file('file')->store('pages', 'public');
+            $fullPath = storage_path("app/public/" . $filePath);
+
+            if (file_exists($fullPath)) {
+                $fileManager = FileManager::initByFileType($fullPath);
+                $pages = $fileManager->config([
+                    'first_row_as_headline' => true,
+                ])->read()->makeAssoc()->filter([
+                    'id',
+                    'path',
+                    'object',
+                    'object_id',
+                    'robot_index',
+                    'robot_follow',
+                    'canonical_url',
+                    'title',
+                    'title_source',
+                    'description',
+                    'description_source',
+                    'images'
+                ])->getData();
+
+                foreach ($pages as $page) {
+                    $images = [];
+                    if (isset($page['id'])) {
+                        $model = Page::find($page['id']);
+                    } elseif (isset($page['path'])) {
+                        $model = Page::whereIn('path', [trim($page['path'], "/"), "/" . trim($page['path'], "/"), url($page['path'])])->first();
+                    }
+                    if (!$model) {
+                        $model = new Page();
+                    }
+                    if (isset($page['images'])) {
+                        $images = $page['images'];
+                        unset($page['images']);
+                    }
+                    if ($model->fill($page)->save()) {
+                        $totalPage++;
+                        if (!empty($images)) {
+                            if (strripos($images, "|") !== false) {
+                                $images = explode("|", $images);
+                            } else {
+                                $images = [$images];
+                            }
+                        }
+                        $saveAbleImage = [];
+                        foreach ($images as $image) {
+                            PageImage::create([
+                                'src' => $image,
+                                'page_id' => $model->id
+                            ]);
+                        }
+                    }
+
+                }
+                return redirect()->back()->with(config('seo.flash_message'), $totalPage . ' saved successfully');
+            }
+        } else {
+            return redirect()->back()->with(config('seo.flash_error'), 'Invalid file');
+        }
+    }
+
+    /**
+     * Download page as csv
+     *
+     * @param Download $download
+     */
+    public function download(Download $download)
+    {
+        $headline = ['id', 'path', 'canonical_url', 'title', 'description', 'robot_index', 'robot_follow'];
+        $pages = Page::all($headline)->toArray();
+        $fileManager = new FileCsv();
+        $filePath = storage_path('app/public/pages/' . uniqid(date('Ymd_')) . '.csv');
+
+        array_unshift($pages, $headline);
+
+        $fileManager->config([
+            'file_path' => $filePath,
+            'data' => $pages
+        ])->write();
+
+        if (file_exists($filePath)) {
+            return response()->download($filePath);
+        }
+
+        return redirect()->back()->with(config('seo.flash_error'), 'Unable to download');
+
     }
 }

@@ -137,6 +137,18 @@ class MetaTagsTableSeeder extends Seeder
             ],
             [
                 'name' => '',
+                'property' => 'fb:app_id',
+                'status' => 'active',
+                'group' => 'og',
+                'default_value' => '',
+                'visibility' => 'global',
+                'input_type' => 'number',
+                'input_placeholder' => 'Facebook numeric ID',
+                'input_label' => 'Facebook App ID',
+                'input_info' => 'Visit: https://developers.facebook.com/tools/debug/accesstoken to get your id',
+            ],
+            [
+                'name' => '',
                 'property' => 'article:publisher',
                 'status' => 'inactive',
                 'group' => 'article',

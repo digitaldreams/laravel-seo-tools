@@ -62,7 +62,6 @@ class SettingController extends Controller
         $setting->fill($request->all());
 
         if ($setting->save()) {
-
             session()->flash(config('seo.flash_message'), 'Setting successfully updated');
             return redirect()->route('seo::settings.index');
         } else {
