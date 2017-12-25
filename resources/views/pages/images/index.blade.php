@@ -6,7 +6,29 @@
     <li class="breadcrumb-item">Images</li>
 
 @endsection
-
+@section('tools')
+    <a href="{{route('seo::pages.images.create',['page'=>$page->id])}}"><i class="fa fa-plus"></i></a>
+@endsection
 @section('content')
-OK
+    <div class="card-deck">
+        @foreach($records->chunk(3) as $recordChunk)
+            @foreach($recordChunk as $record)
+                <div class="card">
+                    <img class="card-img-top" src="{{$record->getSrc()}}" alt="{{$record->title}}">
+                    <div class="card-body">
+                        <h4 class="card-title">{{$record->caption}} &nbsp;&nbsp;
+                            <a href="{{route('seo::pages.images.edit',['page'=>$page->id,'pageImage'=>$record->id])}}">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            @include('seo::forms.destroy',['route'=>route('seo::pages.images.destroy',['page'=>$page->id,'pageImage'=>$record->id])])
+                        </h4>
+                        <p class="card-text">{{$record->title}}</p>
+                        <p class="card-text">
+                            <small class="text-muted"><i class="fa fa-map-marker"></i> {{$record->location}}</small>
+                        </p>
+                    </div>
+                </div>
+            @endforeach
+        @endforeach
+    </div>
 @endSection

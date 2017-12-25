@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property varchar $src src
- * @property tinyint $width width
- * @property tinyint $height height
+ * @property string $caption Caption
+ * @property string $title Title
  * @property int $page_id page id
  * @property timestamp $created_at created at
  * @property timestamp $updated_at updated at
- * @property SeoPage $seoPage belongsTo
+ * @property Page $page belongsTo
  */
 class PageImage extends Model
 {
@@ -25,21 +25,34 @@ class PageImage extends Model
      */
     protected $guarded = ['id'];
 
-
-    /**
-     * Date time columns.
-     */
-    protected $dates = [];
-
     /**
      * seoPage
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function seoPage()
+    public function page()
     {
         return $this->belongsTo(Page::class, 'page_id');
     }
 
+    public function getSrc()
+    {
+        return asset($this->src);
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function getCaption()
+    {
+        return $this->caption;
+    }
+
+    public function getLocation()
+    {
+        return $this->location;
+    }
 
 }

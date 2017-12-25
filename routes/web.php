@@ -7,7 +7,7 @@ Route::group([
     Route::get('dashboard', ['uses' => 'DashboardController@index', 'as' => 'dashboard.index']);
 
     Route::resource('pages.images', 'ImageController', ['except' => ['show'], 'parameters' => [
-        'images' => 'photoImage'
+        'images' => 'pageImage'
     ]]);
 
     Route::post('pages/upload', ['uses' => 'PageController@upload', 'as' => 'pages.upload']);

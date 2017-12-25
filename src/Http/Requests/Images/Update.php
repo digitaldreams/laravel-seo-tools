@@ -25,14 +25,10 @@ class Update extends FormRequest
     public function rules()
     {
         return [
-            'path' => 'required|max:255|unique:seo_pages,path,' . $this->route('page')->id,
-            'route_name' => 'nullable|max:150',
-            'robot_index' => 'nullable|max:50',
-            'robot_follow' => 'nullable|max:50',
-            'canonical_url' => 'nullable|max:255',
-            'title' => 'required|max:70',
-            'description' => 'required|max:170',
-
+            'src' => 'required|max:255',
+            'title' => 'nullable|max:100',
+            'caption' => 'nullable|max:100',
+            'location' => 'nullable|max:50',
         ];
     }
 

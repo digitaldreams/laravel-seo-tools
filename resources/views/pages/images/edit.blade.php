@@ -9,7 +9,7 @@
 
 @endsection
 @section('tools')
-    <a href="{{route('seo::pages.create')}}"><i class="fa fa-plus"></i></a>
+    <a href="{{route('seo::pages.images.create',['page'=>$page->id])}}"><i class="fa fa-plus"></i></a>
 @endsection
 @section('content')
     <div class="row">
@@ -17,7 +17,7 @@
             <div class='panel panel-default'>
                 <div class="panel-body">
                     @include('seo::forms.image',[
-                    'route'=>route('seo::pages.images.update',['page'=>$page->id,'photoImage'=>$model->id]),
+                    'route'=>route('seo::pages.images.update',['page'=>$page->id,'pageImage'=>$model->id]),
                     'method'=>'PUT'
                     ])
                 </div>
