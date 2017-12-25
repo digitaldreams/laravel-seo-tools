@@ -2,7 +2,7 @@
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('seo::dashboard.index')}}"> Dashboard</a></li>
     <li class="breadcrumb-item"><a href="{{route('seo::pages.index')}}">Pages</a></li>
-    <li class="breadcrumb-item">{{$record->path}}</li>
+    <li class="breadcrumb-item"><a href="{{route('seo::pages.show',$record->id)}}"> {{$record->path}}</a></li>
 @endsection
 @section('tools')
     &nbsp;
@@ -13,8 +13,6 @@
 @endsection
 @section('content')
     <div class="row">
-        <div class="col-sm-12">
-            @include('seo::forms.page_meta_tag')
-        </div>
+
     </div>
 @endSection

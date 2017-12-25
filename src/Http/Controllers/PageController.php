@@ -12,6 +12,7 @@ use SEO\Http\Requests\Pages\Create;
 use SEO\Http\Requests\Pages\Destroy;
 use SEO\Http\Requests\Pages\Download;
 use SEO\Http\Requests\Pages\Edit;
+use SEO\Http\Requests\Pages\Image;
 use SEO\Http\Requests\Pages\Index;
 use SEO\Http\Requests\Pages\Show;
 use SEO\Http\Requests\Pages\Store;
@@ -288,6 +289,7 @@ class PageController extends Controller
      * Download page as csv
      *
      * @param Download $download
+     * @return \Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function download(Download $download)
     {
@@ -308,6 +310,18 @@ class PageController extends Controller
         }
 
         return redirect()->back()->with(config('seo.flash_error'), 'Unable to download');
+    }
 
+    /**
+     * @param Image $image
+     * @param Page $page
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function images(Image $image, Page $page)
+    {
+        $data = [
+            'record' => $page
+        ];
+        return view('seo::pages.pages.images', $data);
     }
 }

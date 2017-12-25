@@ -20,7 +20,7 @@
                 <label class="badge badge-secondary">{{$record->robot_index }}</label>
                 <label class="badge badge-secondary">{{$record->robot_follow }}</label>
             </td>
-            <td> {{$record->page_images_count }} </td>
+            <td><a href="{{route('seo::pages.images.index',$record->id)}}">{{$record->page_images_count }}</a></td>
             <td>
                 <a href="{{route('seo::pages.meta',$record->id)}}">
                     <span class="fa fa-pencil"></span>

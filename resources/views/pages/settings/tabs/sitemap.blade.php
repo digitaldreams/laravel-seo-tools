@@ -8,4 +8,9 @@
             <input type="submit" value="Save" class="btn btn-primary">
         </div>
     </form>
+    <div class="help-block">
+        <a href="https://www.google.com/webmasters/tools/sitemap-list?pli=1">
+            Submit your Sitemap
+        </a>
+    </div>
 </div>
