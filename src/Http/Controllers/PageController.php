@@ -19,6 +19,7 @@ use SEO\Http\Requests\Pages\Store;
 use SEO\Http\Requests\Pages\Update;
 use SEO\Http\Requests\Pages\Upload;
 use SEO\Jobs\PageGeneratorJob;
+use SEO\Jobs\PageUploadJob;
 use SEO\Models\Page;
 use SEO\Models\PageImage;
 use SEO\Models\PageMetaTag;
@@ -196,58 +197,8 @@ class PageController extends Controller
             $fullPath = storage_path("app/public/" . $filePath);
 
             if (file_exists($fullPath)) {
-                $fileManager = FileManager::initByFileType($fullPath);
-                $pages = $fileManager->config([
-                    'first_row_as_headline' => true,
-                ])->read()->makeAssoc()->filter([
-                    'id',
-                    'path',
-                    'object',
-                    'object_id',
-                    'robot_index',
-                    'robot_follow',
-                    'canonical_url',
-                    'title',
-                    'title_source',
-                    'description',
-                    'description_source',
-                    'images'
-                ])->getData();
-
-                foreach ($pages as $page) {
-                    $images = [];
-                    if (isset($page['id'])) {
-                        $model = Page::find($page['id']);
-                    } elseif (isset($page['path'])) {
-                        $model = Page::whereIn('path', [trim($page['path'], "/"), "/" . trim($page['path'], "/"), url($page['path'])])->first();
-                    }
-                    if (!$model) {
-                        $model = new Page();
-                    }
-                    if (isset($page['images'])) {
-                        $images = $page['images'];
-                        unset($page['images']);
-                    }
-                    if ($model->fill($page)->save()) {
-                        $totalPage++;
-                        if (!empty($images)) {
-                            if (strripos($images, "|") !== false) {
-                                $images = explode("|", $images);
-                            } else {
-                                $images = [$images];
-                            }
-                        }
-                        $saveAbleImage = [];
-                        foreach ($images as $image) {
-                            PageImage::create([
-                                'src' => $image,
-                                'page_id' => $model->id
-                            ]);
-                        }
-                    }
-
-                }
-                return redirect()->back()->with(config('seo.flash_message'), $totalPage . ' saved successfully');
+                dispatch(new PageUploadJob($fullPath));
+                return redirect()->back()->with(config('seo.flash_message'), 'Your file are in queue now.');
             }
         } else {
             return redirect()->back()->with(config('seo.flash_error'), 'Invalid file');
