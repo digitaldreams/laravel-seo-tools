@@ -21,5 +21,6 @@ interface LinkProvider
      * @return \Illuminate\Support\Collection
      */
     public function all();
+    
 
 }

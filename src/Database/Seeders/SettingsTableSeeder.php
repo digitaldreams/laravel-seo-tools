@@ -42,6 +42,30 @@ class SettingsTableSeeder extends Seeder
                 'group' => 'site'
             ],
             [
+                'label' => 'How frequently the page is likely to change',
+                'description' => 'Please note that the value of this tag is considered a hint and not a command',
+                'key' => 'page_changefreq',
+                'value' => 'monthly',
+                'status' => 'active',
+                'group' => 'sitemap'
+            ],
+            [
+                'label' => 'Priority of this URL',
+                'description' => 'The priority of this URL relative to other URLs on your site',
+                'key' => 'page_priority',
+                'value' => 0.5,
+                'status' => 'active',
+                'group' => 'sitemap'
+            ],
+            [
+                'label' => 'Number of entries per sitemap',
+                'description' => '',
+                'key' => 'entries_per_sitemap',
+                'value' => 1000,
+                'status' => 'active',
+                'group' => 'sitemap'
+            ],
+            [
                 'label' => 'Facebook Page URL',
                 'description' => '',
                 'key' => 'facebook_page_url',

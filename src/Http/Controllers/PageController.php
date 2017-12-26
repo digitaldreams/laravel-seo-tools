@@ -18,6 +18,7 @@ use SEO\Http\Requests\Pages\Show;
 use SEO\Http\Requests\Pages\Store;
 use SEO\Http\Requests\Pages\Update;
 use SEO\Http\Requests\Pages\Upload;
+use SEO\Jobs\PageGeneratorJob;
 use SEO\Models\Page;
 use SEO\Models\PageImage;
 use SEO\Models\PageMetaTag;
@@ -149,40 +150,8 @@ class PageController extends Controller
      */
     public function generate(Request $request)
     {
-        $linkProviders = config('seo.linkProviders', []);
-        $total = 0;
-        foreach ($linkProviders as $linkProvider) {
-
-            $obj = new $linkProvider;
-            if ($obj instanceof LinkProvider) {
-                $links = $obj->all();
-
-                foreach ($links as $link) {
-                    $path = parse_url($link['link'], PHP_URL_PATH);
-                    $page = Page::firstOrNew(['object' => $link['object'], 'id' => $link['id']]);
-
-                    $page->path = $path;
-                    $page->canonical_url = $path;
-                    $page->title_source = isset($link['title']) ? $link['title'] : '';
-                    $page->description_source = isset($link['description']) ? $link['description'] : '';
-                    $page->title_source = isset($link['title']) ? $link['title'] : '';
-                    $page->created_at = isset($link['created_at']) ? $link['created_at'] : '';
-                    $page->updated_at = isset($link['updated_at']) ? $link['updated_at'] : '';
-
-                    if ($page->save()) {
-                        $total++;
-                        PageImage::where('page_id', $page->id)->delete();
-
-                        if (isset($link['images']) && !empty($link['images']) && is_array($link['images'])) {
-                            foreach ($link['images'] as $image) {
-                                PageImage::create(['src' => $image, 'page_id' => $page->id]);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return redirect()->route('seo::pages.index')->with(config('seo.flash_message'), $total . ' Pages saved successfully');
+        dispatch(new PageGeneratorJob());
+        return redirect()->route('seo::pages.index')->with(config('seo.flash_message'), ' Your request are in queue now. ');
     }
 
     /**

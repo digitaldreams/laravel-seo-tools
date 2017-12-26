@@ -30,7 +30,7 @@ class MetaTagController extends Controller
      */
     public function index(Index $request)
     {
-        return view('seo::pages.meta_tags.index', ['records' => MetaTag::paginate(10)]);
+        return view('seo::pages.meta_tags.index', ['records' => MetaTag::paginate(6)]);
     }
 
 
