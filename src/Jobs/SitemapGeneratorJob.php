@@ -47,26 +47,4 @@ class SitemapGeneratorJob implements ShouldQueue
         }
     }
 
-    /**
-     * @param Collection $pages
-     */
-    protected function generate($pages, $pageNumber)
-    {
-        $siteMapTemplate = __DIR__ . '/../../resources/assets/sitemap.xml';
-        $simpleXML = simplexml_load_file($siteMapTemplate);
-        $urlset = $simpleXML->urlset;
-
-        foreach ($pages as $page) {
-            $url = $simpleXML->addChild('url');
-            $url->addChild('loc', $page->getFullUrl());
-            $url->addChild('lastmod', $page->getLastModifiedDate());
-            $url->addChild('changefreq', $page->getChangeFrequency());
-            $url->addChild('priority', $page->getPriority());
-        }
-        $filePath = public_path(config('seo.sitemap_location')) . '/' . 'sitemap-' . $pageNumber . '.xml';
-        if (file_exists($filePath)) {
-            unlink($filePath);
-        }
-        $simpleXML->saveXML($filePath);
-    }
 }
