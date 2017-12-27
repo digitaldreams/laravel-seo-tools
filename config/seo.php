@@ -28,4 +28,9 @@ return [
      * Full path where robot.txt file will be saved.
      */
     'robot_txt' => public_path('robots.txt'),
+
+    /**
+     * public folder of your xml sitemap
+     */
+    'sitemap_location' => 'sitemaps',
 ];

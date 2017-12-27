@@ -82,6 +82,29 @@ class Page extends Model
     }
 
     /**
+     * @return varchar
+     */
+    public function getFullUrl()
+    {
+        return $this->path;
+    }
+
+    public function getLastModifiedDate()
+    {
+        return $this->updated_at->format('c');
+    }
+
+    public function getChangeFrequency()
+    {
+        return $this->change_frequency;
+    }
+
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+
+    /**
      * @return array
      */
     public function metaTags()
