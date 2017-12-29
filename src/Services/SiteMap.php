@@ -31,7 +31,7 @@ class SiteMap
     /**
      * @return $this
      */
-    public function image()
+    protected function imageTemplate()
     {
         $template = __DIR__ . '/../../resources/assets/sitemap-image.xml';
         $this->simpleXml = simplexml_load_file($template);
@@ -41,48 +41,46 @@ class SiteMap
     /**
      * @return $this
      */
-    public function page()
+    protected function pageTemplate()
     {
         $template = __DIR__ . '/../../resources/assets/sitemap.xml';
         $this->simpleXml = simplexml_load_file($template);
         return $this;
     }
 
-    public function xxx()
+    /**
+     *
+     */
+    public function page()
     {
         $this->total = Page::count();
 
         for ($page = 0; $page * $this->perPage < $this->total; $page++) {
+            $this->pageTemplate();
             $pages = Page::where('robot_index', 'index')->take($this->perPage)->offset($page * $this->perPage)->get();
-            $this->generate($pages, $page);
+            $this->generatePage($pages, $page);
         }
-
-
+        return $this;
     }
 
     /**
+     * Page Generator
+     *
      * @param Collection $pages
      */
-    protected function generate($pages, $pageNumber)
+    protected function generatePage($pages, $pageNumber)
     {
-        $siteMapTemplate = __DIR__ . '/../../resources/assets/sitemap.xml';
-        $simpleXML = simplexml_load_file($siteMapTemplate);
-
         foreach ($pages as $page) {
-            $url = $simpleXML->addChild('url');
+            $url = $this->simpleXml->addChild('url');
             $this->singlePage($url, $page);
         }
-
-        $filePath = $this->filePath . '/' . 'sitemap-' . $pageNumber . '.xml';
-        if (file_exists($filePath)) {
-            unlink($filePath);
-        }
-        $simpleXML->saveXML($filePath);
+        $this->save('sitemap-pages-' . $pageNumber . '.xml');
     }
 
     /**
      * @param $url
      * @param $page
+     * @return mixed
      */
     private function singlePage($url, $page)
     {
@@ -90,6 +88,25 @@ class SiteMap
         $url->addChild('lastmod', $page->getLastModifiedDate());
         $url->addChild('changefreq', $page->getChangeFrequency());
         $url->addChild('priority', $page->getPriority());
+        return $url;
+    }
+
+    /**
+     * Page Image generator
+     */
+    public function image()
+    {
+        $this->total = Page::count();
+        for ($p = 0; $p * $this->perPage < $this->total; $p++) {
+            $this->imageTemplate();
+            $pages = Page::where('robot_index', 'index')->take($this->perPage)->offset($p * $this->perPage)->get();
+            foreach ($pages as $page) {
+                $url = $this->simpleXml->addChild('url');
+                $this->pageImages($url, $page);
+            }
+            $this->save('sitemap-images-' . $p . '.xml');
+        }
+        return $this;
     }
 
     /**
@@ -112,7 +129,7 @@ class SiteMap
      */
     protected function singleImage($imageXml, $image)
     {
-        $imageXml->addChild('image:loc', $image->getSrc(), static::ImageNs);
+        $imageXml->addChild('image:loc', $image->getFullUrl(), static::ImageNs);
         $caption = $image->getCaption();
         $title = $image->getTitle();
         $location = $image->getLocation();
@@ -129,8 +146,15 @@ class SiteMap
         return $imageXml;
     }
 
-    public function save()
+    /**
+     * @param $fileName
+     */
+    protected function save($fileName)
     {
-
+        $filePath = $this->filePath . '/' . $fileName;
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+        $this->simpleXml->saveXML($filePath);
     }
 }

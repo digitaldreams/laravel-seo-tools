@@ -37,7 +37,21 @@ class PageImage extends Model
 
     public function getSrc()
     {
+        if (parse_url($this->src, PHP_URL_HOST)) {
+            return $this->src;
+        }
         return asset($this->src);
+    }
+
+    /**
+     * @return varchar
+     */
+    public function getFullUrl()
+    {
+        if (parse_url($this->src, PHP_URL_HOST)) {
+            return $this->src;
+        }
+        url($this->src);
     }
 
     public function getTitle()

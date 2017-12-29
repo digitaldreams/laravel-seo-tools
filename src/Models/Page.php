@@ -86,7 +86,7 @@ class Page extends Model
      */
     public function getFullUrl()
     {
-        return $this->path;
+        return url(parse_url($this->path, PHP_URL_PATH));
     }
 
     public function getLastModifiedDate()
