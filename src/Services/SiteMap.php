@@ -25,7 +25,7 @@ class SiteMap
     {
         $pageLimit = !empty($limit) && is_int($limit) ? $limit : (new Setting())->getValueByKey('entries_per_sitemap');
         $this->perPage = !empty($pageLimit) ? $pageLimit : 1000;
-        $this->filePath = !empty($filePath) ? path_info($filePath, PATHINFO_DIRNAME) : public_path(config('seo.sitemap_location'));
+        $this->filePath = !empty($filePath) ? path_info($filePath, PATHINFO_DIRNAME) : public_path(trim(config('seo.sitemap_location'), "/"));
     }
 
     /**
@@ -156,5 +156,17 @@ class SiteMap
             unlink($filePath);
         }
         $this->simpleXml->saveXML($filePath);
+    }
+
+    public function all()
+    {
+        $files = [];
+        $dirIt = new \DirectoryIterator($this->filePath);
+        foreach ($dirIt as $file) {
+            if ($file->isDot()) continue;
+            if ($file->getExtension() != 'xml') continue;
+            $files[] = asset(trim(config('seo.sitemap_location'), "/") . '/' . $file->getBasename());
+        }
+        return $files;
     }
 }

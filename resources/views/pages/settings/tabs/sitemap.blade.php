@@ -47,6 +47,23 @@
             <input type="submit" value="Save" class="btn btn-primary">
         </div>
     </form>
+
+    <div class="row mb-2">
+        <div class="col-sm-12">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-heading list-group-item-primary">
+                    Your SiteMaps &nbsp;&nbsp; &nbsp;&nbsp;
+                    <form action="{{route('seo::sitemap.generate')}}" method="post" style="display: inline">
+                        {{csrf_field()}}
+                        <input type="submit"  value="Generate" class="btn btn-primary btn-sm">
+                    </form>
+                </li>
+                @foreach($sitemaps as $sitemap)
+                    <li class="list-group-item"><a target="_blank" href="{{$sitemap}}">{{$sitemap}}</a></li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
     <div class="help-block">
         <a href="https://www.google.com/webmasters/tools/sitemap-list?pli=1">
             Submit your Sitemap

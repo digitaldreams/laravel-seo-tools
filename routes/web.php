@@ -30,4 +30,5 @@ Route::group([
 
     Route::resource('settings', 'SettingController', ['only' => ['index', 'store']]);
 
+    Route::post('sitemap/generate', ['uses' => 'SiteMapController@store', 'as' => 'sitemap.generate']);
 });

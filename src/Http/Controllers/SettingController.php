@@ -12,6 +12,7 @@ use SEO\Http\Requests\Settings\Update;
 use SEO\Models\MetaTag;
 use SEO\Models\Setting;
 use SEO\Services\RobotTxt;
+use SEO\Services\SiteMap;
 
 /**
  * Description of SettingController
@@ -31,7 +32,8 @@ class SettingController extends Controller
         return view('seo::pages.settings.index', [
                 'records' => Setting::paginate(10),
                 'metaTags' => MetaTag::withGroupBy('', 'global'),
-                'model' => new Setting()
+                'model' => new Setting(),
+                'sitemaps' => (new SiteMap())->all()
             ]
         );
     }
