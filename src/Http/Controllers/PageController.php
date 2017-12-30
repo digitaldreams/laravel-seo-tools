@@ -214,20 +214,22 @@ class PageController extends Controller
      */
     public function download(Download $download)
     {
-        $headline = ['id', 'path', 'canonical_url', 'title', 'description', 'robot_index', 'robot_follow'];
-        $pages = Page::all($headline)->toArray();
+        $headline = ['id', 'path', 'canonical_url', 'title', 'description', 'robot_index', 'robot_follow', 'change_frequency', 'priority'];
+        $pages = Page::all($headline);
         $fileManager = new FileCsv();
         $filePath = storage_path('app/public/pages/' . uniqid(date('Ymd_')) . '.csv');
-        $data=[];
+        $data = [];
         foreach ($pages as $page) {
             $data[] = [
-                'id' => '"' . $page['id'] . '"',
-                'path' => '"' . $page['path'] . '"',
-                'canonical_url' => '"' . $page['canonical_url'] . '"',
-                'title' => '"' . $page['title'] . '"',
-                'description' => '"' . $page['description'] . '"',
-                'robot_index' => '"' . $page['robot_index'] . '"',
-                'robot_follow' => '"' . $page['robot_follow'] . '"',
+                'id' => '"' . $page->id . '"',
+                'path' => '"' . $page->path . '"',
+                'canonical_url' => '"' . $page->getCanonical() . '"',
+                'title' => '"' . $page->getTitle() . '"',
+                'description' => '"' . $page->getDescription() . '"',
+                'robot_index' => '"' . $page->robot_index . '"',
+                'robot_follow' => '"' . $page->robot_follow . '"',
+                'change_frequency' => '"' . $page->getChangeFrequency() . '"',
+                'priority' => '"' . $page->getPriority() . '"',
             ];
         }
         array_unshift($data, $headline);
