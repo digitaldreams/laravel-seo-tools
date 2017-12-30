@@ -16,6 +16,12 @@
     <a href="{{route('seo::pages.download')}}" class="btn btn-outline-primary btn-sm">
         <i class="fa fa-download"></i> Download CSV
     </a>
+    @if(config('seo.cache.enable'))
+        <form action="{{route('seo::pages.cache')}}" method="post" style="display: inline">
+            {{csrf_field()}}
+            <input type="submit" value="Refresh Cache" class="btn btn-outline-primary btn-sm">
+        </form>
+    @endif
 
 @endsection
 @section('content')

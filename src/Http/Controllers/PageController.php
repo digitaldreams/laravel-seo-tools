@@ -18,6 +18,7 @@ use SEO\Http\Requests\Pages\Show;
 use SEO\Http\Requests\Pages\Store;
 use SEO\Http\Requests\Pages\Update;
 use SEO\Http\Requests\Pages\Upload;
+use SEO\Jobs\PageCacheJob;
 use SEO\Jobs\PageGeneratorJob;
 use SEO\Jobs\PageUploadJob;
 use SEO\Models\Page;
@@ -243,5 +244,14 @@ class PageController extends Controller
             'record' => $page
         ];
         return view('seo::pages.pages.images', $data);
+    }
+
+    /**
+     * Cache page seo tags
+     */
+    public function cache()
+    {
+        dispatch(new PageCacheJob());
+        return redirect()->back()->with(config('seo.flash_message'), 'Your request to refresh cache are in queue now.');
     }
 }

@@ -51,8 +51,8 @@ return [
         /**
          * After a this time cache will be update with database.
          *
-         * Expire in seconds. Default it would be one day
+         * Expire in seconds. Default it would be one hour
          */
-        'expire' => 1
+        'expire' => 3600
     ]
 ];

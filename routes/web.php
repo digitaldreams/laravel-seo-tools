@@ -10,6 +10,7 @@ Route::group([
         'images' => 'pageImage'
     ]]);
 
+    Route::post('pages/cache', ['uses' => 'PageController@cache', 'as' => 'pages.cache']);
     Route::post('pages/upload', ['uses' => 'PageController@upload', 'as' => 'pages.upload']);
 
     Route::get('pages/download', ['uses' => 'PageController@download', 'as' => 'pages.download']);
