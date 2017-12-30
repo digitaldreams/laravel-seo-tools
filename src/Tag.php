@@ -25,11 +25,6 @@ class Tag
     public $page;
 
     /**
-     * @var Request
-     */
-    protected $request;
-
-    /**
      * @var array
      */
     protected $tags = [];
@@ -51,12 +46,11 @@ class Tag
 
     /**
      * Tag constructor.
+     * @param Page $page
      */
-    public function __construct()
+    public function __construct(Page $page)
     {
-        $this->request = app('request');
-        $path = $this->request->path();
-        $this->page = Page::whereIn('path', [trim($path, "/"), "/" . $path, url($path)])->first();
+        $this->page = $page;
         $this->setting = new Setting();
         $this->makeMeta();
     }
@@ -150,7 +144,7 @@ class Tag
      * Generate meta tags adn save them into tags array
      * @return $this
      */
-    protected function make()
+    public function make()
     {
         $this->makeMeta();
         $this->robots()->webmaster()->pageLevel()->og()->twitter()->otherTags();
@@ -166,6 +160,28 @@ class Tag
         if ($this->hasPage()) {
             return $this->make()->asHtml();
         }
+    }
+
+    /**
+     * Save html into storage
+     */
+    public function save()
+    {
+        $cache = config('seo.cache');
+        if (!isset($cache['enable']) || $cache['enable'] == false) {
+            return null;
+        }
+        $html = $this->asHtml();
+        $dir = rtrim($cache['storage'], "/");
+        if (!file_exists($dir)) {
+            mkdir($dir);
+        }
+
+        $filePath = $dir . '/' . $this->page->id . '.html';
+        $splFile = new \SplFileObject($filePath, 'w+');
+        $splFile->fwrite($html);
+        $splFile->fflush();
+        return $splFile->getFilename();
     }
 
     /**

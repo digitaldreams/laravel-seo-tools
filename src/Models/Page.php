@@ -78,7 +78,7 @@ class Page extends Model
      */
     public function getCanonical()
     {
-        return !empty($this->canonical_url) ? $this->canonical_url : $this->path;
+        return !empty($this->canonical_url) ? $this->canonical_url : $this->getFullUrl();
     }
 
     /**

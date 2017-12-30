@@ -33,4 +33,26 @@ return [
      * public folder of your xml sitemap
      */
     'sitemap_location' => 'sitemaps',
+
+    /**
+     * Cache setting
+     */
+    'cache' => [
+        /**
+         * Do you like to serve seo tags from cache. It is highly recommended on production server.
+         */
+        'enable' => true,
+
+        /**
+         * Path where html files will be saved.
+         */
+        'storage' => storage_path('app/seo'),
+
+        /**
+         * After a this time cache will be update with database.
+         *
+         * Expire in seconds. Default it would be one day
+         */
+        'expire' => 1
+    ]
 ];
