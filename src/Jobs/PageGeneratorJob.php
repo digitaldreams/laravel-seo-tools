@@ -11,6 +11,7 @@ use SEO\Models\Page;
 use SEO\Models\PageImage;
 use SEO\Models\Setting;
 use SEO\Contracts\LinkProvider;
+
 class PageGeneratorJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -99,7 +100,9 @@ class PageGeneratorJob implements ShouldQueue
         $priority = $setting->getValueByKey('page_priority');
 
         $path = parse_url($link['link'], PHP_URL_PATH);
-        $page = Page::firstOrNew(['object' => $link['object'], 'id' => $link['id']]);
+        $object = isset($link['object']) ? $link['object'] : null;
+        $objectId = isset($link['object_id']) ? $link['object_id'] : null;
+        $page = Page::firstOrNew(['object' => $object, 'object_id' => $objectId]);
 
         $page->path = $path;
         $page->canonical_url = $path;
