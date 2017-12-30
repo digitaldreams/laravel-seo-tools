@@ -99,7 +99,7 @@ class PageGeneratorJob implements ShouldQueue
         $changeFrequency = $setting->getValueByKey('page_changefreq');
         $priority = $setting->getValueByKey('page_priority');
 
-        $path = parse_url($link['link'], PHP_URL_PATH);
+        $path = $link['link'];
         $object = isset($link['object']) ? $link['object'] : null;
         $objectId = isset($link['object_id']) ? $link['object_id'] : null;
         $page = Page::firstOrNew(['object' => $object, 'object_id' => $objectId]);

@@ -1,6 +1,7 @@
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped text-small">
     <thead>
     <tr>
+        <th>ID</th>
         <th>Path</th>
         <th>Title</th>
         <th>Description</th>
@@ -12,6 +13,7 @@
     <tbody>
     @foreach($records as $record)
         <tr>
+            <td>{{$record->id}}</td>
             <td><a href="{{route('seo::pages.show',$record->id)}}"> {{$record->path }} </a></td>
 
             <td> {{$record->getTitle() }} </td>

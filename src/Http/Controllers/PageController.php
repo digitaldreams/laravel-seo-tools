@@ -40,7 +40,7 @@ class PageController extends Controller
      */
     public function index(Index $request)
     {
-        return view('seo::pages.pages.index', ['records' => Page::withCount(['pageImages'])->paginate(10)]);
+        return view('seo::pages.pages.index', ['records' => Page::withCount(['pageImages'])->paginate(5)]);
     }
 
     /**
@@ -110,7 +110,7 @@ class PageController extends Controller
     /**
      * Update a existing resource in storage.
      *
-     * @param  Request $request
+     * @param  Update $request
      * @param  Page $page
      * @return Response
      */

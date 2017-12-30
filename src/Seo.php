@@ -47,8 +47,6 @@ class Seo
                 $this->splFileObject = new \SplFileObject($this->filePath, 'r');
             }
         }
-
-
     }
 
     /**

@@ -5,7 +5,8 @@
         <div class="form-group col-sm-6">
             <div class="input-group input-group-sm">
                 <div class="input-group-addon">Title</div>
-                <input type="text" class="form-control" name="title" id="title" value="{{old('title',$model->getTitle())}}"
+                <input type="text" class="form-control" name="title" id="title"
+                       value="{{old('title',$model->getTitle())}}"
                        placeholder="" maxlength="100">
             </div>
 
@@ -13,34 +14,6 @@
                 <span class="form-control-feedback">
                  <strong>{{ $errors->first('title') }}</strong>
             </span>
-            @endif
-        </div>
-        <div class="form-group col-sm-6">
-            <div class="input-group input-group-sm">
-                <div class="input-group-addon">{{url('/')}}/</div>
-                <input type="text" class="form-control" name="path" id="path" value="{{old('path',$model->path)}}"
-                       placeholder="Relative path to your page" maxlength="255" required="required">
-                <div class="input-group-addon">Path</div>
-            </div>
-            @if($errors->has('path'))
-                <span class="form-control-feedback">
-        <strong>{{ $errors->first('path') }}</strong>
-    </span>
-            @endif
-        </div>
-    </div>
-    <div class="row">
-        <div class="form-group col-sm-6">
-            <div class="input-group input-group-sm">
-                <div class="input-group-addon">{{url('/')}}/</div>
-                <input type="text" class="form-control" name="canonical_url" id="canonical_url"
-                       value="{{old('canonical_url',$model->canonical_url)}}" placeholder="" maxlength="255">
-                <div class="input-group-addon">Canonical Url</div>
-            </div>
-            @if($errors->has('canonical_url'))
-                <span class="form-control-feedback">
-        <strong>{{ $errors->first('canonical_url') }}</strong>
-    </span>
             @endif
         </div>
         <div class="form-group col-sm-3">
@@ -82,8 +55,34 @@
             @endif
         </div>
 
-
     </div>
+    <div class="form-group">
+        <div class="input-group input-group-sm">
+            <div class="input-group-addon">{{url('/')}}/</div>
+            <input type="text" class="form-control" name="canonical_url" id="canonical_url"
+                   value="{{old('canonical_url',$model->canonical_url)}}" placeholder="" maxlength="255">
+            <div class="input-group-addon">Canonical Url</div>
+        </div>
+        @if($errors->has('canonical_url'))
+            <span class="form-control-feedback">
+        <strong>{{ $errors->first('canonical_url') }}</strong>
+    </span>
+        @endif
+    </div>
+    <div class="form-group">
+        <div class="input-group input-group-sm">
+            <div class="input-group-addon">{{url('/')}}/</div>
+            <input type="text" class="form-control" name="path" id="path" value="{{old('path',$model->path)}}"
+                   placeholder="Relative path to your page" maxlength="255" required="required">
+            <div class="input-group-addon">Page Url</div>
+        </div>
+        @if($errors->has('path'))
+            <span class="form-control-feedback">
+        <strong>{{ $errors->first('path') }}</strong>
+    </span>
+        @endif
+    </div>
+
     <div class="form-group">
         <div class="input-group input-group-sm">
             <div class="input-group-addon">Description</div>

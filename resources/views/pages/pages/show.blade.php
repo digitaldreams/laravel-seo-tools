@@ -9,6 +9,15 @@
     <a href="{{route('seo::pages.create')}}"><i class="fa fa-plus"></i></a>
     &nbsp;
     <a target="_blank" href="{{url($record->path)}}">Visit Page</a>
+    &nbsp;&nbsp;
+    <a target="_blank"
+       href="https://developers.facebook.com/tools/debug/sharing/?q={{urlencode($record->getFullUrl())}}">
+        <i class="fa fa-facebook-official"></i> Facebook Validate
+    </a>
+    &nbsp;&nbsp;
+    <a href="https://cards-dev.twitter.com/validator" target="_blank">
+        <i class="fa fa-twitter"></i> Twiter Card Validate
+    </a>
 
 @endsection
 @section('content')
