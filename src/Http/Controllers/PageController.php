@@ -218,12 +218,23 @@ class PageController extends Controller
         $pages = Page::all($headline)->toArray();
         $fileManager = new FileCsv();
         $filePath = storage_path('app/public/pages/' . uniqid(date('Ymd_')) . '.csv');
-
-        array_unshift($pages, $headline);
+        $data=[];
+        foreach ($pages as $page) {
+            $data[] = [
+                'id' => '"' . $page['id'] . '"',
+                'path' => '"' . $page['path'] . '"',
+                'canonical_url' => '"' . $page['canonical_url'] . '"',
+                'title' => '"' . $page['title'] . '"',
+                'description' => '"' . $page['description'] . '"',
+                'robot_index' => '"' . $page['robot_index'] . '"',
+                'robot_follow' => '"' . $page['robot_follow'] . '"',
+            ];
+        }
+        array_unshift($data, $headline);
 
         $fileManager->config([
             'file_path' => $filePath,
-            'data' => $pages
+            'data' => $data
         ])->write();
 
         if (file_exists($filePath)) {
