@@ -24,6 +24,7 @@ use SEO\Jobs\PageUploadJob;
 use SEO\Models\Page;
 use SEO\Models\PageImage;
 use SEO\Models\PageMetaTag;
+use SEO\Tag;
 
 /**
  * Description of PageController
@@ -266,5 +267,45 @@ class PageController extends Controller
     {
         dispatch(new PageCacheJob());
         return redirect()->back()->with(config('seo.flash_message'), 'Your request to refresh cache are in queue now.');
+    }
+
+    /**
+     * Download folder as zip
+     */
+    public function zip()
+    {
+        if (!file_exists(storage_path('download'))) {
+            mkdir(storage_path('download'));
+        }
+        $zipname = storage_path('download/pages.zip');
+
+        if (file_exists($zipname)) {
+            unlink($zipname);
+        }
+
+        $pages = Page::all();
+        $cachePath = config('seo.cache.storage');
+
+        foreach ($pages as $page) {
+            if (!file_exists($cachePath . "/" . $page->id . 'html')) {
+                $tag = new Tag($page);
+                $tag->make()->save();
+            }
+        }
+
+        $zip = new \ZipArchive;
+        $zip->open($zipname, \ZipArchive::CREATE);
+        $dir = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($cachePath), \RecursiveIteratorIterator::SELF_FIRST);
+        foreach ($dir as $name => $it) {
+            if (in_array($it->getBasename(), [".", ".."])) {
+                continue;
+            }
+            $pageModel = $pages->find($it->getBasename(".html"));
+            $filePath = is_object($pageModel) ? $pageModel->path . '.html' : $it->getBasename();
+            $zip->addFile($it->getPathname(), $filePath);
+        }
+
+        $zip->close();
+        return response()->download($zipname);
     }
 }

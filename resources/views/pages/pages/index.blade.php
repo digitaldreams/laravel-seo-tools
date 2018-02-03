@@ -16,6 +16,9 @@
     <a href="{{route('seo::pages.download')}}" class="btn btn-outline-primary btn-sm">
         <i class="fa fa-download"></i> Download CSV
     </a>
+    <a href="{{route('seo::pages.zip')}}" class="btn btn-outline-primary btn-sm">
+       <i class="fa fa-file-zip-o"></i> Download Zip
+    </a>
     @if(config('seo.cache.enable'))
         <form action="{{route('seo::pages.cache')}}" method="post" style="display: inline">
             {{csrf_field()}}
