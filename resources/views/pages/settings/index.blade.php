@@ -28,11 +28,11 @@
 
     </nav>
     <div class="tab-content mt-3" id="nav-tabContent">
-        @include('seo::pages.settings.tabs.global')
-        @include('seo::pages.settings.tabs.page')
-        @include('seo::pages.settings.tabs.social')
-        @include('seo::pages.settings.tabs.sitemap')
-        @include('seo::pages.settings.tabs.robot')
+        @include('seo::tabs.global')
+        @include('seo::tabs.page')
+        @include('seo::tabs.social')
+        @include('seo::tabs.sitemap')
+        @include('seo::tabs.robot')
 
     </div>
 

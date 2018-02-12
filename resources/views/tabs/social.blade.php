@@ -1,4 +1,4 @@
-<div class="tab-pane fade" id="nav-social" role="tabpanel" aria-labelledby="nav-social-tab">
+<div class="tab-pane show active" id="nav-social" role="tabpanel" aria-labelledby="nav-social-tab">
     <form action="{{route('seo::settings.store')}}" method="post">
         {{csrf_field()}}
 

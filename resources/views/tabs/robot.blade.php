@@ -1,4 +1,4 @@
-<div class="tab-pane fade" id="nav-robot-txt" role="tabpanel" aria-labelledby="nav-robot-txt-tab">
+<div class="tab-pane show active" id="nav-robot-txt" role="tabpanel" aria-labelledby="nav-robot-txt-tab">
     <form action="{{route('seo::settings.robot_txt')}}" method="post">
         {{csrf_field()}}
         <div class="form-group">

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use SEO\Models\MetaTag;
 use SEO\Models\Page;
 use SEO\Models\Setting;
+use SEO\Services\SiteMap;
 
 class DashboardController
 {
@@ -24,5 +25,50 @@ class DashboardController
             'setting_total' => Setting::count()
         ];
         return view('seo::pages.dashboard.index', $data);
+    }
+
+    /**
+     * Manage Social Media
+     */
+    public function social()
+    {
+        $data = [
+            'records' => Setting::paginate(10),
+            'metaTags' => MetaTag::withGroupBy('', 'global'),
+            'model' => new Setting(),
+        ];
+        return view('seo::pages.dashboard.social', $data);
+    }
+
+    /**
+     * Manage Site map
+     */
+    public function sitemap()
+    {
+        $data = [
+            'records' => Setting::paginate(10),
+            'metaTags' => MetaTag::withGroupBy('', 'global'),
+            'model' => new Setting(),
+            'sitemaps' => (new SiteMap())->all()
+        ];
+        return view('seo::pages.dashboard.sitemap', $data);
+    }
+
+    /**
+     *  Import Export and Download Pages
+     */
+    public function tools()
+    {
+        $data = [];
+        return view('seo::pages.dashboard.tools', $data);
+    }
+
+    /**
+     *
+     */
+    public function advanced()
+    {
+        $data = [];
+        return view('seo::pages.dashboard.advanced', $data);
     }
 }

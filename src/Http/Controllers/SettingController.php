@@ -103,4 +103,22 @@ class SettingController extends Controller
         return redirect()->back()->with(config('seo.flash_message'), 'Robot.txt file updated successfully');
 
     }
+
+    /**
+     * Update robot.txt file
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function htaccess(Request $request)
+    {
+        $robotValue = $request->get('htaccess');
+        /**
+         * $robotTxt = new RobotTxt();
+         * $robotTxt->save($robotValue);
+         * return redirect()->back()->with(config('seo.flash_message'), 'Robot.txt file updated successfully');
+         *
+         */
+
+    }
 }

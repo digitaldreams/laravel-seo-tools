@@ -307,7 +307,7 @@ class MetaTagsTableSeeder extends Seeder
             [
                 'name' => 'twitter:description',
                 'property' => '',
-                'status' => 'inactive',
+                'status' => 'active',
                 'group' => 'twitter',
                 'default_value' => '',
                 'visibility' => 'page',
@@ -319,7 +319,7 @@ class MetaTagsTableSeeder extends Seeder
             [
                 'name' => 'twitter:title',
                 'property' => '',
-                'status' => 'inactive',
+                'status' => 'active',
                 'group' => 'twitter',
                 'default_value' => '',
                 'visibility' => 'page',
@@ -331,7 +331,7 @@ class MetaTagsTableSeeder extends Seeder
             [
                 'name' => 'twitter:image',
                 'property' => '',
-                'status' => 'inactive',
+                'status' => 'active',
                 'group' => 'twitter',
                 'default_value' => '',
                 'visibility' => 'page',

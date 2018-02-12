@@ -5,6 +5,10 @@ Route::group([
     'namespace' => '\SEO\Http\Controllers'], function () {
 
     Route::get('dashboard', ['uses' => 'DashboardController@index', 'as' => 'dashboard.index']);
+    Route::get('dashboard/social', ['uses' => 'DashboardController@social', 'as' => 'dashboard.social']);
+    Route::get('dashboard/sitemap', ['uses' => 'DashboardController@sitemap', 'as' => 'dashboard.sitemap']);
+    Route::get('dashboard/tools', ['uses' => 'DashboardController@tools', 'as' => 'dashboard.tools']);
+    Route::get('dashboard/advanced', ['uses' => 'DashboardController@advanced', 'as' => 'dashboard.advanced']);
 
     Route::resource('pages.images', 'ImageController', ['except' => ['show'], 'parameters' => [
         'images' => 'pageImage'
@@ -30,6 +34,7 @@ Route::group([
     Route::resource('meta-tags', 'MetaTagController');
 
     Route::post('settings/robot-txt', ['uses' => 'SettingController@robotTxt', 'as' => 'settings.robot_txt']);
+    Route::post('settings/htaccess', ['uses' => 'SettingController@htaccess', 'as' => 'settings.htaccess']);
 
     Route::resource('settings', 'SettingController', ['only' => ['index', 'store']]);
 
