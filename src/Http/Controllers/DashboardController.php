@@ -19,10 +19,15 @@ class DashboardController
 {
     public function index(Request $request)
     {
+        $metaTags = MetaTag::withGroupBy('', 'global');
+
         $data = [
+            'records' => Setting::paginate(10),
+            'model' => new Setting(),
             'page_total' => Page::count(),
             'meta_tag_total' => MetaTag::count(),
-            'setting_total' => Setting::count()
+            'setting_total' => Setting::count(),
+            'webmasterTags' => isset($metaTags['webmaster_tools']) ? $metaTags['webmaster_tools'] : []
         ];
         return view('seo::pages.dashboard.index', $data);
     }

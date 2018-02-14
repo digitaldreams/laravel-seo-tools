@@ -1,6 +1,6 @@
 @extends(config('seo.layout'))
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{route('seo::dashboard.index')}}"> Dashboard</a></li>
+    <li class="breadcrumb-item"> @include('seo::includes.site-nav-dropdown',['menu'=>'XML SiteMap'])</li>
 @endsection
 @section('tools')
 
@@ -9,13 +9,7 @@
         <form action="{{route('seo::settings.store')}}" method="post">
             {{csrf_field()}}
             <div class="row">
-                <div class="form-group col-sm-6">
-                    <label for="entries_per_sitemap">Entries per sitemap page</label>
-                    <input type="number" class="form-control" id="entries_per_sitemap"
-                           value="{{$model->getValueByKey('entries_per_sitemap')}}"
-                           name="settings[entries_per_sitemap][value]"
-                           placeholder="">
-                </div>
+
                 <div class="form-group col-sm-6">
                     <label for="page_changefreq">How frequently the page is likely to change</label>
                     <input type="text" class="form-control" id="page_changefreq" list="available_change_freq"

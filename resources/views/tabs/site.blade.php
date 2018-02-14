@@ -1,4 +1,4 @@
-<div class="tab-pane fade show active" id="nav-global" role="tabpanel" aria-labelledby="nav-global-tab">
+<div class="tab-pane fade hide" id="nav-site" role="tabpanel" aria-labelledby="nav-site-tab">
     <form action="{{route('seo::settings.store')}}" method="post">
         {{csrf_field()}}
         <div class="form-row">
@@ -9,6 +9,13 @@
                        placeholder="Site title must be below 80 words" max="80"
                        value="{{$model->getValueByKey('site_title')}}">
                 <small id="site-title-help" class="form-text text-muted">Site Title</small>
+            </div>
+            <div class="form-group col-sm-6">
+                <label for="entries_per_sitemap">Entries per sitemap page</label>
+                <input type="number" class="form-control" id="entries_per_sitemap"
+                       value="{{$model->getValueByKey('entries_per_sitemap')}}"
+                       name="settings[entries_per_sitemap][value]"
+                       placeholder="">
             </div>
         </div>
         <div class="form-row">

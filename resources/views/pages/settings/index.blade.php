@@ -14,26 +14,10 @@
            aria-controls="nav-page-meta-tags" aria-selected="false">Global Meta
         </a>
 
-        <a class="nav-item nav-link" id="nav-social-tab" data-toggle="tab" href="#nav-social" role="tab"
-           aria-controls="nav-social" aria-selected="false">Social
-        </a>
-
-        <a class="nav-item nav-link" id="nav-sitemap-tab" data-toggle="tab" href="#nav-sitemap" role="tab"
-           aria-controls="nav-sitemap" aria-selected="false">Sitemap
-        </a>
-
-        <a class="nav-item nav-link" id="nav-robot-txt-tab" data-toggle="tab" href="#nav-robot-txt" role="tab"
-           aria-controls="nav-robot-txt" aria-selected="false">Robot.txt
-        </a>
-
     </nav>
     <div class="tab-content mt-3" id="nav-tabContent">
-        @include('seo::tabs.global')
+        @include('seo::tabs.site')
         @include('seo::tabs.page')
-        @include('seo::tabs.social')
-        @include('seo::tabs.sitemap')
-        @include('seo::tabs.robot')
-
     </div>
 
 @endSection

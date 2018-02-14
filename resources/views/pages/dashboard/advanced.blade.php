@@ -1,6 +1,6 @@
 @extends(config('seo.layout'))
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{route('seo::dashboard.index')}}"> Dashboard</a></li>
+    <li class="breadcrumb-item"> @include('seo::includes.site-nav-dropdown',['menu'=>'Advanced'])</li>
 @endsection
 @section('tools')
 

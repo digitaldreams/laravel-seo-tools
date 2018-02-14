@@ -32,7 +32,6 @@ class SettingController extends Controller
     {
         return view('seo::pages.settings.index', [
                 'records' => Setting::paginate(10),
-                'metaTags' => MetaTag::withGroupBy('', 'global'),
                 'model' => new Setting(),
                 'sitemaps' => (new SiteMap())->all()
             ]

@@ -1,106 +1,48 @@
 @extends(config('seo.layout'))
 @section('breadcrumb')
-    <li class="breadcrumb-item">Dashboard</li>
+    <li class="breadcrumb-item">@include('seo::includes.site-nav-dropdown')</li>
 @endsection
 @section('tools')
 @endsection
 @section('content')
-    <article>
-        <h1>On Page Seo Tool for Laravel</h1>
-        <p class="mb-lg-5 mt-lg-3 lead">
-            By using this tool you can easily about to insert on page seo tags like title, meta tags, scripts, webmaster
-            validation, robot.txt file content. It also generate site map of your site with one click.
-            You can able to import and export meta tags by csv or excel file.
-        </p>
-    </article>
+    <nav class="nav nav-tabs" id="seo-settings-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-dashboard-tab" data-toggle="tab" href="#nav-dashboard" role="tab"
+           aria-controls="nav-global" aria-selected="true">Home
+        </a>
 
-    <div class="row">
-        <div class='col-md-4'>
-            <div class="card">
-                <div class="card-header">
-                    <a href="{{route('seo::settings.index')}}">Settings</a>
-                </div>
-                <div class="card-body">
-                    <p class="card-text lead"><span style="font-size: 60px"><b>{{$setting_total or 0 }}</b></span>
-                        Global settings</p>
-                </div>
-            </div>
-        </div>
-        <div class='col-md-4'>
-            <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <a href="{{route('seo::pages.index')}}">Pages</a>
-                        </div>
-                        <div class="col-sm-4">
-                            <a href="{{route('seo::pages.create')}}"> <i class="fa fa-plus"></i> Create </a>
+        <a class="nav-item nav-link hide" id="nav-site-tab" data-toggle="tab" href="#nav-site" role="tab"
+                       aria-controls="nav-global" aria-selected="true">Site
+        </a>
 
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <p class="card-text lead"><span style="font-size: 60px"><b>{{$page_total or 0 }}</b></span>
-                        Pages that are optimized
-                    </p>
-                </div>
-            </div>
+        <a class="nav-item nav-link" id="nav-webmaster-tab" data-toggle="tab" href="#nav-webmaster"
+           role="tab"
+           aria-controls="nav-page-meta-tags" aria-selected="false">Webmaster Tools
+        </a>
+        <a class="nav-item nav-link" id="nav-personal-info-tab" data-toggle="tab" href="#nav-personal-info"
+           role="tab"
+           aria-controls="nav-page-meta-tags" aria-selected="false">Personal/Company info
+        </a>
+    </nav>
+    <div class="tab-content mt-3" id="nav-tabContent">
+        @include('seo::tabs.dashboard')
+        @include('seo::tabs.site')
+        <div class="tab-pane fade" id="nav-webmaster" role="tabpanel" aria-labelledby="nav-webmaster-tab">
+            @include('seo::forms.meta-tag-global',['tags'=>$webmasterTags])
         </div>
-        <div class='col-md-4'>
-            <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <a href="{{route('seo::meta-tags.index')}}">Meta Tags</a>
-                        </div>
-                        <div class="col-sm-4 text-right">
-                            <a href="{{route('seo::meta-tags.create')}}"> <i class="fa fa-plus"></i> Create </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <p class="card-text lead"><span style="font-size: 60px"><b>{{$meta_tag_total or 0 }}</b></span> Meta
-                        Tags </p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <h3 class="mt-lg-3">Social Media</h3>
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-4">Facebook</div>
-                        <div class="col-sm-8">
-                            <a href="https://developers.facebook.com/tools/debug">Validation</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-4">Twitter</div>
-                        <div class="col-sm-8">
-                            <a href=" https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started">Guide</a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
+        <div class="tab-pane fade" id="nav-personal-info" role="tabpanel" aria-labelledby="nav-personal-info-tab">
+          Your personal Info
         </div>
     </div>
 
-    <div class="card bg-light mt-lg-3">
-        <div class="card-body">
-            <p>Do not have knowledge about On Page SEO. Thats no problem. <a href="https://moz.com/learn/seo">
-                    Here is an awesome tutorial series on moz.com</a>. That teaches you all
-            </p>
-        </div>
-
-    </div>
 @endSection
+
+@section('scripts')
+    <script type="text/javascript">
+        $(document).ready(function (e) {
+            $('#seo-settings-tab a').on('click', function (e) {
+                e.preventDefault()
+                $(this).tab('show')
+            })
+        });
+    </script>
+@endsection
