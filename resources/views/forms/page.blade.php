@@ -3,12 +3,10 @@
     <input type="hidden" name="_method" value="{{$method or 'POST'}}"/>
     <div class="row">
         <div class="form-group col-sm-6">
-            <div class="input-group input-group-sm">
-                <div class="input-group-addon">Title</div>
+                <label for="title">Title</label>
                 <input type="text" class="form-control" name="title" id="title"
                        value="{{old('title',$model->getTitle())}}"
                        placeholder="" maxlength="100">
-            </div>
 
             @if($errors->has('title'))
                 <span class="form-control-feedback">
@@ -16,18 +14,16 @@
             </span>
             @endif
         </div>
-        <div class="form-group col-sm-3">
 
-            <div class="input-group input-group-sm">
-                <div class="input-group-addon">Robot Index</div>
-                <select class="form-control" name="robot_index" id="robot_index">
-                    <option value="index" {{old('robot_index',$model->robot_index)=='index'?'selected':''}}>Index
-                    </option>
-                    <option value="noindex" {{old('robot_index',$model->robot_index)=='noindex'?'selected':''}}>No
-                        Index
-                    </option>
-                </select>
-            </div>
+        <div class="form-group col-sm-3">
+            <label for="robot_index">Robot Index</label>
+            <select class="form-control" name="robot_index" id="robot_index">
+                <option value="index" {{old('robot_index',$model->robot_index)=='index'?'selected':''}}>Index
+                </option>
+                <option value="noindex" {{old('robot_index',$model->robot_index)=='noindex'?'selected':''}}>No
+                    Index
+                </option>
+            </select>
 
             @if($errors->has('robot_index'))
                 <span class="form-control-feedback">
@@ -36,9 +32,7 @@
             @endif
         </div>
         <div class="form-group col-sm-3">
-
-            <div class="input-group input-group-sm">
-                <div class="input-group-addon">Robot Follow</div>
+                <label for="robot_follow">Robot Follow</label>
                 <select class="form-control" name="robot_follow" id="robot_follow">
                     <option value="follow" {{old('robot_follow',$model->robot_follow)=='follow'?'selected':''}}>Follow
                     </option>
@@ -46,7 +40,6 @@
                         Follow
                     </option>
                 </select>
-            </div>
 
             @if($errors->has('robot_follow'))
                 <span class="form-control-feedback">
@@ -57,12 +50,9 @@
 
     </div>
     <div class="form-group">
-        <div class="input-group input-group-sm">
-            <div class="input-group-addon">{{url('/')}}/</div>
+            <label for="canonical_url">Canonical Url</label>
             <input type="text" class="form-control" name="canonical_url" id="canonical_url"
                    value="{{old('canonical_url',$model->canonical_url)}}" placeholder="" maxlength="255">
-            <div class="input-group-addon">Canonical Url</div>
-        </div>
         @if($errors->has('canonical_url'))
             <span class="form-control-feedback">
         <strong>{{ $errors->first('canonical_url') }}</strong>
@@ -70,12 +60,9 @@
         @endif
     </div>
     <div class="form-group">
-        <div class="input-group input-group-sm">
-            <div class="input-group-addon">{{url('/')}}/</div>
+            <label for="path">Page Url</label>
             <input type="text" class="form-control" name="path" id="path" value="{{old('path',$model->path)}}"
                    placeholder="Relative path to your page" maxlength="255" required="required">
-            <div class="input-group-addon">Page Url</div>
-        </div>
         @if($errors->has('path'))
             <span class="form-control-feedback">
         <strong>{{ $errors->first('path') }}</strong>
@@ -84,12 +71,10 @@
     </div>
 
     <div class="form-group">
-        <div class="input-group input-group-sm">
-            <div class="input-group-addon">Description</div>
-            <input type="text" class="form-control" name="description" id="description"
-                   value="{{old('title',$model->getDescription())}}"
-                   placeholder="Meta description" maxlength="170">
-        </div>
+            <label for="description">Description</label>
+            <textarea class="form-control" name="description" id="description" placeholder="Meta description"
+                      maxlength="170">{{old('title',$model->getDescription())}}</textarea>
+
 
         @if($errors->has('description'))
             <span class="form-control-feedback">

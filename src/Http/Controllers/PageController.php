@@ -164,9 +164,25 @@ class PageController extends Controller
      */
     public function meta(Request $request, Page $page)
     {
+        $og = [];
+        $twitter = [];
+        $metaTags = $page->metaTags();
+
+        if (isset($metaTags['og'])) {
+            $og = $metaTags['og'];
+            unset($metaTags['og']);
+        }
+
+        if (isset($metaTags['twitter'])) {
+            $twitter = $metaTags['twitter'];
+            unset($metaTags['twitter']);
+        }
+
         return view('seo::pages.pages.meta_tags', [
             'record' => $page,
-            'metaTags' => $page->metaTags()
+            'og' => $og,
+            'twitter' => $twitter,
+            'metaTags' => $metaTags,
         ]);
     }
 

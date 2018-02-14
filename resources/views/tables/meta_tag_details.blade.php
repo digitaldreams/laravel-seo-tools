@@ -7,8 +7,6 @@
         <th>Property</th>
         <th>Status</th>
         <th>Group</th>
-        <th>Input Type</th>
-        <th>Input Placeholder</th>
         <th>Visibility</th>
         <th>&nbsp;</th>
     </tr>
@@ -22,8 +20,6 @@
             <td> {{$record->property }} </td>
             <td> {{$record->status }} </td>
             <td> {{$record->group }} </td>
-            <td> {{$record->input_type }} </td>
-            <td> {{$record->input_placeholder }} </td>
             <td> {{$record->visibility }} </td>
             <td>
                 <a href="{{route('seo::meta-tags.edit',$record->id)}}">
