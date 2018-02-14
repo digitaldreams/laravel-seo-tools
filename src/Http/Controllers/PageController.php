@@ -41,7 +41,7 @@ class PageController extends Controller
      */
     public function index(Index $request)
     {
-        return view('seo::pages.pages.index', ['records' => Page::withCount(['pageImages'])->paginate(5)]);
+        return view('seo::pages.pages.index', ['records' => Page::withCount(['pageImages'])->paginate(6)]);
     }
 
     /**

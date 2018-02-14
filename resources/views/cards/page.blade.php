@@ -1,53 +1,25 @@
-<div class="card card-default">
+<div class="card card-default mb-4">
     <div class="card-header">
-        <div class="row">
-            <div class="col-sm-9">
-                {{$record->title}}
-            </div>
-            <div class="col-sm-3">
-                <div class="btn-group" style="float: left">
-                    <a href="{{'seo_pages.edit',$record->id}}">
-                        <span class="fa fa-pencil"></span>
-                    </a>
-                    <a href="{{'seo_pages.show'}}">
-                        <span class="fa fa-eye"></span>
-                    </a>
-                    <form onsubmit="return confirm('Are you sure you want to delete?')" action="{{$route}}"
-                          method="post" style="display: inline">
-                        {{csrf_field()}}
-                        {{method_field('DELETE')}}
-                        <button type="submit" class="btn btn-default cursor-pointer  btn-sm"><i
-                                    class="text-danger fa fa-remove"></i></button>
-                    </form>
-                </div>
-            </div>
+        <a href="{{route('seo::pages.show',$record->id)}}">  #{{$record->id}} {{$record->getTitle()}}</a>
+    </div>
+    <div class="card-body">
+        <div class="card-text">
+            {{$record->getDescription()}}
         </div>
     </div>
-    <div class="card-block">
-        <table class="table table-bordered table-striped">
-            <tbody>
-            <tr>
-                <th>Path</th>
-                <td>{{$record->path}}</td>
-            </tr>
-            <tr>
-                <th>Route Name</th>
-                <td>{{$record->route_name}}</td>
-            </tr>
-            <tr>
-                <th>Robot Index</th>
-                <td>{{$record->robot_index}}</td>
-            </tr>
-            <tr>
-                <th>Robot Follow</th>
-                <td>{{$record->robot_follow}}</td>
-            </tr>
-            <tr>
-                <th>Canonical Url</th>
-                <td>{{$record->canonical_url}}</td>
-            </tr>
+    <div class="card-footer">
+        <label class="badge badge-secondary">{{$record->robot_index}}</label>
+        <label class="badge badge-secondary">{{$record->robot_follow}}</label>
+        <label class="badge badge-secondary">{{$record->page_images_count}} &nbsp;&nbsp;  <i class="fa fa-image"></i></label>
 
-            </tbody>
-        </table>
+        <a target="_blank" href="{{url($record->getFullUrl())}}">Visit Page</a>
+
+        <div class="" style="float: right">
+            <a href="{{route('seo::pages.meta',$record->id)}}">
+                <span class="fa fa-pencil"></span>
+            </a>
+            &nbsp;&nbsp;
+            @include('seo::forms.destroy',['route'=>route('seo::pages.destroy',$record->id)])
+        </div>
     </div>
 </div>

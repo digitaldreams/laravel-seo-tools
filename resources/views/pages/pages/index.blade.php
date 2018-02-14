@@ -17,7 +17,7 @@
         <i class="fa fa-download"></i> Download CSV
     </a>
     <a href="{{route('seo::pages.zip')}}" class="btn btn-outline-primary btn-sm">
-       <i class="fa fa-file-zip-o"></i> Download Zip
+        <i class="fa fa-file-zip-o"></i> Download Zip
     </a>
     @if(config('seo.cache.enable'))
         <form action="{{route('seo::pages.cache')}}" method="post" style="display: inline">
@@ -28,6 +28,13 @@
 
 @endsection
 @section('content')
-    @include('seo::tables.page')
+    <div class="row">
+        @foreach($records as $record)
+            <div class="col-sm-6">
+                @include('seo::cards.page')
+            </div>
+        @endforeach
+    </div>
+    {!! $records->render() !!}
     @include('seo::modals.page_upload')
 @endSection

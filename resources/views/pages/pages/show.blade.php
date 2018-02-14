@@ -23,7 +23,7 @@
 @section('content')
     <div class="row">
         <div class="col-sm-12">
-            @include('seo::forms.page_meta_tag')
+            <h3>Page under construction. Here Page statistics/health/Images/Json+LD will be shown</h3>
         </div>
     </div>
 @endSection
