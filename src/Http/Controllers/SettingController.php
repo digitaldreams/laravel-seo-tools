@@ -11,6 +11,7 @@ use SEO\Http\Requests\Settings\Store;
 use SEO\Http\Requests\Settings\Update;
 use SEO\Models\MetaTag;
 use SEO\Models\Setting;
+use SEO\Services\HtaccessFile;
 use SEO\Services\RobotTxt;
 use SEO\Services\SiteMap;
 
@@ -112,13 +113,10 @@ class SettingController extends Controller
      */
     public function htaccess(Request $request)
     {
-        $robotValue = $request->get('htaccess');
-        /**
-         * $robotTxt = new RobotTxt();
-         * $robotTxt->save($robotValue);
-         * return redirect()->back()->with(config('seo.flash_message'), 'Robot.txt file updated successfully');
-         *
-         */
+        $htaccessValue = $request->get('htaccess');
 
+        $htaccess = new HtaccessFile();
+        $htaccess->save($htaccessValue);
+        return redirect()->back()->with(config('seo.flash_message'), '.htaccess file updated successfully');
     }
 }

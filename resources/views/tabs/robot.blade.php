@@ -2,7 +2,7 @@
     <form action="{{route('seo::settings.robot_txt')}}" method="post">
         {{csrf_field()}}
         <div class="form-group">
-            <textarea name="robot_txt" class="form-control"
+            <textarea name="robot_txt"  class="form-control" rows="15"
                       placeholder="Content of your robot.txt"><?php $robotTxt = new \SEO\Services\RobotTxt();echo $robotTxt->get(); ?></textarea>
             <small id="site-title-help" class="form-text text-muted">Please write content here carefully. It will read
                 by bot.

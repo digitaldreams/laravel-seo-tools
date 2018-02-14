@@ -21,7 +21,7 @@ class RobotTxt
      */
     public function __construct()
     {
-        $this->path = config('seo.robot_txt', public_path('robot.txt'));
+        $this->path = config('seo.robot_txt', public_path('robots.txt'));
     }
 
     /**

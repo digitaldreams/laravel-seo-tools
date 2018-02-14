@@ -23,10 +23,30 @@
     <div class="tab-content mt-3" id="nav-tabContent">
         @include('seo::tabs.social')
         <div class="tab-pane fade" id="nav-facebook" role="tabpanel" aria-labelledby="nav-facebook-tab">
-
+            <form action="{{route('seo::meta-tags.global')}}" method="post" enctype="multipart/form-data">
+                {{csrf_field()}}
+                    <div class="row">
+                        @foreach($og as $tag)
+                            @include('seo::forms.tag')
+                        @endforeach
+                    </div>
+                <div class="form-group text-right">
+                    <input type="submit" value="Save" class="btn btn-primary">
+                </div>
+            </form>
         </div>
         <div class="tab-pane fade" id="nav-twitter" role="tabpanel" aria-labelledby="nav-twitter-tab">
-            Twitter Settings
+            <form action="{{route('seo::meta-tags.global')}}" method="post" enctype="multipart/form-data">
+                {{csrf_field()}}
+                <div class="row">
+                    @foreach($twitter as $tag)
+                        @include('seo::forms.tag')
+                    @endforeach
+                </div>
+                <div class="form-group text-right">
+                    <input type="submit" value="Save" class="btn btn-primary">
+                </div>
+            </form>
         </div>
     </div>
 @endSection

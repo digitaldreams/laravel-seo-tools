@@ -23,7 +23,8 @@
 
         </div>
         <div class="tab-pane fade" id="nav-htaccess" role="tabpanel" aria-labelledby="nav-htaccess-tab">
-            Twitter Settings
+            @include('seo::tabs.htaccess')
+
         </div>
     </div>
 @endSection
