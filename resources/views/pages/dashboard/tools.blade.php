@@ -10,7 +10,7 @@
 @endsection
 @section('content')
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-3 col-xs-6">
             <div class="card ">
                 <div class="card-body">
                     <div class="card-title">
@@ -27,7 +27,7 @@
             </div>
 
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3 col-xs-6">
             <div class="card">
                 <div class="card-body">
                     <div class="card-title">
@@ -43,15 +43,30 @@
 
 
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3 col-xs-6">
             <div class="card">
                 <div class="card-body">
                     <div class="card-title">
-                        Download page meta tags as html file
+                        Download page Html
                     </div>
                     <div class="card-text">
                         <a href="{{route('seo::pages.zip')}}" class="btn btn-outline-primary btn-sm">
                             <i class="fa fa-file-zip-o"></i> Download Zip
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-3 col-xs-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        Page Bulk Edit
+                    </div>
+                    <div class="card-text">
+                        <a href="{{route('seo::pages.bulkEdit')}}" class="btn btn-outline-primary btn-sm">
+                            <i class="fa fa-pencil-square-o"></i> Bulk Edit
                         </a>
                     </div>
                 </div>

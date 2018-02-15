@@ -8,6 +8,7 @@ use DataConverter\FileManager;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use SEO\Contracts\LinkProvider;
+use SEO\Http\Requests\Pages\BulkUpdate;
 use SEO\Http\Requests\Pages\Create;
 use SEO\Http\Requests\Pages\Destroy;
 use SEO\Http\Requests\Pages\Download;
@@ -109,6 +110,14 @@ class PageController extends Controller
     }
 
     /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function bulkEdit()
+    {
+        return view('seo::pages.pages.bulk-edit', ['pages' => Page::paginate(5)]);
+    }
+
+    /**
      * Update a existing resource in storage.
      *
      * @param  Update $request
@@ -126,6 +135,31 @@ class PageController extends Controller
             session()->flash(config('seo.flash_error'), 'Something is wrong while updating Page');
         }
         return redirect()->back();
+    }
+
+    /**
+     * @param BulkUpdate $update
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function bulkUpdate(BulkUpdate $update)
+    {
+        $mit = new \MultipleIterator(\MultipleIterator::MIT_KEYS_ASSOC);
+        $mit->attachIterator(new \ArrayIterator($update->get('page_id')), "id");
+        $mit->attachIterator(new \ArrayIterator($update->get('title')), "title");
+        $mit->attachIterator(new \ArrayIterator($update->get('description')), "description");
+        $mit->attachIterator(new \ArrayIterator($update->get('robot_index')), "robot_index");
+
+        foreach ($mit as $page) {
+            $pageModel = Page::find($page['id']);
+
+            if ($pageModel) {
+                $pageModel->title = $page['title'];
+                $pageModel->description = $page['description'];
+                $pageModel->robot_index = !empty($page['robot_index'])?$page['robot_index']:'noindex';
+                $pageModel->save();
+            }
+        }
+        return redirect()->back()->with(config('seo.flash_message'), 'Pages saved successfully');
     }
 
     /**

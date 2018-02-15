@@ -14,7 +14,11 @@ Route::group([
         'images' => 'pageImage'
     ]]);
 
+    Route::get('pages/bulk-edit', ['uses' => 'PageController@bulkEdit', 'as' => 'pages.bulkEdit']);
+    Route::post('pages/bulk-update', ['uses' => 'PageController@bulkUpdate', 'as' => 'pages.bulkUpdate']);
+
     Route::post('pages/cache', ['uses' => 'PageController@cache', 'as' => 'pages.cache']);
+
     Route::post('pages/upload', ['uses' => 'PageController@upload', 'as' => 'pages.upload']);
 
     Route::get('pages/download-zip', ['uses' => 'PageController@zip', 'as' => 'pages.zip']);

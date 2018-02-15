@@ -25,6 +25,9 @@
             <input type="submit" value="Refresh Cache" class="btn btn-outline-primary btn-sm">
         </form>
     @endif
+    <a href="{{route('seo::pages.bulkEdit')}}" class="btn btn-outline-primary btn-sm">
+        <i class="fa fa-pencil-square-o"></i> Bulk Edit
+    </a>
 
 @endsection
 @section('content')
