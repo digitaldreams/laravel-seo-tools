@@ -145,6 +145,30 @@ class SettingsTableSeeder extends Seeder
                 'status' => 'active',
                 'group' => 'ownership'
             ],
+            [
+                'label' => 'Logo',
+                'description' => '  URL of a logo that is representative of the organization.',
+                'key' => 'ownership_logo',
+                'value' => '',
+                'status' => 'active',
+                'group' => 'ownership'
+            ],
+            [
+                'label' => 'Logo',
+                'description' => '  URL of a logo that is representative of the organization.',
+                'key' => 'ownership_contact_point_telephone',
+                'value' => '',
+                'status' => 'active',
+                'group' => 'ownership'
+            ],
+            [
+                'label' => 'Contact Type',
+                'description' => '',
+                'key' => 'ownership_contact_point_contact_type',
+                'value' => '',
+                'status' => 'active',
+                'group' => 'ownership'
+            ],
         ]);
     }
 }
