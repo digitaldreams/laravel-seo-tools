@@ -1,6 +1,6 @@
-<div class="card card-default mb-4">
+<div class="card  mb-4">
     <div class="card-header">
-        <a href="{{route('seo::pages.show',$record->id)}}">  #{{$record->id}} {{$record->getTitle()}}</a>
+        <a class="" href="{{route('seo::pages.show',$record->id)}}">  #{{$record->id}} {{$record->getTitle()}}</a>
     </div>
     <div class="card-body">
         <div class="card-text">

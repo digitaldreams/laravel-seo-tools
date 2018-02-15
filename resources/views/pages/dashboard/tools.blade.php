@@ -11,7 +11,7 @@
 @section('content')
     <div class="row">
         <div class="col-sm-4">
-            <div class="card">
+            <div class="card ">
                 <div class="card-body">
                     <div class="card-title">
                         Upload Your CSV file

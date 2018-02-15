@@ -36,6 +36,7 @@ Route::group([
     Route::post('settings/robot-txt', ['uses' => 'SettingController@robotTxt', 'as' => 'settings.robot_txt']);
     Route::post('settings/htaccess', ['uses' => 'SettingController@htaccess', 'as' => 'settings.htaccess']);
 
+    Route::resource('settings', 'SettingController', ['only' => ['index', 'store']]);
 
     Route::post('sitemap/update', ['uses' => 'SiteMapController@update', 'as' => 'sitemap.update']);
     Route::post('sitemap/generate', ['uses' => 'SiteMapController@store', 'as' => 'sitemap.generate']);

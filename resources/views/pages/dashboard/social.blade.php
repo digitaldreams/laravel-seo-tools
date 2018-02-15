@@ -12,11 +12,11 @@
         </a>
 
         <a class="nav-item nav-link" id="nav-facebook-tab" data-toggle="tab" href="#nav-facebook" role="tab"
-           aria-controls="nav-facebook" aria-selected="false"> Facebook
+           aria-controls="nav-facebook" aria-selected="false"> <i class="fa fa-facebook-official"></i> Facebook
         </a>
 
         <a class="nav-item nav-link" id="nav-twitter-tab" data-toggle="tab" href="#nav-twitter" role="tab"
-           aria-controls="nav-twitter" aria-selected="false"> Twitter
+           aria-controls="nav-twitter" aria-selected="false"> <i class="fa fa-twitter"></i> Twitter
         </a>
 
     </nav>

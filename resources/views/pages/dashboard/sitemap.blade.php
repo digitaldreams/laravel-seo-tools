@@ -9,7 +9,7 @@
     <form action="{{route('seo::sitemap.update')}}" method="post">
         {{csrf_field()}}
 
-        <table class="table table-secondary table-bordered table-strip">
+        <table class="table table-secondary table-bordered table-striped">
             <thead>
             <tr>
                 <th>ID</th>
