@@ -15,7 +15,7 @@ class AddXmlColumnsToSeoPagesTable extends Migration
     {
         Schema::table('seo_pages', function (Blueprint $table) {
             $table->string('change_frequency', 20)->default('monthly');
-            $table->float('priority', 2)->default(0.5);
+            $table->double('priority', 4)->default(0.5);
         });
     }
 

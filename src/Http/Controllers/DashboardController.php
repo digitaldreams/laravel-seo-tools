@@ -53,9 +53,7 @@ class DashboardController
     public function sitemap()
     {
         $data = [
-            'records' => Setting::paginate(10),
-            'metaTags' => MetaTag::withGroupBy('', 'global'),
-            'model' => new Setting(),
+            'pages' => Page::where('robot_index', 'index')->paginate(15),
             'sitemaps' => (new SiteMap())->all()
         ];
         return view('seo::pages.dashboard.sitemap', $data);

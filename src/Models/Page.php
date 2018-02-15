@@ -89,6 +89,11 @@ class Page extends Model
         return url(parse_url($this->path, PHP_URL_PATH));
     }
 
+    public function getShortPath()
+    {
+        return parse_url($this->path, PHP_URL_PATH);
+    }
+
     public function getLastModifiedDate()
     {
         return $this->updated_at->format('c');

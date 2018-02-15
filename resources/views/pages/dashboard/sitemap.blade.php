@@ -6,68 +6,89 @@
 
 @endsection
 @section('content')
-        <form action="{{route('seo::settings.store')}}" method="post">
-            {{csrf_field()}}
-            <div class="row">
+    <form action="{{route('seo::sitemap.update')}}" method="post">
+        {{csrf_field()}}
 
-                <div class="form-group col-sm-6">
-                    <label for="page_changefreq">How frequently the page is likely to change</label>
-                    <input type="text" class="form-control" id="page_changefreq" list="available_change_freq"
-                           name="settings[page_changefreq][value]"
-                           value="{{$model->getValueByKey('page_changefreq')}}"
-                           placeholder="">
-                    <datalist id="available_change_freq">
-                        <option value="always"/>
-                        <option value="hourly"/>
-                        <option value="daily"/>
-                        <option value="weekly"/>
-                        <option value="monthly"/>
-                        <option value="yearly"/>
-                        <option value="yearly"/>
-                        <option value="never"/>
+        <table class="table table-secondary table-bordered table-strip">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Path</th>
+                <th data-toggle="tooltip" title="How frequently the page is likely to change">Change Frequency</th>
+                <th data-toggle="tooltip" title="      The priority of this URL relative to other URLs on your site. Valid values range from 0.0 to 1.0.
+                    This value does not affect how your pages are compared to pages on other sites—it only lets the
+                    search engines know which pages you deem most important for the crawlers.">Priority
+                </th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($pages as $page)
+                <tr>
+                    <input type="hidden" value="{{$page->id}}" name="page_id[]"/>
+                    <td>{{$page->id}}</td>
+                    <td><a href="{{route('seo::pages.meta',$page->id)}}"> {{$page->getShortPath()}}</a></td>
+                    <td>
+                        <select class="form-control" id="change_frequency_{{$page->id}}" name="change_frequency[]">
+                            <option value="always" {{$page->getChangeFrequency()=='always'?'selected':''}}>Always
+                            </option>
+                            <option value="hourly" {{$page->getChangeFrequency()=='hourly'?'selected':''}}>Hourly
+                            </option>
+                            <option value="daily" {{$page->getChangeFrequency()=='daily'?'selected':''}}>Daily</option>
+                            <option value="weekly" {{$page->getChangeFrequency()=='weekly'?'selected':''}}>Weekly
+                            </option>
+                            <option value="monthly" {{$page->getChangeFrequency()=='monthly'?'selected':''}}>Monthly
+                            </option>
+                            <option value="yearly" {{$page->getChangeFrequency()=='yearly'?'selected':''}}>Yearly
+                            </option>
+                            <option value="never" {{$page->getChangeFrequency()=='never'?'selected':''}}>Never</option>
+                        </select>
+                    </td>
+                    <td>
 
-                    </datalist>
-                </div>
-                <div class="form-group col-sm-6">
-                    <label for="page_priority">Priority of this URL</label>
-                    <input type="number" class="form-control" id="page_priority"
-                           name="settings[page_priority][value]"
-                           value="{{$model->getValueByKey('page_priority')}}"
-                           placeholder="" min="0" max="1.0" step="0.1">
-                    <div class="form-text text-muted">
-                        The priority of this URL relative to other URLs on your site. Valid values range from 0.0 to 1.0.
-                        This value does not affect how your pages are compared to pages on other sites—it only lets the
-                        search engines know which pages you deem most important for the crawlers.
+                        <input type="number" class="form-control" id="page_priority"
+                               name="priority[]"
+                               value="{{$page->getPriority()}}"
+                               placeholder="" min="0" max="1.0" step="0.1">
+                    </td>
+                    <td>
+                        <a href="{{route('seo::pages.meta',$page->id)}}"><i class="fa fa-pencil"></i></a>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+            <tfoot>
+            <tr>
+                <td></td>
+                <td colspan="2">{!! $pages->render() !!}</td>
+                <td colspan="2" class="text-right">
+                    <input type="submit" class="btn btn-primary btn-block" value="Save">
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
 
 
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group text-right">
-                <input type="submit" value="Save" class="btn btn-primary">
-            </div>
-        </form>
-
-        <div class="row mb-2">
-            <div class="col-sm-12">
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-heading list-group-item-primary">
-                        Your SiteMaps &nbsp;&nbsp; &nbsp;&nbsp;
-                        <form action="{{route('seo::sitemap.generate')}}" method="post" style="display: inline">
-                            {{csrf_field()}}
-                            <input type="submit"  value="Generate" class="btn btn-primary btn-sm">
-                        </form>
-                    </li>
-                    @foreach($sitemaps as $sitemap)
-                        <li class="list-group-item"><a target="_blank" href="{{$sitemap}}">{{$sitemap}}</a></li>
-                    @endforeach
-                </ul>
-            </div>
+    <div class="row mb-2">
+        <div class="col-sm-12">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-heading list-group-item-primary">
+                    Your SiteMaps &nbsp;&nbsp; &nbsp;&nbsp;
+                    <form action="{{route('seo::sitemap.generate')}}" method="post" style="display: inline">
+                        {{csrf_field()}}
+                        <input type="submit" value="Generate" class="btn btn-primary btn-sm">
+                    </form>
+                </li>
+                @foreach($sitemaps as $sitemap)
+                    <li class="list-group-item"><a target="_blank" href="{{$sitemap}}">{{$sitemap}}</a></li>
+                @endforeach
+            </ul>
         </div>
-        <div class="help-block">
-            <a href="https://www.google.com/webmasters/tools/sitemap-list?pli=1">
-                Submit your Sitemap
-            </a>
-        </div>
+    </div>
+    <div class="help-block">
+        <a href="https://www.google.com/webmasters/tools/sitemap-list?pli=1">
+            Submit your Sitemap
+        </a>
+    </div>
 @endSection
