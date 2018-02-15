@@ -11,16 +11,6 @@
                     <input type="url" class="form-control" name="settings[facebook_page_url][value]"
                            value="{{$model->getValueByKey('facebook_page_url')}}"
                            id="facebook_page_url" placeholder="Facebook profile url">
-                    <div class="input-group-addon">
-                        <select class="" name="settings[facebook_page_url][status]">
-                            <option value="active" {{$model->getValueByKey('facebook_page_url','status')=='active'?'selected':''}}>
-                                Active
-                            </option>
-                            <option value="inactive" {{$model->getValueByKey('facebook_page_url','status')=='inactive'?'selected':''}}>
-                                Inactive
-                            </option>
-                        </select>
-                    </div>
                 </div>
 
             </div>
@@ -35,16 +25,6 @@
                            name="settings[twitter_username][value]"
                            value="{{$model->getValueByKey('twitter_username')}}"
                            id="twitter_username" placeholder="Twitter username">
-                    <div class="input-group-addon">
-                        <select class="" name="settings[twitter_username][status]">
-                            <option value="active" {{$model->getValueByKey('twitter_username','status')=='active'?'selected':''}}>
-                                Active
-                            </option>
-                            <option value="inactive" {{$model->getValueByKey('twitter_username','status')=='inactive'?'selected':''}}>
-                                Inactive
-                            </option>
-                        </select>
-                    </div>
                 </div>
 
             </div>
@@ -58,17 +38,6 @@
                     <input type="url" class="form-control" value="{{$model->getValueByKey('instagram_url')}}"
                            id="instagram_url" name="settings[instagram_url][value]"
                            placeholder="Instagram profile url">
-
-                    <div class="input-group-addon">
-                        <select class="" name="settings[instagram_url][status]">
-                            <option value="active" {{$model->getValueByKey('instagram_url','status')=='active'?'selected':''}}>
-                                Active
-                            </option>
-                            <option value="inactive" {{$model->getValueByKey('instagram_url','status')=='inactive'?'selected':''}}>
-                                Inactive
-                            </option>
-                        </select>
-                    </div>
                 </div>
             </div>
         </div>
@@ -82,16 +51,6 @@
                            id="google_plus_url" name="settings[google_plus_url][value]"
                            placeholder="Google Plus profile url">
 
-                    <div class="input-group-addon">
-                        <select class="" name="settings[google_plus_url][status]">
-                            <option value="active" {{$model->getValueByKey('google_plus_url','status')=='active'?'selected':''}}>
-                                Active
-                            </option>
-                            <option value="inactive" {{$model->getValueByKey('google_plus_url','status')=='inactive'?'selected':''}}>
-                                Inactive
-                            </option>
-                        </select>
-                    </div>
                 </div>
             </div>
         </div>
@@ -105,16 +64,6 @@
                            id="linkedin_url" name="settings[linkedin_url][value]"
                            placeholder="LinkedIn Profile Url">
 
-                    <div class="input-group-addon">
-                        <select class="" name="settings[linkedin_url][status]">
-                            <option value="active" {{$model->getValueByKey('linkedin_url','status')=='active'?'selected':''}}>
-                                Active
-                            </option>
-                            <option value="inactive" {{$model->getValueByKey('linkedin_url','status')=='inactive'?'selected':''}}>
-                                Inactive
-                            </option>
-                        </select>
-                    </div>
                 </div>
             </div>
         </div>

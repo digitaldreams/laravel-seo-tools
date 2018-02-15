@@ -40,8 +40,8 @@ class DashboardController
         $metaTags = MetaTag::withGroupBy('', 'global');
         $data = [
             'records' => Setting::paginate(10),
-            'og' => $metaTags['og'],
-            'twitter' => $metaTags['twitter'],
+            'og' => isset($metaTags['og']) ? $metaTags['og'] : [],
+            'twitter' => isset($metaTags['twitter']) ? $metaTags['twitter'] : [],
             'model' => new Setting(),
         ];
         return view('seo::pages.dashboard.social', $data);

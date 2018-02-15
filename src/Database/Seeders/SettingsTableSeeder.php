@@ -113,7 +113,38 @@ class SettingsTableSeeder extends Seeder
                 'status' => 'inactive',
                 'group' => 'site'
             ],
-
+            [
+                'label' => 'Organization or person',
+                'description' => 'Either Person or Organization',
+                'key' => 'ownership_type',
+                'value' => '',
+                'status' => 'active',
+                'group' => 'ownership'
+            ],
+            [
+                'label' => 'Web Site',
+                'description' => '',
+                'key' => 'ownership_url',
+                'value' => '',
+                'status' => 'active',
+                'group' => 'ownership'
+            ],
+            [
+                'label' => 'Email Address',
+                'description' => '',
+                'key' => 'ownership_email',
+                'value' => '',
+                'status' => 'active',
+                'group' => 'ownership'
+            ],
+            [
+                'label' => 'Address',
+                'description' => 'Physical address of Company',
+                'key' => 'ownership_address',
+                'value' => '',
+                'status' => 'active',
+                'group' => 'ownership'
+            ],
         ]);
     }
 }

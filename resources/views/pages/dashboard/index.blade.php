@@ -11,7 +11,7 @@
         </a>
 
         <a class="nav-item nav-link hide" id="nav-site-tab" data-toggle="tab" href="#nav-site" role="tab"
-                       aria-controls="nav-global" aria-selected="true">Site
+           aria-controls="nav-global" aria-selected="true">Site
         </a>
 
         <a class="nav-item nav-link" id="nav-webmaster-tab" data-toggle="tab" href="#nav-webmaster"
@@ -30,7 +30,8 @@
             @include('seo::forms.meta-tag-global',['tags'=>$webmasterTags])
         </div>
         <div class="tab-pane fade" id="nav-personal-info" role="tabpanel" aria-labelledby="nav-personal-info-tab">
-          Your personal Info
+
+            @include('seo::tabs.ownership')
         </div>
     </div>
 
