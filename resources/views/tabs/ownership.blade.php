@@ -6,7 +6,7 @@
     <div class="form-group row">
         <label for="settings_ownership_type" class="col-sm-3">Organization / person</label>
         <select class="form-control col-sm-9" name="settings[ownership_type][value]"
-                id="settings_ownership_type">
+                id="settings_ownership_type" required>
             <option value="">Choose</option>
             <option value="Person" {{$model->getValueByKey('ownership_type')=='Person'?'selected':''}}>Person</option>
             <option value="Organization" {{$model->getValueByKey('ownership_type')=='Organization'?'selected':''}}>
@@ -20,7 +20,14 @@
             Site</label>
         <input type="url" name="settings[ownership_url][value]" class="form-control col-sm-9"
                id="settings_ownership_url" value="{{$model->getValueByKey('ownership_url')}}"
-               placeholder="e.g. www.your-site.com">
+               placeholder="e.g. www.your-site.com" required>
+    </div>
+
+    <div class="form-group row">
+        <label for="settings_ownership_name" class="col-sm-3"><i class="fa fa-user-circle"></i> Name </label>
+        <input type="text" name="settings[ownership_name][value]" class="form-control col-sm-9"
+               id="settings_ownership_name" value="{{$model->getValueByKey('ownership_name')}}"
+               placeholder="e.g. Tuhin Bepari" required>
     </div>
 
     <div class="form-group row">
@@ -43,16 +50,7 @@
                id="settings_ownership_logo" value="{{$model->getValueByKey('ownership_logo')}}"
                placeholder="e.g. https://www.your-site.com/logo.png">
         <p class="text-muted text-center">
-            URL of a logo that is representative of the organization.
-
-        <ul>
-            <li> Additional image guidelines:</li>
-            <li> The image must be 112x112px, at minimum.</li>
-            <li> The image URL must be crawlable and indexable.</li>
-            <li> The image must be in .jpg, .png, or. gif format.</li>
-        </ul>
-
-
+            URL of a logo that is representative of the organization. The image must be 112x112px, at minimum and in .jpg, .png, or. gif format
         </p>
     </div>
 

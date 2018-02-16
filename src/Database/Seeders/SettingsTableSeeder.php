@@ -122,6 +122,14 @@ class SettingsTableSeeder extends Seeder
                 'group' => 'ownership'
             ],
             [
+                'label' => 'Name',
+                'description' => 'Either Person or Organization name',
+                'key' => 'ownership_name',
+                'value' => '',
+                'status' => 'active',
+                'group' => 'ownership'
+            ],
+            [
                 'label' => 'Web Site',
                 'description' => '',
                 'key' => 'ownership_url',
@@ -165,7 +173,7 @@ class SettingsTableSeeder extends Seeder
                 'label' => 'Contact Type',
                 'description' => '',
                 'key' => 'ownership_contact_point_contact_type',
-                'value' => '',
+                'value' => 'customer service',
                 'status' => 'active',
                 'group' => 'ownership'
             ],

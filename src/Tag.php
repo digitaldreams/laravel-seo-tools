@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use SEO\Models\MetaTag;
 use SEO\Models\Page;
 use SEO\Models\Setting;
+use SEO\Services\SchemaBuilder;
 
 /**
  * Class Tag
@@ -130,6 +131,18 @@ class Tag
         return $this;
     }
 
+    public function schemaJsonLd()
+    {
+        $script = '';
+        $json = (new SchemaBuilder())->ownership();
+        if (!empty($json)) {
+            $script = '<script type="application/ld+json">' . PHP_EOL;
+            $script .= $json . PHP_EOL;
+            $script .= '</script>';
+        }
+        return $script;
+    }
+
 
     /**
      * Show tags array into html string
@@ -137,7 +150,9 @@ class Tag
      */
     public function asHtml()
     {
-        return implode("\n", $this->tags);
+        $metaHtml = implode("\n", $this->tags);
+        $metaHtml .= PHP_EOL . $this->schemaJsonLd() . PHP_EOL;
+        return $metaHtml;
     }
 
     /**
@@ -149,7 +164,6 @@ class Tag
         $this->makeMeta();
         $this->robots()->webmaster()->pageLevel()->og()->twitter()->otherTags();
         return $this;
-
     }
 
     /**
