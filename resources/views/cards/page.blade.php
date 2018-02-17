@@ -19,6 +19,11 @@
            href="https://developers.facebook.com/tools/debug/sharing/?q={{urlencode($record->getFullUrl())}}">
             <i class="fa fa-facebook-official"></i> Preview
         </a>
+        &nbsp;
+        <a target="_blank"
+           href="https://developers.google.com/speed/pagespeed/insights/?url={{urlencode($record->getFullUrl())}}">
+            <i class="fa fa-google"></i> Page Speed
+        </a>
 
         <div class="" style="float: right">
             <a href="{{route('seo::pages.meta',$record->id)}}">

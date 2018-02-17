@@ -17,6 +17,11 @@
     <a href="https://cards-dev.twitter.com/validator" target="_blank">
         <i class="fa fa-twitter"></i> Twiter Card Validate
     </a>
+    &nbsp;
+    <a target="_blank"
+       href="https://developers.google.com/speed/pagespeed/insights/?url={{urlencode($record->getFullUrl())}}">
+        <i class="fa fa-google"></i> Google Page Speed
+    </a>
 @endsection
 @section('content')
     <nav class="nav nav-tabs" id="seo-settings-tab" role="tablist">
