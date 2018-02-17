@@ -54,9 +54,45 @@ class PageController extends Controller
      */
     public function show(Show $request, Page $page)
     {
+        $success = false;
+        $fullUrl = $page->getFullUrl();
+        $content = @file_get_contents($fullUrl);
+
+        if ($content) {
+            $success = true;
+        }
+        $dom = @new \DOMDocument('1.0', 'UTF-8');
+        libxml_use_internal_errors(true);
+        $dom->loadHTML($content);
+        $xpath = new \DOMXpath($dom);
+
+        libxml_clear_errors();
+
+        $images = $dom->getElementsByTagName('img');
+        $imgs = [];
+
+        if ($images->length > 0) {
+            foreach ($images as $image) {
+                $img = [];
+                foreach ($image->attributes as $attr) {
+                    $img[$attr->name] = $attr->nodeValue;
+                }
+                $imgs[] = $img;
+            }
+        }
+
+
         return view('seo::pages.pages.show', [
             'record' => $page,
-            'metaTags' => $page->metaTags()
+            'success' => $success,
+            'dom' => $dom,
+            'length' => mb_strlen($content, 'utf8'),
+            'title' => $dom->getElementsByTagName('title'),
+            'description'=>$xpath->query("*/meta[@name='description']"),
+            'h1' => $dom->getElementsByTagName('h1'),
+            'h2' => $dom->getElementsByTagName('h2'),
+            'h3' => $dom->getElementsByTagName('h3'),
+            'images' => $imgs,
         ]);
     }
 
@@ -155,7 +191,7 @@ class PageController extends Controller
             if ($pageModel) {
                 $pageModel->title = $page['title'];
                 $pageModel->description = $page['description'];
-                $pageModel->robot_index = !empty($page['robot_index'])?$page['robot_index']:'noindex';
+                $pageModel->robot_index = !empty($page['robot_index']) ? $page['robot_index'] : 'noindex';
                 $pageModel->save();
             }
         }
