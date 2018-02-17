@@ -2,7 +2,7 @@
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('seo::dashboard.index')}}"> Dashboard</a></li>
     <li class="breadcrumb-item"><a href="{{route('seo::pages.index')}}">Pages</a></li>
-    <li class="breadcrumb-item">{{$record->path}}</li>
+    <li class="breadcrumb-item">{{pathinfo($record->path,PATHINFO_BASENAME)}}</li>
 @endsection
 @section('tools')
     &nbsp;&nbsp;

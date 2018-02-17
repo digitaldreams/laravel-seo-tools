@@ -6,7 +6,7 @@
 @endsection
 @section('tools')
     &nbsp;
-    <a href="{{route('seo::pages.create')}}"><i class="fa fa-plus"></i></a>
+    <a href="{{route('seo::pages.meta',$record->id)}}"><i class="fa fa-pencil"></i></a>
     &nbsp;
     <a target="_blank" href="{{url($record->path)}}">Visit Page</a>
     &nbsp;&nbsp;
@@ -97,6 +97,90 @@
                     <td>{{round($length / 1000)}} KB</td>
                 </tr>
                 <tr>
+                    <th>CSS File</th>
+                    <td>
+                        <div id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="card">
+                                <div class="card-title" role="tab" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                                           aria-expanded="false" aria-controls="collapseOne">
+                                            &nbsp;&nbsp;{{$css->length}} file found <i class="fa fa-arrow-down"></i>
+                                        </a>
+                                    </h5>
+                                </div>
+
+                                <div id="collapseOne" class="collapse hide" role="tabpanel"
+                                     aria-labelledby="headingOne">
+                                    <div class="card-block">
+                                        <table class="table table-striped">
+                                            <tbody>
+                                            @foreach($css as $file)
+                                                @foreach($file->attributes as $attr)
+                                                    @if($attr->name=='href')
+                                                        <tr>
+                                                            <td> {{$attr->nodeValue}}</td>
+                                                            <td>
+                                                                {{round(\SEO\Services\Helper::fileSize($attr->nodeValue)/1000)}}
+                                                                KB
+                                                            </td>
+                                                        </tr>
+
+                                                    @endif
+                                                @endforeach
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Scripts File</th>
+                    <td>
+                        <div id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="card">
+                                <div class="card-title" role="tab" id="headingTwo">
+                                    <h5 class="mb-0">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
+                                           aria-expanded="false" aria-controls="collapseTwo">
+                                            &nbsp;&nbsp;{{$css->length}} file found <i class="fa fa-arrow-down"></i>
+                                        </a>
+                                    </h5>
+                                </div>
+
+                                <div id="collapseTwo" class="collapse hide" role="tabpanel"
+                                     aria-labelledby="headingTwo">
+                                    <div class="card-block">
+                                        <table class="table table-striped">
+                                            <tbody>
+                                            @foreach($scripts as $file)
+                                                @foreach($file->attributes as $attr)
+                                                    @if($attr->name=='src')
+                                                        <tr>
+                                                            <td> {{$attr->nodeValue}}</td>
+                                                            <td>
+                                                                {{round(\SEO\Services\Helper::fileSize($attr->nodeValue)/1000)}}
+                                                                KB
+                                                            </td>
+                                                        </tr>
+
+                                                    @endif
+                                                @endforeach
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
                     <th>Loading Time</th>
                     <td><a href="#">Update To Pro</a></td>
                 </tr>
@@ -121,6 +205,7 @@
                         </div>
                         <div class="card-footer p-0">
                             <?php if (isset($image['src']) && !empty($image['src']) && @getimagesize($image['src'])): ?>
+
                             @php
                                 $info= @getimagesize($image['src'])
                             @endphp
@@ -130,6 +215,10 @@
                             @if(isset($info['mime']))
                                 <label class="badge badge-secondary">{{$info['mime']}}</label>
                             @endif
+                            &nbsp;
+                            <label class="badge badge-secondary">
+                                {{round(\SEO\Services\Helper::fileSize($image['src']) /1000)}} kb
+                            </label>
                             <?php endif; ?>
                         </div>
                     </div>
