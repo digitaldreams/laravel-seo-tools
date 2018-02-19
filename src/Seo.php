@@ -8,6 +8,7 @@
 namespace SEO;
 
 
+use Illuminate\Database\Eloquent\Model;
 use SEO\Models\Page;
 
 class Seo
@@ -40,7 +41,7 @@ class Seo
         $path = $this->request->path();
         $this->page = Page::whereIn('path', [trim($path, "/"), "/" . $path, url($path)])->first();
 
-        if($this->page){
+        if ($this->page) {
             $this->filePath = rtrim(config('seo.cache.storage'), "/") . '/' . $this->page->id . '.html';
 
             if (file_exists($this->filePath)) {
@@ -65,6 +66,32 @@ class Seo
             return $tags;
         }
         return '';
+    }
+
+    public function form(Model $model)
+    {
+        $page = Page::firstOrNew([
+            'object' => get_class($model),
+            'object_id' => $model->getKey()
+        ]);
+
+        $metaTags = $page->metaTags();
+
+        if (isset($metaTags['og'])) {
+            $og = $metaTags['og'];
+            unset($metaTags['og']);
+        }
+
+        if (isset($metaTags['twitter'])) {
+            $twitter = $metaTags['twitter'];
+            unset($metaTags['twitter']);
+        }
+        return view('seo::includes.page_meta_tags', [
+            'record' => $page,
+            'og' => $og,
+            'twitter' => $twitter,
+            'metaTags' => $metaTags,
+        ]);
     }
 
     /**
