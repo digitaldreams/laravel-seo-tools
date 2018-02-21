@@ -4,14 +4,14 @@
             <div class="row">
                 <div class="col-sm-6">
                     <h5 class="m-0 p-0">
-                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                        <a class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
                                 aria-expanded="true"
                                 aria-controls="collapseOne">
                             Laravel SEO <i class="fa fa-info-circle"
                                            title="This is a SEO tools which helps this post to boost on Search Engine and Social Media"
                                            data-toggle="tooltip">
                             </i>
-                        </button>
+                        </a>
                     </h5>
                 </div>
                 <div class="col-sm-6 text-right">

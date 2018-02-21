@@ -26,7 +26,7 @@ class Page extends Model
     /**
      * Protected columns from mass assignment
      */
-    protected $guarded = ['id'];
+    protected $fillable = ['title', 'description', 'path', 'canonical_url', 'robot_index', 'robot_follow', 'change_frequency', 'priority', 'schema'];
 
 
     /**
@@ -133,6 +133,22 @@ class Page extends Model
             }
         }
         return $meta;
+    }
+
+    /**
+     * @param array $metaValues
+     * @return array
+     */
+    public function saveMeta($metaValues)
+    {
+        $retArr = [];
+        foreach ($metaValues as $id => $content) {
+            $pageMeta = PageMetaTag::firstOrCreate(['seo_page_id' => $this->id, 'seo_meta_tag_id' => $id]);
+            $pageMeta->content = $content;
+            $pageMeta->save();
+            $retArr[] = $pageMeta;
+        }
+        return $retArr;
     }
 
 }

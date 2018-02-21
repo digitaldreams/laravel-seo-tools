@@ -14,7 +14,7 @@ class Store extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -27,11 +27,11 @@ class Store extends FormRequest
         return [
             'path' => 'required|unique:seo_pages,path|max:255',
             'route_name' => 'nullable|max:150',
-            'robot_index' => 'nullable|max:50',
-            'robot_follow' => 'nullable|max:50',
-            'canonical_url' => 'nullable|max:255',
-            'title' => 'required|max:70',
-            'description' => 'required|max:170',
+            'page.robot_index' => 'nullable|max:50',
+            'page.robot_follow' => 'nullable|max:50',
+            'page.canonical_url' => 'nullable|max:255',
+            'page.title' => 'required|max:70',
+            'page.description' => 'required|max:170',
         ];
     }
 

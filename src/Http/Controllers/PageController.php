@@ -266,11 +266,7 @@ class PageController extends Controller
     public function saveMeta(Request $request, Page $page)
     {
         $metaValues = $request->get('meta', []);
-        foreach ($metaValues as $id => $content) {
-            $pageMeta = PageMetaTag::firstOrCreate(['seo_page_id' => $page->id, 'seo_meta_tag_id' => $id]);
-            $pageMeta->content = $content;
-            $pageMeta->save();
-        }
+        $page->saveMeta($metaValues);
         return redirect()->back()->with(config('seo.flash_message'), 'Page meta tags saved successfully');
     }
 

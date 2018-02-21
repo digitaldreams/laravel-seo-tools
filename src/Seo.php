@@ -9,6 +9,7 @@ namespace SEO;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use SEO\Models\Page;
 
 class Seo
@@ -68,7 +69,7 @@ class Seo
         return '';
     }
 
-    public function form(Model $model)
+    public static function form(Model $model)
     {
         $page = Page::firstOrNew([
             'object' => get_class($model),
@@ -92,6 +93,42 @@ class Seo
             'twitter' => $twitter,
             'metaTags' => $metaTags,
         ]);
+    }
+
+    /**
+     * @param Model $model
+     * @param $url
+     * @param array $data
+     * @return Page
+     */
+    public static function save(Model $model, $url, $data = [])
+    {
+        try {
+            $fillable = request()->get('page', []);
+
+            $page = Page::firstOrNew([
+                'object' => get_class($model),
+                'object_id' => $model->getKey()
+            ]);
+
+            $page->path = $url;
+            $page->object = get_class($model);
+            $page->object_id = $model->getKey();
+
+            foreach ($fillable as $column => $value) {
+                if (empty($value) && isset($data[$column]) && !empty($data[$column])) {
+                    $fillable[$column] = $data[$column];
+                }
+            }
+            $page->fill($fillable);
+            if ($page->save()) {
+                $metaValues = request()->get('meta', []);
+                $page->saveMeta($metaValues);
+            }
+            return $page;
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+        }
     }
 
     /**
