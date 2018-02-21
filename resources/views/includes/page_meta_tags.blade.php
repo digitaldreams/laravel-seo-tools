@@ -5,8 +5,8 @@
                 <div class="col-sm-6">
                     <h5 class="m-0 p-0">
                         <a class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
-                                aria-expanded="true"
-                                aria-controls="collapseOne">
+                           aria-expanded="true"
+                           aria-controls="collapseOne">
                             Laravel SEO <i class="fa fa-info-circle"
                                            title="This is a SEO tools which helps this post to boost on Search Engine and Social Media"
                                            data-toggle="tooltip">
@@ -15,6 +15,22 @@
                     </h5>
                 </div>
                 <div class="col-sm-6 text-right">
+                    @if(!empty($record->id))
+                        <a target="_blank"
+                           href="https://developers.facebook.com/tools/debug/sharing/?q={{urlencode($record->getFullUrl())}}">
+                            <i class="fa fa-facebook-official"></i> Validate
+                        </a>
+                        &nbsp;&nbsp;
+                        <a href="https://cards-dev.twitter.com/validator" target="_blank">
+                            <i class="fa fa-twitter"></i> Card Validate
+                        </a>
+                        &nbsp;
+                        <a target="_blank"
+                           href="https://developers.google.com/speed/pagespeed/insights/?url={{urlencode($record->getFullUrl())}}">
+                            <i class="fa fa-google"></i> Page Speed
+                        </a>
+                        &nbsp;&nbsp;
+                    @endif
                     <label class="" data-toggle="collapse" data-target="#collapseOne"
                            aria-expanded="true"
                            aria-controls="collapseOne">

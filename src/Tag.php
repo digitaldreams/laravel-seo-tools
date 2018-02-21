@@ -79,7 +79,7 @@ class Tag
         $pageFollow = ($roboxFollow == 'nofollow') ? 'nofollow' : $this->page->robot_follow;
 
         $pageIndex = empty($pageIndex) ? $roboxIndex : $pageIndex;
-        $pageFollow = empty($pageFollow) ? $roboxFollow : $roboxFollow;
+        $pageFollow = empty($pageFollow) ? $roboxFollow : $pageFollow;
 
         $this->tags[] = '<meta name="robots" content="' . $pageIndex . ',' . $pageFollow . '" />';
         return $this;

@@ -46,8 +46,22 @@
                  </span>
         @endif
     </div>
-
 </div>
+
+@if(isset($showPageUrl) && !empty($showPageUrl))
+    <div class="form-group">
+        <label for="page_path">Page Url</label>
+        <input type="text" class="form-control" name="page[path]" id="page_path"
+               value="{{old('page.path',$model->path)}}"
+               placeholder="Relative path to your page" maxlength="255" required="required">
+        @if($errors->has('page.path'))
+            <span class="form-control-feedback">
+        <strong>{{ $errors->first('page.path') }}</strong>
+    </span>
+        @endif
+    </div>
+@endif
+
 <div class="form-group">
     <label for="page_canonical_url">Canonical Url</label>
     <input type="text" class="form-control" name="page[canonical_url]" id="page_canonical_url"

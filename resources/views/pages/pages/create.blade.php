@@ -11,7 +11,7 @@
         <div class='col-md-12'>
             <div class='panel panel-default'>
                 <div class="panel-body">
-                    @include('seo::forms.page')
+                    @include('seo::forms.page',['showPageUrl'=>true])
                 </div>
             </div>
         </div>

@@ -90,19 +90,17 @@ class MetaTag extends Model
     {
         $params = [];
 
-        $sql = 'select m.*,pm.content from seo_meta_tags as m 
-                left join seo_page_meta_tags as pm on m.id=pm.seo_meta_tag_id 
-                ';
         if (!empty($page_id)) {
-            $sql .= 'and pm.seo_page_id=:id';
+            $sql = 'select  m.*,pm.content from seo_meta_tags as m 
+                left join seo_page_meta_tags as pm on m.id=pm.seo_meta_tag_id ';
+            $sql .= 'and pm.seo_page_id=:id where m.status=:status and m.visibility=:visibility';
             $params['id'] = $page_id;
+        }else{
+            $sql = 'select * from seo_meta_tags  where status=:status and visibility=:visibility';
         }
-        $sql .= ' where m.status=:status and m.visibility=:visibility';
         $params['status'] = 'active';
         $params['visibility'] = $visibility;
         return DB::select($sql, $params);
-
-
     }
 
     /**

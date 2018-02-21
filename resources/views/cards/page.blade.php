@@ -26,7 +26,7 @@
         </a>
 
         <div class="" style="float: right">
-            <a href="{{route('seo::pages.meta',$record->id)}}">
+            <a href="{{route('seo::pages.edit',$record->id)}}">
                 <span class="fa fa-pencil"></span>
             </a>
             &nbsp;&nbsp;

@@ -6,7 +6,7 @@
 @endsection
 @section('tools')
     &nbsp;
-    <a href="{{route('seo::pages.meta',$record->id)}}"><i class="fa fa-pencil"></i></a>
+    <a href="{{route('seo::pages.edit',$record->id)}}"><i class="fa fa-pencil"></i></a>
     &nbsp;
     <a target="_blank" href="{{url($record->path)}}">Visit Page</a>
     &nbsp;&nbsp;

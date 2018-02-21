@@ -106,9 +106,23 @@ class PageController extends Controller
      */
     public function create(Create $request)
     {
-        return view('seo::pages.pages.create', [
-            'model' => new Page,
+        $page = new Page();
+        $metaTags = $page->metaTags();
 
+        if (isset($metaTags['og'])) {
+            $og = $metaTags['og'];
+            unset($metaTags['og']);
+        }
+
+        if (isset($metaTags['twitter'])) {
+            $twitter = $metaTags['twitter'];
+            unset($metaTags['twitter']);
+        }
+        return view('seo::pages.pages.create', [
+            'record' => $page,
+            'og' => $og,
+            'twitter' => $twitter,
+            'metaTags' => $metaTags,
         ]);
     }
 
@@ -121,9 +135,11 @@ class PageController extends Controller
     public function store(Store $request)
     {
         $model = new Page;
-        $model->fill($request->all());
+        $model->fill($request->get('page'));
 
         if ($model->save()) {
+            $model->saveMeta(request()->get('meta', []));
+
             session()->flash(config('seo.flash_message'), 'Page saved successfully');
             return redirect()->route('seo::pages.index');
         } else {
@@ -141,9 +157,22 @@ class PageController extends Controller
      */
     public function edit(Edit $request, Page $page)
     {
+        $metaTags = $page->metaTags();
+
+        if (isset($metaTags['og'])) {
+            $og = $metaTags['og'];
+            unset($metaTags['og']);
+        }
+
+        if (isset($metaTags['twitter'])) {
+            $twitter = $metaTags['twitter'];
+            unset($metaTags['twitter']);
+        }
         return view('seo::pages.pages.edit', [
-            'model' => $page,
-            'metaTags' => $page->metaTags()
+            'record' => $page,
+            'og' => $og,
+            'twitter' => $twitter,
+            'metaTags' => $metaTags,
         ]);
     }
 
@@ -164,9 +193,11 @@ class PageController extends Controller
      */
     public function update(Update $request, Page $page)
     {
-        $page->fill($request->all());
+        $page->fill($request->get('page'));
 
         if ($page->save()) {
+            $page->saveMeta(request()->get('meta', []));
+
             session()->flash(config('seo.flash_message'), 'Page successfully updated');
             return redirect()->route('seo::pages.index');
         } else {
