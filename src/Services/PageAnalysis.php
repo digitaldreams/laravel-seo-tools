@@ -8,6 +8,7 @@
 namespace SEO\Services;
 
 
+use Illuminate\Support\Facades\Cache;
 use SEO\Models\Page;
 use SEO\Services\Helper;
 
@@ -38,10 +39,21 @@ class PageAnalysis
      */
     protected $xpath;
 
-    public function __construct($url, $keyword = '')
+    /**
+     * @var array
+     */
+    protected $data = [];
+
+    protected $url;
+
+    /**
+     * PageAnalysis constructor.
+     * @param $url
+     */
+    public function __construct($url)
     {
-        $fullUrl = $url;
-        $content = @file_get_contents($fullUrl);
+        $this->url = $url;
+        $content = @file_get_contents($this->url);
 
         if ($content) {
             $this->success = true;
@@ -63,32 +75,44 @@ class PageAnalysis
         return (bool)$this->success;
     }
 
-    public function report()
+    /**
+     * @param bool $size
+     * @return $this
+     */
+    public function fetch($size = true)
     {
-
-    }
-
-    public function density()
-    {
-
-    }
-
-    public function warnings()
-    {
-
-    }
-
-    public function good()
-    {
-
+        $this->data['images'] = $this->images($size);
+        $this->data['anchors'] = $this->anchor();
+        $this->data['metas'] = $this->metaTags();
+        $this->data['css'] = $this->css($size);
+        $this->data['js'] = $this->js($size);
+        $this->data['headings'] = $this->headings();
+        return $this;
     }
 
     /**
-     *
+     * @param int $minutes
+     * @return $this
+     * @throws \Exception
      */
-    public function save()
+    public function save($minutes = 30)
     {
+        cache([$this->url => json_encode($this->data,JSON_UNESCAPED_SLASHES)], now()->addMinutes($minutes));
+        return $this;
+    }
 
+    /**
+     * Try to get result from cache if exists otherwise run fetch
+     * @return PageAnalysis
+     */
+    public function fromCache()
+    {
+        if (Cache::has($this->url)) {
+            $this->data = json_decode(Cache::get($this->url), true);
+        } else {
+            $this->fetch();
+        }
+        return $this;
     }
 
     /**
@@ -96,7 +120,30 @@ class PageAnalysis
      */
     public function toArray()
     {
+        return $this->data;
+    }
 
+    /**
+     * @return array
+     */
+    public function metaTags()
+    {
+        $retArr = [];
+        $tags = $this->dom->getElementsByTagName("meta");
+
+        foreach ($tags as $key => $tag) {
+            $meta = [];
+            foreach ($tag->attributes as $attr) {
+                if ($attr->name == 'property') {
+                    $key = '@' . $attr->nodeValue;
+                } elseif ($attr->name == 'name') {
+                    $key = $attr->nodeValue;
+                }
+                $meta[$attr->name] = $attr->nodeValue;
+            }
+            $retArr[$key] = $meta;
+        }
+        return $retArr;
     }
 
     public function headings(array $list = ['h1', 'h2', 'h3'])
@@ -124,26 +171,17 @@ class PageAnalysis
                 if ($attr->name == 'href') {
                     $link['href'] = $attr->nodeValue;
                     $link['internal'] = $this->isInternal($attr->nodeValue);
-                    $link['exists'] = $this->fileExists($attr->nodeValue);
+                    $link['exists'] = null;
                 } else {
                     $link[$attr->name] = $attr->nodeValue;
                 }
             }
-            $link['text']=trim($tag->nodeValue);
+            $link['text'] = trim($tag->nodeValue);
             $links[] = $link;
         }
         return $links;
     }
 
-    /**
-     * @param $url
-     * @return bool
-     */
-    protected function fileExists($url)
-    {
-        $file_headers = @get_headers($url);
-        return $file_headers[0] == 'HTTP/1.1 404 Not Found' ? false : true;
-    }
 
     /**
      * @param $url
@@ -242,4 +280,13 @@ class PageAnalysis
         return $ret;
     }
 
+    /**
+     * @param $url
+     * @return bool
+     */
+    protected function fileExists($url)
+    {
+        $file_headers = @get_headers($url);
+        return $file_headers[0] == 'HTTP/1.1 404 Not Found' ? false : true;
+    }
 }
