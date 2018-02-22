@@ -27,12 +27,4 @@ class Helper
             return false;
         }
     }
-
-    protected function addToCache($url)
-    {
-
-    }
-
-
-
 }

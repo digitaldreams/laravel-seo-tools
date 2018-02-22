@@ -26,207 +26,264 @@
 @endsection
 @section('content')
     <div class="row">
-        <div class="col-sm-9">
-            <table class="table table-bordered">
-                <tbody>
-                <tr>
-                    <th>Meta Title</th>
-                    <td>
-                        @if($title->length)
-                            <span class="h4"><i
-                                        class="fa fa-check-circle-o text-primary"></i> {{$title->item(0)->nodeValue}}</span>
-                        @else
-                            <i class="fa fa-remove text-danger fa-3x"></i>
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th>Meta Description</th>
-                    <td>
-                        @if($description->length)
-
-                            <span class=""><i class="fa fa-check-circle-o text-primary"></i>
-                                @foreach($description[0]->attributes as $attr)
-                                    @if($attr->name=='content')
-                                        {{$attr->nodeValue}}
-                                    @endif
-                                @endforeach
+        @if(isset($success) && !empty($success))
+            <div class="col-sm-9">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th>Meta Title</th>
+                        <td>
+                            @if(strlen($title)>0)
+                                <span class="h4">
+                                   {{$title}}
+                                </span>
+                            @else
+                                <i class="fa fa-remove text-danger fa-3x"></i>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Meta Description</th>
+                        <td>
+                            @if(isset($metas['description']) && !empty($metas['description']))
+                                <span class="">
+                                    {{$metas['description']['content'] or ''}}
                                </span>
-                        @else
-                            <i class="fa fa-remove text-danger fa-3x"></i>
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th>H1 heading status</th>
-                    <td>
-                        @if($h1->length >0)
-                            <label class="badge badge-secondary fa-2x"><b>{{$h1->length}}</b> <i
-                                        class="fa fa-check-circle-o text-primary"></i></label>
-                        @else
-                            <i class="fa fa-remove text-danger fa-3x"></i>
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th>H2 heading status</th>
-                    <td>
-                        @if($h2->length >0)
-                            <label class="badge badge-secondary fa-2x"><b>{{$h2->length}}</b> <i
-                                        class="fa fa-check-circle-o text-primary"></i></label>
-                        @else
-                            <i class="fa fa-remove text-danger fa-2x"></i>
-                        @endif
+                            @else
+                                <i class="fa fa-remove text-danger fa-3x"></i>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Other Meta</th>
+                        <td>
+                            <div id="accordionMetaTags" role="tablist" aria-multiselectable="true">
+                                <div class="card">
+                                    <div class="card-title" role="tab" id="headingMetaTags">
+                                        <h5 class="mb-0">
+                                            <a data-toggle="collapse" data-parent="#accordionMetaTags"
+                                               href="#collapseMetaTags"
+                                               aria-expanded="false" aria-controls="collapse">
+                                                &nbsp;&nbsp;
+                                                <label><b>{{count($metas)}}</b>
 
-                    </td>
-                </tr>
-                <tr>
-                    <th>H3 heading status</th>
-                    <td>
-                        @if($h3->length >0)
-                            <label class="badge badge-secondary "><b class="h3">{{$h3->length}} <i
-                                            class="fa fa-check-circle-o text-primary"></i></b> </label>
-                        @else
-                            <i class="fa fa-remove text-danger fa-2x"></i>
-                        @endif
-                    </td>
-                </tr>
-
-                <tr>
-                    <th>HTML Page Size</th>
-                    <td>{{round($length / 1000)}} KB</td>
-                </tr>
-                <tr>
-                    <th>CSS File</th>
-                    <td>
-                        <div id="accordion" role="tablist" aria-multiselectable="true">
-                            <div class="card">
-                                <div class="card-title" role="tab" id="headingOne">
-                                    <h5 class="mb-0">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
-                                           aria-expanded="false" aria-controls="collapseOne">
-                                            &nbsp;&nbsp;{{$css->length}} file found <i class="fa fa-arrow-down"></i>
-                                        </a>
-                                    </h5>
-                                </div>
-
-                                <div id="collapseOne" class="collapse hide" role="tabpanel"
-                                     aria-labelledby="headingOne">
-                                    <div class="card-block">
-                                        <table class="table table-striped">
-                                            <tbody>
-                                            @foreach($css as $file)
-                                                @foreach($file->attributes as $attr)
-                                                    @if($attr->name=='href')
-                                                        <tr>
-                                                            <td> {{$attr->nodeValue}}</td>
-                                                            <td>
-                                                                {{round(\SEO\Services\Helper::fileSize($attr->nodeValue)/1000)}}
-                                                                KB
-                                                            </td>
-                                                        </tr>
-
-                                                    @endif
+                                                </label> found <i class="fa fa-arrow-down"></i>
+                                            </a>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseMetaTags" class="collapse hide" role="tabpanel"
+                                         aria-labelledby="headingMetaTags">
+                                        <div class="card-block">
+                                            <ul class="list-group">
+                                                @foreach($metas as $m)
+                                                    <li class="list-group-item">
+                                                        <code>
+                                                            &lt;meta @foreach($m as $p=>$v)
+                                                                {{$p."="."\"$v\""}}
+                                                            @endforeach
+                                                            /&gt;
+                                                        </code>
+                                                    </li>
                                                 @endforeach
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Scripts File</th>
-                    <td>
-                        <div id="accordion" role="tablist" aria-multiselectable="true">
-                            <div class="card">
-                                <div class="card-title" role="tab" id="headingTwo">
-                                    <h5 class="mb-0">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
-                                           aria-expanded="false" aria-controls="collapseTwo">
-                                            &nbsp;&nbsp;{{$css->length}} file found <i class="fa fa-arrow-down"></i>
-                                        </a>
-                                    </h5>
-                                </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>H1 heading status</th>
+                        <td>
+                            @if(isset($headings['h1']) && count($headings['h1'])>0)
+                                @include('seo::includes.heading-analysis',['level'=>1,'tags'=>$headings['h1']])
+                            @else
+                                <i class="fa fa-remove text-danger fa-3x"></i>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>H2 heading status</th>
+                        <td>
+                            @if(isset($headings['h2']) && count($headings['h2'])>0)
+                                @include('seo::includes.heading-analysis',['level'=>2,'tags'=>$headings['h2']])
+                            @else
+                                <i class="fa fa-remove text-danger fa-2x"></i>
+                            @endif
 
-                                <div id="collapseTwo" class="collapse hide" role="tabpanel"
-                                     aria-labelledby="headingTwo">
-                                    <div class="card-block">
-                                        <table class="table table-striped">
-                                            <tbody>
-                                            @foreach($scripts as $file)
-                                                @foreach($file->attributes as $attr)
-                                                    @if($attr->name=='src')
-                                                        <tr>
-                                                            <td> {{$attr->nodeValue}}</td>
-                                                            <td>
-                                                                {{round(\SEO\Services\Helper::fileSize($attr->nodeValue)/1000)}}
-                                                                KB
-                                                            </td>
-                                                        </tr>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>H3 heading status</th>
+                        <td>
+                            @if(isset($headings['h3']) && count($headings['h3'])>0)
+                                @include('seo::includes.heading-analysis',['level'=>3,'tags'=>$headings['h3']])
+                            @else
+                                <i class="fa fa-remove text-danger fa-2x"></i>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>CSS files</th>
+                        <td>
+                            <div id="accordionCssFiles" role="tablist" aria-multiselectable="true">
+                                <div class="card">
+                                    <div class="card-title" role="tab" id="headingCssFiles">
+                                        <h5 class="mb-0">
+                                            <a data-toggle="collapse" data-parent="#accordionCssFiles"
+                                               href="#collapseCssFiles"
+                                               aria-expanded="false" aria-controls="collapse">
+                                                &nbsp;&nbsp;
+                                                <label><b>{{count($css)}}</b>
 
-                                                    @endif
+                                                </label> found <i class="fa fa-arrow-down"></i>
+                                            </a>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseCssFiles" class="collapse hide" role="tabpanel"
+                                         aria-labelledby="headingCssFiles">
+                                        <div class="card-block">
+                                            <table class="table table-bordered">
+                                                @foreach($css as $f)
+                                                    <tr>
+                                                        <td>{{$f['href'] or ''}}</td>
+                                                        <td>{{$f['size'] or ''}}</td>
+                                                    </tr>
                                                 @endforeach
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Loading Time</th>
-                    <td><a href="#">Update To Pro</a></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-sm-3">
-            @if(count($images) >0)
-                @foreach($images as $image)
-                    <div class="card mb-2">
-                        <?php if (isset($image['src']) && !empty($image['src'])): ?>
-                        <img src="{{$image['src']}}" class="card-img-top img-responsive">
-                        <?php endif; ?>
-                        <div class="card-body mb-0 p-1">
-                            <div class="card-title">
-                                <?php if (isset($image['alt']) && !empty($image['alt'])): ?>
-                                <small class="text-muted">{{$image['alt']}}</small>
-                                <?php else: ?>
-                                <i class="fa fa-remove text-danger fa-2x"></i> No Alt attribute found
-                                <?php endif?>
-                            </div>
-                        </div>
-                        <div class="card-footer p-0">
-                            <?php if (isset($image['src']) && !empty($image['src']) && @getimagesize($image['src'])): ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>JavaScript files</th>
+                        <td>
+                            <div id="accordionJsFiles" role="tablist" aria-multiselectable="true">
+                                <div class="card">
+                                    <div class="card-title" role="tab" id="headingJsFiles">
+                                        <h5 class="mb-0">
+                                            <a data-toggle="collapse" data-parent="#accordionJsFiles"
+                                               href="#collapseJsFiles"
+                                               aria-expanded="false" aria-controls="collapse">
+                                                &nbsp;&nbsp;
+                                                <label><b>{{count($js)}}</b>
 
-                            @php
-                                $info= @getimagesize($image['src'])
-                            @endphp
-                            @if(isset($info[0]) && isset($info[1]))
-                                &nbsp;<label class="badge badge-secondary"> {{$info[0]}}px x {{$info[1]}}px</label>
-                            @endif
-                            @if(isset($info['mime']))
-                                <label class="badge badge-secondary">{{$info['mime']}}</label>
-                            @endif
-                            &nbsp;
-                            <label class="badge badge-secondary">
-                                {{round(\SEO\Services\Helper::fileSize($image['src']) /1000)}} kb
-                            </label>
+                                                </label> found <i class="fa fa-arrow-down"></i>
+                                            </a>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseJsFiles" class="collapse hide" role="tabpanel"
+                                         aria-labelledby="headingJsFiles">
+                                        <div class="card-block">
+                                            <table class="table table-bordered">
+                                                @foreach($js as $f)
+                                                    <tr>
+                                                        <td>{{$f['src'] or ''}}</td>
+                                                        <td>{{$f['size'] or ''}}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Anchor</th>
+                        <td>
+                            <div id="accordionAnchor" role="tablist" aria-multiselectable="true">
+                                <div class="card">
+                                    <div class="card-title" role="tab" id="headingAnchor">
+                                        <h5 class="mb-0">
+                                            <a data-toggle="collapse" data-parent="#accordionAnchor"
+                                               href="#collapseAnchor"
+                                               aria-expanded="false" aria-controls="collapse">
+                                                &nbsp;&nbsp;
+                                                <label><b>{{count($anchors)}}</b>
+
+                                                </label> found <i class="fa fa-arrow-down"></i>
+                                            </a>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseAnchor" class="collapse hide" role="tabpanel"
+                                         aria-labelledby="headingAnchor">
+                                        <div class="card-block">
+                                            <table class="table table-bordered">
+                                                @foreach($anchors as $f)
+                                                    <tr>
+                                                        <td>{{$f['href'] or ''}}</td>
+                                                        <td>{{$f['text'] or ''}}</td>
+                                                        <td>
+                                                            <label class="badge {{empty($f['internal'])?' badge-warning':' badge-default'}} ">{{empty($f['internal'])?' External':' Internal'}}</label>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Loading Time</th>
+                        <td><a href="#">Update To Pro</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-3">
+                <p class="lead border-light border bg-light">
+                    &nbsp;<label class="badge badge-info"> {{$size}} KB</label> total page size
+                </p>
+                @if(count($images) >0)
+                    @foreach($images as $image)
+                        <div class="card mb-2">
+                            <?php if (isset($image['src']) && !empty($image['src'])): ?>
+                            <img src="{{$image['src']}}" class="card-img-top img-responsive">
                             <?php endif; ?>
-                        </div>
-                    </div>
-                @endforeach
+                            <div class="card-body mb-0 p-1">
+                                <div class="card-title">
+                                    @if (isset($image['alt']) && !empty($image['alt']))
+                                        <small class="text-muted">{{$image['alt']}}</small>
+                                    @else
+                                        <i class="fa fa-remove text-danger fa-2x"></i> No Alt attribute found
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="card-footer p-0">
+                                @if (isset($image['src']) && !empty($image['src']))
 
-            @else
-                <i class="fa fa-remove text-danger fa-2x"></i> No image found
-            @endif
-        </div>
+                                    @if(isset($image['width']) && isset($image['height']))
+                                        &nbsp;<label class="badge badge-secondary"> {{$image['width']}}px
+                                            x {{$image['height']}}px</label>
+                                    @endif
+
+                                    @if(isset($image['mime']))
+                                        <label class="badge badge-secondary">{{$image['mime']}}</label>
+                                    @endif
+
+                                    &nbsp;@if(isset($image['size']))
+                                        <label class="badge badge-secondary">
+                                            {{$image['size']}} kb
+                                        </label>
+                                    @endif
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+
+                @else
+                    <i class="fa fa-remove text-danger fa-2x"></i> No image found
+                @endif
+            </div>
+        @else
+            <div class="alert alert-warning">Page does not exists</div>
+        @endif
+
     </div>
 @endSection

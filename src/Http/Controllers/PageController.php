@@ -25,6 +25,7 @@ use SEO\Jobs\PageUploadJob;
 use SEO\Models\Page;
 use SEO\Models\PageImage;
 use SEO\Models\PageMetaTag;
+use SEO\Services\PageAnalysis;
 use SEO\Tag;
 
 /**
@@ -51,51 +52,20 @@ class PageController extends Controller
      * @param  Show $request
      * @param  Page $page
      * @return Response
+     * @throws \Exception
      */
     public function show(Show $request, Page $page)
     {
-        $success = false;
-        $fullUrl = $page->getFullUrl();
-        $content = @file_get_contents($fullUrl);
-
-        if ($content) {
-            $success = true;
-        }
-        $dom = @new \DOMDocument('1.0', 'UTF-8');
-        libxml_use_internal_errors(true);
-        $dom->loadHTML($content);
-        $xpath = new \DOMXpath($dom);
-
-        libxml_clear_errors();
-
-        $images = $dom->getElementsByTagName('img');
-        $imgs = [];
-
-        if ($images->length > 0) {
-            foreach ($images as $image) {
-                $img = [];
-                foreach ($image->attributes as $attr) {
-                    $img[$attr->name] = $attr->nodeValue;
-                }
-                $imgs[] = $img;
-            }
-        }
-
-
-        return view('seo::pages.pages.show', [
+        $data = [
             'record' => $page,
-            'success' => $success,
-            'dom' => $dom,
-            'length' => mb_strlen($content, 'utf8'),
-            'title' => $dom->getElementsByTagName('title'),
-            'description' => $xpath->query("*/meta[@name='description']"),
-            'css' => $xpath->query("*/link[@rel='stylesheet']"),
-            'scripts' => $dom->getElementsByTagName("script"),
-            'h1' => $dom->getElementsByTagName('h1'),
-            'h2' => $dom->getElementsByTagName('h2'),
-            'h3' => $dom->getElementsByTagName('h3'),
-            'images' => $imgs,
-        ]);
+            'success' => false
+        ];
+        $pageAnalysis = new PageAnalysis($page->getFullUrl());
+        if ($pageAnalysis->isSuccess()) {
+            $data = array_merge($pageAnalysis->fromCache()->save()->toArray(), $data);
+            $data['success'] = true;
+        }
+        return view('seo::pages.pages.show', $data);
     }
 
     /**

@@ -16,13 +16,14 @@ class PageAnalysis
 {
 
     /**
-     * @var
+     * @var string HTML Tags
      */
     protected $htmlContent;
+
     /**
      * @var
      */
-    protected $textConent;
+    protected $textContent;
 
     /**
      * @var
@@ -44,7 +45,12 @@ class PageAnalysis
      */
     protected $data = [];
 
+    /**
+     * @var
+     */
     protected $url;
+
+    protected $resourceSize = 0;
 
     /**
      * PageAnalysis constructor.
@@ -53,13 +59,13 @@ class PageAnalysis
     public function __construct($url)
     {
         $this->url = $url;
-        $content = @file_get_contents($this->url);
+        $this->htmlContent = @file_get_contents($this->url);
 
-        if ($content) {
+        if ($this->htmlContent) {
             $this->success = true;
             $this->dom = @new \DOMDocument('1.0', 'UTF-8');
             libxml_use_internal_errors(true);
-            $this->dom->loadHTML($content);
+            $this->dom->loadHTML($this->htmlContent);
             $this->xpath = new \DOMXpath($this->dom);
             libxml_clear_errors();
         }
@@ -70,7 +76,7 @@ class PageAnalysis
      *
      * @return bool
      */
-    public function isSuccss()
+    public function isSuccess()
     {
         return (bool)$this->success;
     }
@@ -81,12 +87,17 @@ class PageAnalysis
      */
     public function fetch($size = true)
     {
+        $this->data['title'] = $this->title();
+        $this->data['metas'] = $this->metaTags();
+        $this->data['headings'] = $this->headings();
         $this->data['images'] = $this->images($size);
         $this->data['anchors'] = $this->anchor();
-        $this->data['metas'] = $this->metaTags();
         $this->data['css'] = $this->css($size);
         $this->data['js'] = $this->js($size);
-        $this->data['headings'] = $this->headings();
+
+        $pageSize = mb_strlen($this->htmlContent, 'utf8');
+        $this->data['size'] = round($this->resourceSize + ($pageSize / 1000));
+
         return $this;
     }
 
@@ -97,7 +108,7 @@ class PageAnalysis
      */
     public function save($minutes = 30)
     {
-        cache([$this->url => json_encode($this->data,JSON_UNESCAPED_SLASHES)], now()->addMinutes($minutes));
+        cache([$this->url => json_encode($this->data, JSON_UNESCAPED_SLASHES)], now()->addMinutes($minutes));
         return $this;
     }
 
@@ -121,6 +132,12 @@ class PageAnalysis
     public function toArray()
     {
         return $this->data;
+    }
+
+    public function title()
+    {
+        $title = $this->dom->getElementsByTagName('title');
+        return $title->length > 0 ? $title->item(0)->nodeValue : null;
     }
 
     /**
@@ -222,7 +239,10 @@ class PageAnalysis
                         $mg['mime'] = isset($info['mime']) ? $info['mime'] : '';
 
                         if ($size) {
-                            $mg['size'] = round(Helper::fileSize($mg['src']) / 1000);
+                            $sizeKb = round(Helper::fileSize($mg['src']) / 1000);
+                            $this->resourceSize += $sizeKb;
+                            $mg['size'] = $sizeKb;
+
                         }
                     }
                 }
@@ -255,9 +275,13 @@ class PageAnalysis
         foreach ($files as $file) {
             foreach ($file->attributes as $attr) {
                 if ($attr->name == $attrName) {
+                    $sizeKb = !empty($size) ? round(Helper::fileSize($attr->nodeValue) / 1000) : null;
+                    if ($size) {
+                        $this->resourceSize += $sizeKb;
+                    }
                     $retFiles[] = [
                         $attrName => $attr->nodeValue,
-                        'size' => !empty($size) ? round(Helper::fileSize($attr->nodeValue) / 1000) : null
+                        'size' => $sizeKb
                     ];
                 }
             }
