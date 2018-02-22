@@ -13,10 +13,7 @@ use SEO\Services\Helper;
 
 class PageAnalysis
 {
-    /**
-     * @var Page
-     */
-    protected $page;
+
     /**
      * @var
      */
@@ -41,10 +38,9 @@ class PageAnalysis
      */
     protected $xpath;
 
-    public function __construct(Page $page, $keyword = '')
+    public function __construct($url, $keyword = '')
     {
-        $this->page = $page;
-        $fullUrl = $this->page->getFullUrl();
+        $fullUrl = $url;
         $content = @file_get_contents($fullUrl);
 
         if ($content) {
@@ -52,7 +48,7 @@ class PageAnalysis
             $this->dom = @new \DOMDocument('1.0', 'UTF-8');
             libxml_use_internal_errors(true);
             $this->dom->loadHTML($content);
-            $xpath = new \DOMXpath($this->dom);
+            $this->xpath = new \DOMXpath($this->dom);
             libxml_clear_errors();
         }
 
@@ -103,11 +99,66 @@ class PageAnalysis
 
     }
 
+    public function headings(array $list = ['h1', 'h2', 'h3'])
+    {
+        $ret = [];
+
+        foreach ($list as $level) {
+            $ret[$level] = $this->heading($level);
+        }
+        return $ret;
+    }
+
+    /**
+     * @return array
+     */
+    public function anchor()
+    {
+        $links = [];
+        $tags = $this->dom->getElementsByTagName('a');
+
+        foreach ($tags as $tag) {
+            $link = [];
+            foreach ($tag->attributes as $attr) {
+
+                if ($attr->name == 'href') {
+                    $link['href'] = $attr->nodeValue;
+                    $link['internal'] = $this->isInternal($attr->nodeValue);
+                    $link['exists'] = $this->fileExists($attr->nodeValue);
+                } else {
+                    $link[$attr->name] = $attr->nodeValue;
+                }
+            }
+            $link['text']=trim($tag->nodeValue);
+            $links[] = $link;
+        }
+        return $links;
+    }
+
+    /**
+     * @param $url
+     * @return bool
+     */
+    protected function fileExists($url)
+    {
+        $file_headers = @get_headers($url);
+        return $file_headers[0] == 'HTTP/1.1 404 Not Found' ? false : true;
+    }
+
+    /**
+     * @param $url
+     * @return bool
+     */
+    public function isInternal($url)
+    {
+        return parse_url($url, PHP_URL_HOST) == parse_url(url('/'), PHP_URL_HOST);
+    }
+
     /**
      * @param bool $size
      * @return array
      */
-    public function fetchImages($size = true)
+    public function images($size = true)
     {
         $imgs = [];
         $retImgs = [];
@@ -126,7 +177,7 @@ class PageAnalysis
                 $mg['height'] = '';
                 $mg['mime'] = '';
                 if (isset($mg['src']) && !empty($mg['src'])) {
-                    $info = @getimagesize($image['src']);
+                    $info = @getimagesize($mg['src']);
                     if (!empty($info)) {
                         $mg['width'] = isset($info[0]) ? $info[0] : '';
                         $mg['height'] = isset($info[1]) ? $info[1] : '';
@@ -141,6 +192,54 @@ class PageAnalysis
             }
         }
         return $retImgs;
+    }
+
+    public function css()
+    {
+        $css = $this->xpath->query("*/link[@rel='stylesheet']");
+        return $this->jscss($css, 'href');
+    }
+
+    /**
+     * @param bool $size
+     * @return array
+     */
+    public function js($size = true)
+    {
+        $scripts = $this->dom->getElementsByTagName("script");
+        return $this->jscss($scripts, 'src');
+    }
+
+    protected function jscss($files, $attrName, $size = true)
+    {
+        $retFiles = [];
+
+        foreach ($files as $file) {
+            foreach ($file->attributes as $attr) {
+                if ($attr->name == $attrName) {
+                    $retFiles[] = [
+                        $attrName => $attr->nodeValue,
+                        'size' => !empty($size) ? round(Helper::fileSize($attr->nodeValue) / 1000) : null
+                    ];
+                }
+            }
+
+        }
+        return $retFiles;
+    }
+
+    /**
+     * @param $level
+     * @return array
+     */
+    protected function heading($level)
+    {
+        $ret = [];
+        $headings = $this->dom->getElementsByTagName($level);
+        foreach ($headings as $heading) {
+            $ret[] = $heading->nodeValue;
+        }
+        return $ret;
     }
 
 }
