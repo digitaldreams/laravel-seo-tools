@@ -46,6 +46,20 @@ class Page extends Model
     }
 
     /**
+     * @param string $for
+     * @return
+     */
+    public function getLeadImageAttribute($for = 'og')
+    {
+        $image = $this->pageImages()->first();
+        if (!empty($image)) {
+            return $image->getSrc();
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * seoPageMetaTags
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
