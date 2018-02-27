@@ -30,6 +30,11 @@ return [
     'robot_txt' => public_path('robots.txt'),
 
     /**
+     * Full path where .htaccess file will be saved.
+     */
+    'htaccess' => public_path('.htaccess'),
+
+    /**
      * public folder of your xml sitemap
      */
     'sitemap_location' => 'sitemaps',

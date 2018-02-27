@@ -105,6 +105,11 @@ class Seo
     {
         try {
             $fillable = request()->get('page', []);
+            $images = [];
+            if (isset($data['images'])) {
+                $images = $data['images'];
+                unset($data['images']);
+            }
 
             $page = Page::firstOrNew([
                 'object' => get_class($model),
@@ -122,6 +127,10 @@ class Seo
             }
             $page->fill($fillable);
             if ($page->save()) {
+                if (!empty($images)) {
+
+                    $page->saveImagesFromArray($images);
+                }
                 $metaValues = request()->get('meta', []);
                 $page->saveMeta($metaValues);
             }

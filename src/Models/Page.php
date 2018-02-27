@@ -3,6 +3,7 @@
 namespace SEO\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * @property varchar $path path
@@ -149,6 +150,41 @@ class Page extends Model
             $retArr[] = $pageMeta;
         }
         return $retArr;
+    }
+
+    /**
+     * @param array $images
+     * @return Collection
+     */
+    public function saveImagesFromArray(array $images)
+    {
+        $ret = [];
+
+        foreach ($images as $image) {
+            if (is_array($image)) {
+                if (!isset($image['src'])) {
+                    continue;
+                }
+                $pageImage = PageImage::firstOrCreate(['src' => $image['src'], 'page_id' => $this->id]);
+
+                if (isset($image['title'])) {
+                    $pageImage->title = $image['title'];
+                }
+                if (isset($image['caption'])) {
+                    $pageImage->caption = $image['caption'];
+
+                }
+                if (isset($image['location'])) {
+                    $pageImage->location = $image['location'];
+                }
+                if ($pageImage->save()) {
+                    $ret[] = $pageImage;
+                }
+            } else {
+                $ret[] = PageImage::firstOrCreate(['src' => $image, 'page_id' => $this->id]);
+            }
+        }
+        return new Collection($ret);
     }
 
 }
