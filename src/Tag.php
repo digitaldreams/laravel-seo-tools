@@ -61,9 +61,16 @@ class Tag
      */
     protected function pageLevel()
     {
-        $this->tags[] = '<title>' . $this->page->getTitle() . ' | ' . $this->setting->getValueByKey('site_title') . '</title>';
+        $siteTitle = $this->setting->getValueByKey('site_title');
+        if (!empty($siteTitle)) {
+            $siteTitle = ' | ' . $siteTitle;
+        }
+        $this->tags[] = '<title>' . $this->page->getTitle() . $siteTitle . '</title>';
         $this->tags[] = '<link rel="canonical" href="' . $this->page->getCanonical() . '" />';
-        $this->tags[] = '<meta name="description" content="' . $this->page->getDescription() . '" />';
+        $description = $this->page->getDescription();
+        if (!empty($description)) {
+            $this->tags[] = '<meta name="description" content="' . $description . '" />';
+        }
         return $this;
     }
 
