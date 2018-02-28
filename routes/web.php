@@ -3,7 +3,7 @@ Route::group([
     'prefix' => 'seo', 'as' => 'seo::',
     'middleware' => ['web', config('seo.middleware', 'auth')],
     'namespace' => '\SEO\Http\Controllers'], function () {
-
+    Route::get('analysis', ['uses' => 'AnalysisController@index', 'analysis.index']);
     Route::get('dashboard', ['uses' => 'DashboardController@index', 'as' => 'dashboard.index']);
     Route::get('dashboard/social', ['uses' => 'DashboardController@social', 'as' => 'dashboard.social']);
     Route::get('dashboard/sitemap', ['uses' => 'DashboardController@sitemap', 'as' => 'dashboard.sitemap']);

@@ -23,11 +23,6 @@ class PageAnalysis
     /**
      * @var
      */
-    protected $textContent;
-
-    /**
-     * @var
-     */
     protected $success = false;
 
     /**
@@ -50,7 +45,16 @@ class PageAnalysis
      */
     protected $url;
 
+    /**
+     * @var int
+     */
     protected $resourceSize = 0;
+
+    protected $host;
+
+    protected $scheme;
+
+    protected $doman;
 
     /**
      * PageAnalysis constructor.
@@ -68,8 +72,17 @@ class PageAnalysis
             $this->dom->loadHTML($this->htmlContent);
             $this->xpath = new \DOMXpath($this->dom);
             libxml_clear_errors();
+            $this->doman = $this->getDomain();
         }
 
+    }
+
+    /**
+     * @return null|string|string[]
+     */
+    public function textContent()
+    {
+        return preg_replace('/^[ \t]*[\r\n]+/m', '', strip_tags($this->htmlContent));
     }
 
     /**
@@ -187,7 +200,7 @@ class PageAnalysis
 
                 if ($attr->name == 'href') {
                     $link['href'] = $attr->nodeValue;
-                    $link['internal'] = $this->isInternal($attr->nodeValue);
+                    $link['internal'] = $this->isInternal($this->linkBuilder($attr->nodeValue));
                     $link['exists'] = null;
                 } else {
                     $link[$attr->name] = $attr->nodeValue;
@@ -206,7 +219,7 @@ class PageAnalysis
      */
     public function isInternal($url)
     {
-        return parse_url($url, PHP_URL_HOST) == parse_url(url('/'), PHP_URL_HOST);
+        return parse_url($url, PHP_URL_HOST) == $this->host;
     }
 
     /**
@@ -231,7 +244,9 @@ class PageAnalysis
                 $mg['width'] = '';
                 $mg['height'] = '';
                 $mg['mime'] = '';
+
                 if (isset($mg['src']) && !empty($mg['src'])) {
+                    $mg['src'] = $this->linkBuilder($mg['src']);
                     $info = @getimagesize($mg['src']);
                     if (!empty($info)) {
                         $mg['width'] = isset($info[0]) ? $info[0] : '';
@@ -275,12 +290,12 @@ class PageAnalysis
         foreach ($files as $file) {
             foreach ($file->attributes as $attr) {
                 if ($attr->name == $attrName) {
-                    $sizeKb = !empty($size) ? round(Helper::fileSize($attr->nodeValue) / 1000) : null;
+                    $sizeKb = !empty($size) ? round(Helper::fileSize($this->linkBuilder($attr->nodeValue)) / 1000) : null;
                     if ($size) {
                         $this->resourceSize += $sizeKb;
                     }
                     $retFiles[] = [
-                        $attrName => $attr->nodeValue,
+                        $attrName => $this->linkBuilder($attr->nodeValue),
                         'size' => $sizeKb
                     ];
                 }
@@ -313,4 +328,31 @@ class PageAnalysis
         $file_headers = @get_headers($url);
         return $file_headers[0] == 'HTTP/1.1 404 Not Found' ? false : true;
     }
+
+    protected function getDomain()
+    {
+        $ret = '';
+        $parts = parse_url($this->url);
+        if (isset($parts['scheme']) && !empty($parts['scheme'])) {
+            $this->scheme = $parts['scheme'];
+            $ret = $this->scheme . "://";
+        }
+        if (isset($parts['host']) && !empty($parts['host'])) {
+            $this->host = $parts['host'];
+            $ret .= $this->host;
+        }
+        return !empty($ret) ? $ret : url($this->url);
+    }
+
+    /**
+     * Make partial url to absolute
+     * @param $url
+     * @return string
+     */
+    protected function linkBuilder($url)
+    {
+        $linkHost=parse_url($url, PHP_URL_HOST);
+        return empty($linkHost) ? $this->doman . '/' . ltrim($url, "/") : $url;
+    }
+
 }
