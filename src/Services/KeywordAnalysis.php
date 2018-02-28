@@ -35,7 +35,7 @@ class KeywordAnalysis extends PageAnalysis
      * @param $url
      * @param $keyword
      */
-    public function __construct($url, $keyword,$size=false)
+    public function __construct($url, $keyword, $size = false)
     {
         parent::__construct($url);
         $this->keyword = $keyword;
@@ -49,6 +49,7 @@ class KeywordAnalysis extends PageAnalysis
     {
         $keywordWord = str_word_count($this->keyword);
         $pageWord = str_word_count($this->textContent());
+
         return round(($keywordWord / $pageWord) * 100, 2);
     }
 
@@ -57,6 +58,7 @@ class KeywordAnalysis extends PageAnalysis
      */
     public function inTitle()
     {
+
         $matches = $this->find($this->data['title']);
         if ($matches > 0) {
             $this->good[] = 'Keyword found in title';
@@ -70,13 +72,26 @@ class KeywordAnalysis extends PageAnalysis
     /**
      * @return $this
      */
+    public function run()
+    {
+        $this->inTitle()->inDescription()->inHeadings()->inImageAlt()->inFirstPara()->density();
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
     public function inDescription()
     {
-        $matches = $this->find($this->data['metas']['description']);
-        if ($matches > 0) {
-            $this->good[] = 'Keyword found in meta description';
+        if (isset($this->data['metas']['description'])) {
+            $matches = $this->find($this->data['metas']['description']['content']);
+            if ($matches > 0) {
+                $this->good[] = 'Keyword found in meta description';
+            } else {
+                $this->errors[] = 'Keyword is not found on meta description';
+            }
         } else {
-            $this->errors[] = 'Keyword is not found on meta description';
+            $this->errors[] = 'No meta description found';
         }
         return $this;
     }
@@ -151,6 +166,7 @@ class KeywordAnalysis extends PageAnalysis
         if (count($altArr) < count($images)) {
             $this->warnings[] = count($images) - count($altArr) . ' alt attribute missing from image';
         }
+        return $this;
 
     }
 
@@ -159,7 +175,7 @@ class KeywordAnalysis extends PageAnalysis
      */
     public function inFirstPara()
     {
-
+        return $this;
     }
 
     /**
@@ -170,6 +186,16 @@ class KeywordAnalysis extends PageAnalysis
     {
         preg_match_all('/(' . $this->keyword . ')/i', $string, $matches, PREG_SET_ORDER);
         return count($matches);
+    }
+
+    public function result()
+    {
+        return [
+            'good' => $this->good,
+            'warnings' => $this->warnings,
+            'errors' => $this->errors,
+
+        ];
     }
 
 }

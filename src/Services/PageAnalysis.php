@@ -257,7 +257,6 @@ class PageAnalysis
                             $sizeKb = round(Helper::fileSize($mg['src']) / 1000);
                             $this->resourceSize += $sizeKb;
                             $mg['size'] = $sizeKb;
-
                         }
                     }
                 }
@@ -267,10 +266,10 @@ class PageAnalysis
         return $retImgs;
     }
 
-    public function css()
+    public function css($size = true)
     {
         $css = $this->xpath->query("*/link[@rel='stylesheet']");
-        return $this->jscss($css, 'href');
+        return $this->jscss($css, 'href',$size);
     }
 
     /**
@@ -280,7 +279,7 @@ class PageAnalysis
     public function js($size = true)
     {
         $scripts = $this->dom->getElementsByTagName("script");
-        return $this->jscss($scripts, 'src');
+        return $this->jscss($scripts, 'src',$size);
     }
 
     protected function jscss($files, $attrName, $size = true)

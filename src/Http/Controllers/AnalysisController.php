@@ -22,15 +22,15 @@ class AnalysisController
         $data = [
             'success' => false
         ];
-        if(!empty($url)){
-            $pageAnalysis = new KeywordAnalysis($url, $keyword, true);
+        if (!empty($url)) {
+            $pageAnalysis = new KeywordAnalysis($url, $keyword, false);
+
             if ($pageAnalysis->isSuccess()) {
                 $data = array_merge($pageAnalysis->toArray(), $data);
                 $data['success'] = true;
+                $data['result'] = $pageAnalysis->run()->result();
             }
         }
-
-
         return view('seo::pages.analysis.index', $data);
     }
 

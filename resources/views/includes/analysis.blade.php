@@ -208,54 +208,77 @@
                 </tr>
                 </tbody>
             </table>
+
+
+            @if(count($images) >0)
+                @foreach(array_chunk($images,4) as $imgChunk)
+                    <div class="card-group">
+                        @foreach($imgChunk as $image)
+                            <div class="card mb-2">
+                                <?php if (isset($image['src']) && !empty($image['src'])): ?>
+                                <img src="{{$image['src']}}" class="card-img-top img-responsive">
+                                <?php endif; ?>
+                                <div class="card-body mb-0 p-1">
+                                    <div class="card-title">
+                                        @if (isset($image['alt']) && !empty($image['alt']))
+                                            <small class="text-muted">{{$image['alt']}}</small>
+                                        @else
+                                            <i class="fa fa-remove text-danger fa-2x"></i> No Alt attribute found
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-footer p-0">
+                                    @if (isset($image['src']) && !empty($image['src']))
+
+                                        @if(isset($image['width']) && isset($image['height']))
+                                            &nbsp;<label class="badge badge-secondary"> {{$image['width']}}px
+                                                x {{$image['height']}}px</label>
+                                        @endif
+
+                                        @if(isset($image['mime']))
+                                            <label class="badge badge-secondary">{{$image['mime']}}</label>
+                                        @endif
+
+                                        &nbsp;@if(isset($image['size']))
+                                            <label class="badge badge-secondary">
+                                                {{$image['size']}} kb
+                                            </label>
+                                        @endif
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endforeach
+            @else
+                <i class="fa fa-remove text-danger fa-2x"></i> No image found
+            @endif
         </div>
         <div class="col-sm-3">
             <p class="lead border-light border bg-light">
                 &nbsp;<label class="badge badge-info"> {{$size}} KB</label> total page size
             </p>
-            @if(count($images) >0)
-                @foreach($images as $image)
-                    <div class="card mb-2">
-                        <?php if (isset($image['src']) && !empty($image['src'])): ?>
-                        <img src="{{$image['src']}}" class="card-img-top img-responsive">
-                        <?php endif; ?>
-                        <div class="card-body mb-0 p-1">
-                            <div class="card-title">
-                                @if (isset($image['alt']) && !empty($image['alt']))
-                                    <small class="text-muted">{{$image['alt']}}</small>
-                                @else
-                                    <i class="fa fa-remove text-danger fa-2x"></i> No Alt attribute found
-                                @endif
-                            </div>
-                        </div>
-                        <div class="card-footer p-0">
-                            @if (isset($image['src']) && !empty($image['src']))
-
-                                @if(isset($image['width']) && isset($image['height']))
-                                    &nbsp;<label class="badge badge-secondary"> {{$image['width']}}px
-                                        x {{$image['height']}}px</label>
-                                @endif
-
-                                @if(isset($image['mime']))
-                                    <label class="badge badge-secondary">{{$image['mime']}}</label>
-                                @endif
-
-                                &nbsp;@if(isset($image['size']))
-                                    <label class="badge badge-secondary">
-                                        {{$image['size']}} kb
-                                    </label>
-                                @endif
-                            @endif
-                        </div>
-                    </div>
+            <h3>Keyword Analysis</h3>
+            <div class="alert">
+                
+            </div>
+            <ul class="list-group">
+                @foreach($result['good'] as $message)
+                    <li class="list-group-item list-group-item-success">{{$message}}</li>
                 @endforeach
-
-            @else
-                <i class="fa fa-remove text-danger fa-2x"></i> No image found
-            @endif
+            </ul>
+            <ul class="list-group">
+                @foreach($result['warnings'] as $message)
+                    <li class="list-group-item list-group-item-warning">{{$message}}</li>
+                @endforeach
+            </ul>
+            <ul class="list-group">
+                @foreach($result['errors'] as $message)
+                    <li class="list-group-item list-group-item-danger">{{$message}}</li>
+                @endforeach
+            </ul>
         </div>
     @else
         <div class="alert alert-warning">Page does not exists</div>
     @endif
-
 </div>
