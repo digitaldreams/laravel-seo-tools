@@ -1,7 +1,7 @@
 <p class="text-small text-muted">This data is shown as metadata in your site. It is intended to appear in
     Google's Knowledge Graph.
     You can be either a company or a person</p>
-<form action="{{route('seo::settings.store')}}" method="post">
+<form action="{{route('seo::settings.store')}}" method="post" enctype="multipart/form-data">
     {{csrf_field()}}
     <div class="form-group row">
         <label for="settings_ownership_type" class="col-sm-3">Organization / person</label>
@@ -45,12 +45,18 @@
         <p class="text-muted text-center">Physical address of Company</p>
     </div>
     <div class="form-group row">
-        <label for="settings_ownership_logo" class="col-sm-3"><i class="fa fa-image"></i> Logo </label>
-        <input type="text" name="settings[ownership_logo][value]" class="form-control col-sm-9"
-               id="settings_ownership_logo" value="{{$model->getValueByKey('ownership_logo')}}"
-               placeholder="e.g. https://www.your-site.com/logo.png">
+        <label for="settings_ownership_logo" class="col-sm-3"><i class="fa fa-image"></i> Logo
+        </label>
+        <div class="custom-file">
+            <input type="file" id="settings_ownership_logo"  name="settings[ownership_logo][value]"  class="custom-file-input form-control-lg"  placeholder="e.g. https://www.your-site.com/logo.png">
+            <span class="custom-file-control">
+                    {{pathinfo($model->getValueByKey('ownership_logo'),PATHINFO_BASENAME)}}
+            </span>
+        </div>
+
         <p class="text-muted text-center">
-            URL of a logo that is representative of the organization. The image must be 112x112px, at minimum and in .jpg, .png, or. gif format
+            URL of a logo that is representative of the organization. The image must be 112x112px, at minimum and in
+            .jpg, .png, or. gif format
         </p>
     </div>
 
