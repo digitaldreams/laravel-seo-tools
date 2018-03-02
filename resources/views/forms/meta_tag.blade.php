@@ -135,6 +135,8 @@
                     <option value="number" {{old('input_type',$model->input_type)=='number'?'selected':''}}>Number
                     </option>
                     <option value="url" {{old('input_type',$model->input_type)=='url'?'selected':''}}>URL</option>
+                    <option value="file" {{old('input_type',$model->input_type)=='file'?'selected':''}}>File</option>
+
                     <option value="email" {{old('input_type',$model->input_type)=='email'?'selected':''}}>Email</option>
                     <option value="date" {{old('input_type',$model->input_type)=='date'?'selected':''}}>Date</option>
                     <option value="datetime" {{old('input_type',$model->input_type)=='datetime'?'selected':''}}>Date

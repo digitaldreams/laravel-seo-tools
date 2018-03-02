@@ -59,5 +59,26 @@ return [
          * Expire in seconds. Default it would be one hour
          */
         'expire' => 3600
+    ],
+
+    /**
+     * Image Storage
+     */
+    'storage' => [
+
+        /**
+         * Storage driver
+         */
+        'driver' => 'public',
+
+        /**
+         * Prefix which will be used before every image url
+         */
+        'prefix' => 'storage',
+
+        /**
+         * Which folder on your driver will storaage all the files
+         */
+        'folder' => 'seo'
     ]
 ];

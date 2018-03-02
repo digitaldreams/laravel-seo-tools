@@ -260,7 +260,7 @@
             </p>
             <h3>Keyword Analysis</h3>
             <div class="alert">
-                
+
             </div>
             <ul class="list-group">
                 @foreach($result['good'] as $message)

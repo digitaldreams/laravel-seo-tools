@@ -104,8 +104,12 @@ class Seo
     public static function save(Model $model, $url, $data = [])
     {
         try {
-            $fillable = request()->get('page', []);
+            $imageMeta = [];
             $images = [];
+
+            $fillable = request()->get('page', []);
+
+
             if (isset($data['images'])) {
                 $images = $data['images'];
                 unset($data['images']);
@@ -132,7 +136,10 @@ class Seo
                     $page->saveImagesFromArray($images);
                 }
                 $metaValues = request()->get('meta', []);
+
                 $page->saveMeta($metaValues);
+
+                $page->saveMeta(static::upload(request()->file('meta')));
             }
             return $page;
         } catch (\Exception $e) {
@@ -155,5 +162,25 @@ class Seo
             }
         }
         return false;
+    }
+
+    /**
+     * @param $files
+     * @return array
+     */
+    public static function upload($files)
+    {
+        $imageMeta = [];
+        $metaImages = request()->file('meta');
+
+        $imageDriver = config('seo.storage.driver', 'public');
+        $imagePrefix = config('seo.storage.prefix', 'storage');
+        $imageFolder = config('seo.storage.folder', 'seo');
+
+        foreach ($metaImages as $id => $img) {
+            $path = $img->store($imageFolder, $imageDriver);
+            $imageMeta[$id] = asset($imagePrefix . '/' . $path);
+        }
+        return $imageMeta;
     }
 }
