@@ -4,6 +4,7 @@ namespace SEO\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @property varchar $path path
@@ -130,6 +131,25 @@ class Page extends Model
     public function metaTags()
     {
         return MetaTag::withGroupBy($this->id, 'page', $this);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function pageLevel()
+    {
+        if (!empty($this->id)) {
+            $sql = 'select  m.*,pm.content from seo_meta_tags as m 
+                left join seo_page_meta_tags as pm on m.id=pm.seo_meta_tag_id ';
+            $sql .= 'and pm.seo_page_id=:id ';
+            $params['id'] = $this->id;
+        } else {
+            $sql = 'select * from seo_meta_tags as m ';
+        }
+        $sql .= ' where m.status=:status and m.visibility=:visibility';
+        $params['status'] = 'active';
+        $params['visibility'] = 'page';
+        return MetaTag::parseTags(DB::select($sql, $params), $this);
     }
 
     public function assignDefaultValueToMeta($meta)

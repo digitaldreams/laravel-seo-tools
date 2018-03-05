@@ -103,6 +103,18 @@ class MetaTag extends Model
         return DB::select($sql, $params);
     }
 
+    public static function forGlobal()
+    {
+        $params = [];
+        $sql = 'select distinct m.*,pm.content from seo_meta_tags as m 
+                left join seo_page_meta_tags as pm on m.id=pm.seo_meta_tag_id and pm.seo_page_id is NULL ';
+        $sql .= ' where m.status=:status and m.visibility=:visibility ';
+        $params['status'] = 'active';
+        $params['visibility'] = 'global';
+        $results = DB::select($sql, $params);
+        return static::parseTags($results);
+    }
+
     /**
      * @param string $page_id
      * @param string $visibility
@@ -114,6 +126,17 @@ class MetaTag extends Model
         $metaTags = [];
         $results = static::withContent($page_id, $visibility);
 
+        return static::parseTags($results, $page);
+    }
+
+    /**
+     * @param $results
+     * @param $page
+     * @return mixed
+     */
+    public static function parseTags($results, $page = '')
+    {
+        $metaTags = [];
         foreach ($results as $meta) {
 
             if ($page instanceof Page) {

@@ -76,7 +76,7 @@ class Seo
             'object_id' => $model->getKey()
         ]);
 
-        $metaTags = $page->metaTags();
+        $metaTags = $page->pageLevel();
 
         if (isset($metaTags['og'])) {
             $og = $metaTags['og'];

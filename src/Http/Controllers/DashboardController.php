@@ -37,7 +37,7 @@ class DashboardController
      */
     public function social()
     {
-        $metaTags = MetaTag::withGroupBy('', 'global');
+        $metaTags = MetaTag::forGlobal();
         $data = [
             'records' => Setting::paginate(10),
             'og' => isset($metaTags['og']) ? $metaTags['og'] : [],

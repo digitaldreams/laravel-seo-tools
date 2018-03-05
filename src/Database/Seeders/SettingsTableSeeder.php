@@ -74,12 +74,28 @@ class SettingsTableSeeder extends Seeder
                 'group' => 'social_media_links'
             ],
             [
+                'label' => 'Facebook Default Image',
+                'description' => 'When no image found for a page then this image will be used',
+                'key' => 'facebook_default_image',
+                'value' => '',
+                'status' => 'active',
+                'group' => 'facebook'
+            ],
+            [
                 'label' => 'Twitter Username',
                 'description' => '',
                 'key' => 'twitter_username',
                 'value' => '',
                 'status' => 'active',
                 'group' => 'social_media_links'
+            ],
+            [
+                'label' => 'Twitter Default Image',
+                'description' => 'When no image found for a page then this image will be used',
+                'key' => 'twitter_default_image',
+                'value' => '',
+                'status' => 'active',
+                'group' => 'twitter'
             ],
             [
                 'label' => 'Instagram URL',
@@ -162,7 +178,7 @@ class SettingsTableSeeder extends Seeder
                 'group' => 'ownership'
             ],
             [
-                'label' => 'Logo',
+                'label' => 'Contact Type Telephone',
                 'description' => '  URL of a logo that is representative of the organization.',
                 'key' => 'ownership_contact_point_telephone',
                 'value' => '',
