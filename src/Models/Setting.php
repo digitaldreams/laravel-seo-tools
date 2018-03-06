@@ -35,4 +35,26 @@ class Setting extends Model
         return is_object($settings) ? $settings->$column : false;
     }
 
+    /**
+     * @param $files
+     * @return array
+     */
+    public static function upload($files)
+    {
+        $imageMeta = [];
+
+        $imageDriver = config('seo.storage.driver', 'public');
+        $imagePrefix = config('seo.storage.prefix', 'storage');
+        $imageFolder = config('seo.storage.folder', 'seo');
+
+        foreach ($files as $key => $fields) {
+            if (!isset($fields['value'])) {
+                continue;
+            }
+            $img = $fields['value'];
+            $path = $img->store($imageFolder, $imageDriver);
+            $imageMeta[$key]['value'] = asset($imagePrefix . '/' . $path);
+        }
+        return $imageMeta;
+    }
 }

@@ -1,5 +1,5 @@
 <div class="tab-pane show active" id="nav-social" role="tabpanel" aria-labelledby="nav-social-tab">
-    <form action="{{route('seo::settings.store')}}" method="post">
+    <form action="{{route('seo::settings.store')}}" method="post" enctype="multipart/form-data">
         {{csrf_field()}}
 
 
@@ -15,6 +15,22 @@
 
             </div>
         </div>
+        <div class="form-group row">
+            <label for="facebook_default_image" class="col-sm-2 col-form-label"><i class="fa fa-facebook-official"></i>
+                Facebook Default Image</label>
+            <div class="col-sm-10">
+                <div class="custom-file">
+                    <input type="file" id="facebook_default_image" name="settings[facebook_default_image][value]"
+                           class="custom-file-input form-control-lg"
+                           placeholder="e.g. Upload your image">
+                    <span class="custom-file-control">
+                    {{pathinfo($model->getValueByKey('facebook_default_image'),PATHINFO_BASENAME)}}
+            </span>
+                </div>
+
+            </div>
+        </div>
+
 
         <div class="form-group row">
             <label for="twitter_username" class="col-sm-2 col-form-label"><i class="fa fa-twitter"></i>
@@ -25,6 +41,22 @@
                            name="settings[twitter_username][value]"
                            value="{{$model->getValueByKey('twitter_username')}}"
                            id="twitter_username" placeholder="Twitter username">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="facebook_default_image" class="col-sm-2 col-form-label"><i class="fa fa-facebook-official"></i>
+                Twitter Default Image</label>
+            <div class="col-sm-10">
+                <div class="custom-file">
+                    <input type="file" id="twitter_default_image" name="settings[twitter_default_image][value]"
+                           class="custom-file-input form-control-lg"
+                           placeholder="e.g. Upload your image">
+                    <span class="custom-file-control">
+                    {{pathinfo($model->getValueByKey('twitter_default_image'),PATHINFO_BASENAME)}}
+            </span>
                 </div>
 
             </div>
