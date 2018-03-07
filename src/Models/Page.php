@@ -196,7 +196,7 @@ class Page extends Model
 
         foreach ($images as $image) {
             if (is_array($image)) {
-                if (!isset($image['src'])) {
+                if (!isset($image['src']) || empty($image['src'])) {
                     continue;
                 }
                 $pageImage = PageImage::firstOrCreate(['src' => $image['src'], 'page_id' => $this->id]);
@@ -214,7 +214,7 @@ class Page extends Model
                 if ($pageImage->save()) {
                     $ret[] = $pageImage;
                 }
-            } else {
+            } elseif(!empty($image)) {
                 $ret[] = PageImage::firstOrCreate(['src' => $image, 'page_id' => $this->id]);
             }
         }

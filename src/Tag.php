@@ -43,6 +43,19 @@ class Tag
     /**
      * @var array
      */
+    protected static $map = [
+        'name' => [
+            'twitter:image' => 'twitter_default_image',
+        ],
+        'property' => [
+
+            'og:image' => 'facebook_default_image'
+        ]
+    ];
+
+    /**
+     * @var array
+     */
     protected $globalGroups = ['og', 'twitter', 'article', 'webmaster'];
 
     /**
@@ -256,6 +269,7 @@ class Tag
     protected function generator($tags)
     {
         foreach ($tags as $tag) {
+            $tag = $this->assignDefaultValueFromSettings($tag);
             if (!empty($tag->content)) {
                 if (!empty($tag->name)) {
                     $this->tags[] = '<meta name="' . $tag->name . '" content="' . $tag->content . '" />';
@@ -268,5 +282,26 @@ class Tag
             }
         }
         return $this;
+    }
+
+    protected function assignDefaultValueFromSettings($meta)
+    {
+        $settingModel = new Setting();
+        if (empty($meta->content)) {
+            $fieldMap = static::$map;
+            if (!empty($meta->name) && isset($fieldMap['name'][$meta->name])) {
+                $settingKeyName = $fieldMap['name'][$meta->name];
+            } elseif (!empty($meta->property) && isset($fieldMap['property'][$meta->property])) {
+                $settingKeyName = $fieldMap['property'][$meta->property];
+            }
+
+            if (!empty($settingKeyName)) {
+                $value = $settingModel->getValueByKey($settingKeyName);
+                if (!empty($value)) {
+                    $meta->content = $value;
+                }
+            }
+        }
+        return $meta;
     }
 }
