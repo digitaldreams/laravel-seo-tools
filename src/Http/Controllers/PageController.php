@@ -27,6 +27,7 @@ use SEO\Models\PageImage;
 use SEO\Models\PageMetaTag;
 use SEO\Services\PageAnalysis;
 use SEO\Tag;
+use SEO\Services\KeywordAnalysis;
 
 /**
  * Description of PageController
@@ -127,13 +128,17 @@ class PageController extends Controller
      */
     public function edit(Edit $request, Page $page)
     {
+        $keywordAnalysis=false;
         $metaTags = $page->metaTags();
 
         if (isset($metaTags['og'])) {
             $og = $metaTags['og'];
             unset($metaTags['og']);
         }
-
+        if (!empty($page->focus_keyword)) {
+            $keyword = new KeywordAnalysis($page->path, $page->focus_keyword);
+            $keywordAnalysis = $keyword->run()->result();
+        }
         if (isset($metaTags['twitter'])) {
             $twitter = $metaTags['twitter'];
             unset($metaTags['twitter']);
@@ -143,6 +148,7 @@ class PageController extends Controller
             'og' => $og,
             'twitter' => $twitter,
             'metaTags' => $metaTags,
+            'keywordAnalysis'=> $keywordAnalysis
         ]);
     }
 
