@@ -34,14 +34,28 @@ class KeywordAnalysis extends PageAnalysis
      * KeywordAnalysis constructor.
      * @param $url
      * @param $keyword
+     * @param bool $size
      */
     public function __construct($url, $keyword, $size = false)
     {
         parent::__construct($url);
         $this->keyword = $keyword;
-        $this->fetch($size);
+        $this->fetchBasic($size);
     }
 
+    /**
+     * @param bool $size
+     * @return $this
+     */
+    public function fetchBasic($size = false)
+    {
+        $this->data['title'] = $this->title();
+        $this->data['metas'] = $this->metaTags();
+        $this->data['headings'] = $this->headings();
+        $this->data['images'] = $this->images($size);
+        $this->data['anchors'] = $this->anchor();
+        return $this;
+    }
     /**
      *
      */

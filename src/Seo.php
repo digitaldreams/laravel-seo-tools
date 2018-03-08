@@ -11,6 +11,7 @@ namespace SEO;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use SEO\Models\Page;
+use SEO\Services\KeywordAnalysis;
 
 class Seo
 {
@@ -75,14 +76,17 @@ class Seo
             'object' => get_class($model),
             'object_id' => $model->getKey()
         ]);
-
+        $keywordAnalysis = false;
         $metaTags = $page->pageLevel();
 
         if (isset($metaTags['og'])) {
             $og = $metaTags['og'];
             unset($metaTags['og']);
         }
-
+        if (!empty($page->focus_keyword)) {
+            $keyword = new KeywordAnalysis($page->path, $page->focus_keyword);
+            $keywordAnalysis = $keyword->run()->result();
+        }
         if (isset($metaTags['twitter'])) {
             $twitter = $metaTags['twitter'];
             unset($metaTags['twitter']);
@@ -92,6 +96,7 @@ class Seo
             'og' => $og,
             'twitter' => $twitter,
             'metaTags' => $metaTags,
+            'keywordAnalysis' => $keywordAnalysis
         ]);
     }
 

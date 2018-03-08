@@ -28,7 +28,18 @@ class Page extends Model
     /**
      * Protected columns from mass assignment
      */
-    protected $fillable = ['title', 'description', 'path', 'canonical_url', 'robot_index', 'robot_follow', 'change_frequency', 'priority', 'schema'];
+    protected $fillable = [
+        'title',
+        'description',
+        'path',
+        'canonical_url',
+        'robot_index',
+        'robot_follow',
+        'change_frequency',
+        'priority',
+        'schema',
+        'focus_keyword'
+    ];
 
 
     /**
