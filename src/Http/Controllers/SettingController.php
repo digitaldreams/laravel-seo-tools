@@ -33,7 +33,8 @@ class SettingController extends Controller
         return view('seo::pages.settings.index', [
                 'records' => Setting::paginate(10),
                 'model' => new Setting(),
-                'sitemaps' => (new SiteMap())->all()
+                'sitemaps' => (new SiteMap())->all(),
+                'metaTags'=>[]
             ]
         );
     }
