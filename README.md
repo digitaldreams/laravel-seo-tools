@@ -27,3 +27,9 @@ Also you can set pririty and change frequency of your page.
 
 ### Robot.txt and .htaccess file customization ###
 Web master sometings need to have access to robot.txt and .htaccess. Now it can be done via dashboard. Although its require expertise knowledge to modify this files. 
+
+### Meta tag management ###
+Only way to inform search engine about your site or page is via Meta tags. There are many tags. Most common are already there. But you can able to create, edit or delete any of them. To add a meta tag you do not have to call programmer. You can do it from dashbarod. 
+
+This is simple. Isn't it?
+
