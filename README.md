@@ -1,29 +1,16 @@
-# README #
+# Laravel Seo Tools #
 
-This README would normally document whatever steps are necessary to get your application up and running.
 
-### What is this repository for? ###
+### Easy To Use ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+### Social Media Sharing ###
 
-### How do I get set up? ###
+### Page management ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+### Submit Company or Personal Information to Google ###
 
-### Contribution guidelines ###
+### Webmaster tools ###
 
-* Writing tests
-* Code review
-* Other guidelines
+### Sitemap Generator ###
 
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+### Robot.txt and .htaccess file customization ###
