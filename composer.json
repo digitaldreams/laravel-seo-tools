@@ -1,0 +1,44 @@
+{
+  "name": "digitaldream/laravel-seo-tools",
+  "type": "library",
+  "description": "Laravel Seo package for Content writer/admin/web master who do not know programming but want to edit/update SEO tags from dashboard",
+  "keywords": [
+    "Laravel",
+    "SEO",
+    "SEO Tools",
+    "Laravel SEO tools"
+  ],
+  "homepage": "https://github.com/digitaldreams/laravel-seo-tools",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tuhin Bepari",
+      "email": "digitaldreams40@gmail.com",
+      "homepage": "http://www.tuhinbepari.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.6.0",
+    "laravel/framework": ">=5.3"
+  },
+  "require-dev": {
+  },
+  "suggest": {
+    "digitaldreams/laracrud": "For Laravel Code generator"
+  },
+  "autoload": {
+    "psr-4": {
+      "SEO\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "SEO\\SeoServiceProvider"
+      ],
+      "aliases": {
+      }
+    }
+  }
+}
