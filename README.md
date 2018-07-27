@@ -8,28 +8,33 @@ Target user of this tool is non programmer. So they can able to add/modify on pa
 
 ### Social media sharing ###
 Everybody loves to share their page or content in Socail media. By using tools you can able to manage how your page looks like in Facebook, Twitter and others and what image will be shown, which title and description are shown and many more. 
+<img src="https://image.ibb.co/e2yAzT/social_media.png" alt="social_media" border="0">
 
 ### Page management ###
 Your application have many pages but not all of them for search engine. You can control this from your dashboard. 
 Also it can be set via programatically for example when a post is published it will automatically added to xml sitemap and will add necessary seo tags so search engine can understand its purpose and content. 
+<img src="https://image.ibb.co/j8Jom8/page_management.png" alt="page_management" border="0">
 
 ### Submit company or personal information to Google ###
  For business or ecommerce we often see support email, telephone and some other extra information like ther facebook, Twiteer account in google search. This can be done schema.org tags. To make this super simple there have few input field that you can easily fill and save. 
 Behind the scene everyting will be done for you. 
+<img src="https://image.ibb.co/frTceT/company_personal_info.png" alt="company_personal_info" border="0">
 
 ### Webmaster tools ###
 Sometimes web master need ftp or file access because they need to add some verification code into your site. Using this tools they can simply add this from dashboard. Like Google Verification code
-
+<img src="https://image.ibb.co/mUkZR8/webmaster_tools.png" alt="webmaster_tools" border="0">
 ### Sitemap generator ###
-Sitemap are the key to search engine. Search engline will crawl your website according to this. It will be created automatically for you. 
-Also you can set pririty and change frequency of your page. 
+Sitemap are the key to search engine. Search engline will crawl your website according to this. It will be created automatically for you. Also you can set pririty and change frequency of your page. 
+<img src="https://image.ibb.co/jQGKto/site_map.png" alt="site_map" border="0">
 
 
 ### Robot.txt and .htaccess file customization ###
 Web master sometings need to have access to robot.txt and .htaccess. Now it can be done via dashboard. Although its require expertise knowledge to modify this files. 
+<img src="https://image.ibb.co/hM3ceT/robot_htaccess.png" alt="robot_htaccess" border="0">
 
 ### Meta tag management ###
 Only way to inform search engine about your site or page is via Meta tags. There are many tags. Most common are already there. But you can able to create, edit or delete any of them. To add a meta tag you do not have to call programmer. You can do it from dashbarod. 
 
+<img src="https://image.ibb.co/meMkYo/meta_tags.png" alt="meta_tags" border="0">
 This is simple. Isn't it?
 
