@@ -2,6 +2,52 @@
 Laravel is becoming more and more popular and lots of web application are developing. In most of the web application there need some SEO work for thir marketing purpose. There are some tools but those are not suitable for non programmer. Everything can be control via dashboard  like  [Wordpress Yoast](https://yoast.com/)
 
 ### Installation ###
+```javascript
+  "require": { 
+     "digitaldream/laravel-seo-tools": "dev-master"
+}
+```
+#### Settings ###
+
+01. Add this line to config/app.php providers array . Not needed if you are using laravel 5.5 or greater
+```php
+    SEO\SeoServiceProvider::class
+``` 
+  
+02. Then Run
+```php
+    php artisan vendor:publish --provider="SEO\SeoServiceProvider"
+```
+
+03. Run migration
+```php 
+  php artisan migrate
+```
+04. Run Seed
+```php 
+   php artisan db:seed --class="SEO\Database\Seeders\SeoTablesSeeder"
+```
+05. Show form into your post/content page
+```javascript
+     {!! \SEO\Seo::form($model) !!}
+```
+
+06. Save tags into your controller
+ ```php
+      if ($model->save()) {
+            Seo::save($model, route('blog::posts.show', $model->slug), [
+                'title' => $model->title,
+                'images' => [
+                    $model->getImageUrl()
+                ]
+            ]);
+           }
+```
+07. Finally display tags into your layouts header
+```php
+   $tag = new \SEO\Seo();
+   print($tag->tags());
+```
 
 ### Easy to use ###
 Target user of this tool is non programmer. So they can able to add/modify on page SEO tags and do some necessary action that can give full control how this page will be appear by Search Engine. 
