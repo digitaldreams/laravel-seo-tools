@@ -61,9 +61,11 @@ class PageController extends Controller
             'record' => $page,
             'success' => false
         ];
-        $pageAnalysis = new PageAnalysis($page->getFullUrl());
+        $pageAnalysis = new KeywordAnalysis($page->getFullUrl(), $page->keyword);
         if ($pageAnalysis->isSuccess()) {
+
             $data = array_merge($pageAnalysis->fromCache()->save()->toArray(), $data);
+            $data['result'] = $pageAnalysis->run()->result();
             $data['success'] = true;
         }
         return view('seo::pages.pages.show', $data);
@@ -128,7 +130,7 @@ class PageController extends Controller
      */
     public function edit(Edit $request, Page $page)
     {
-        $keywordAnalysis=false;
+        $keywordAnalysis = false;
         $metaTags = $page->metaTags();
 
         if (isset($metaTags['og'])) {
@@ -148,7 +150,7 @@ class PageController extends Controller
             'og' => $og,
             'twitter' => $twitter,
             'metaTags' => $metaTags,
-            'keywordAnalysis'=> $keywordAnalysis
+            'keywordAnalysis' => $keywordAnalysis
         ]);
     }
 
