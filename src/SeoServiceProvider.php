@@ -3,6 +3,8 @@
 namespace SEO;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Blade;
 
 class SeoServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,20 @@ class SeoServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__ . '/../config/seo.php', 'seo'
         );
+        Blade::directive('seoForm', function ($model) {
+            return "<?php echo \SEO\Seo::form($model); ?>";
+        });
+        Blade::directive('seoTags', function ($model) {
+            return "<?php print((new \SEO\Seo())->tags()); ?>";
+        });
+        Event::listen(['eloquent.saved: *', 'eloquent.created: *'], function ($name, $models) {
+            foreach ($models as $model) {
+                if (in_array(get_class($model), config('seo.models'))) {
+
+                }
+            }
+
+        });
     }
 
     /**

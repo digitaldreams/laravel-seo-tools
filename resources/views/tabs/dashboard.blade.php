@@ -53,8 +53,10 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <p class="card-text lead"><span style="font-size: 60px"><b>{{$meta_tag_total or 0 }}</b></span> Meta
-                        Tags </p>
+                    <p class="card-text lead">
+                        <span style="font-size: 60px"><b>{{isset($meta_tag_total)?$meta_tag_total: 0 }}</b></span>
+                        Meta Tags
+                    </p>
                 </div>
             </div>
         </div>

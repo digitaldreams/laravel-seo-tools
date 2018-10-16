@@ -78,6 +78,8 @@ class Seo
         ]);
         $keywordAnalysis = false;
         $metaTags = $page->pageLevel();
+        $twitter = [];
+        $og = [];
 
         if (isset($metaTags['og'])) {
             $og = $metaTags['og'];
