@@ -48,6 +48,7 @@ Laravel is becoming more and more popular and lots of web application are develo
 ```php
    @seoTags()
 ```
+Now visit **/seo/dashboard** from your browser to see seo dashboard and settings
 
 ### Easy to use ###
 Target user of this tool is non programmer. So they can able to add/modify on page SEO tags and do some necessary action that can give full control how this page will be appear by Search Engine. 
