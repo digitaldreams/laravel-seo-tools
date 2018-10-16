@@ -18,7 +18,7 @@ Laravel is becoming more and more popular and lots of web application are develo
 ```php
     php artisan vendor:publish --provider="SEO\SeoServiceProvider"
 ```
-
+  Please have a look to App\Policies\Seo folder. Adjust permission for seo settings routes.
 03. Run migration
 ```php 
   php artisan migrate
@@ -27,11 +27,12 @@ Laravel is becoming more and more popular and lots of web application are develo
 ```php 
    php artisan db:seed --class="SEO\Database\Seeders\SeoTablesSeeder"
 ```
-05. Show form into your post/content page
+05. Show form into your post/content page by adding this custom blade tag
 ```javascript
-     {!! \SEO\Seo::form($model) !!}
+     @seoForm($model)
 ```
-
+ This will be usually inside your form. 
+ 
 06. Save tags into your controller
  ```php
       if ($model->save()) {
@@ -43,10 +44,9 @@ Laravel is becoming more and more popular and lots of web application are develo
             ]);
            }
 ```
-07. Finally display tags into your layouts header
+07. Finally display tags into your layouts header by this custom blade tag
 ```php
-   $tag = new \SEO\Seo();
-   print($tag->tags());
+   @seoTags()
 ```
 
 ### Easy to use ###
