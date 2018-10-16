@@ -82,5 +82,6 @@ return [
         'folder' => 'seo'
     ],
     'models' => [
+
     ],
 ];

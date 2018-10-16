@@ -14,6 +14,7 @@ use App\Policies\Seo\ImagePolicy;
 use App\Policies\Seo\MetaTagPolicy;
 use App\Policies\Seo\PagePolicy;
 use App\Policies\Seo\SettingPolicy;
+use Illuminate\Support\Facades\Route;
 
 class SeoServiceProvider extends ServiceProvider
 {
@@ -63,9 +64,24 @@ class SeoServiceProvider extends ServiceProvider
             return "<?php print((new \SEO\Seo())->tags()); ?>";
         });
         Event::listen(['eloquent.saved: *', 'eloquent.created: *'], function ($name, $models) {
-            foreach ($models as $model) {
-                if (in_array(get_class($model), config('seo.models'))) {
+            $modelConfig = config('seo.models');
+            $modelNames = array_keys($modelConfig);
 
+            foreach ($models as $model) {
+                $modelClassName = get_class($model);
+                if (in_array($modelClassName, $modelNames)) {
+                    if (isset($modelConfig[$modelClassName]['route'])) {
+                        $routes = $modelConfig[$modelClassName]['route'];
+                        $allowedRoutes = is_array($routes) ? $routes : [$routes];
+                        if (!in_array(Route::currentRouteName(), $allowedRoutes)) {
+                            continue;
+                        }
+                    }
+                    if (!isset($modelConfig[$modelClassName]['job'])) {
+                        continue;
+                    }
+                    $jobClass = $modelConfig[$modelClassName]['job'];
+                    dispatch(new $jobClass($model));
                 }
             }
 
