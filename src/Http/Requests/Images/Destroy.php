@@ -14,7 +14,7 @@ class Destroy extends FormRequest
      */
     public function authorize() 
     {
-        return true;
+        return auth()->user()->can('delete',$this->route('pageImage'));
     }
 
     /**

@@ -4,7 +4,7 @@ namespace SEO\Http\Requests\Pages;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Destroy extends FormRequest 
+class Destroy extends FormRequest
 {
 
     /**
@@ -12,9 +12,9 @@ class Destroy extends FormRequest
      *
      * @return bool
      */
-    public function authorize() 
+    public function authorize()
     {
-        return true;
+        return auth()->user()->can('delete', $this->route('page'));
     }
 
     /**
@@ -22,7 +22,7 @@ class Destroy extends FormRequest
      *
      * @return array
      */
-    public function rules() 
+    public function rules()
     {
         return [
 
@@ -30,14 +30,14 @@ class Destroy extends FormRequest
     }
 
     /**
-    * Get the error messages for the defined validation rules.
-    *
-    * @return array
-    */
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [
-     
+
         ];
     }
 

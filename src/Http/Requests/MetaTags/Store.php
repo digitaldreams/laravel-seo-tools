@@ -3,6 +3,7 @@
 namespace SEO\Http\Requests\MetaTags;
 
 use Illuminate\Foundation\Http\FormRequest;
+use SEO\Models\MetaTag;
 
 class Store extends FormRequest
 {
@@ -14,7 +15,7 @@ class Store extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->can('create', MetaTag::class);
     }
 
     /**

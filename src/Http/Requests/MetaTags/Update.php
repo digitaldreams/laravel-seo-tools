@@ -14,7 +14,7 @@ class Update extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->can('update', $this->route('meta_tag'));
     }
 
     /**
@@ -25,8 +25,8 @@ class Update extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'nullable|max:50|unique:seo_meta_tags,name,'.$this->route('meta_tag')->id,
-            'property' => 'nullable|max:100|unique:seo_meta_tags,property,'.$this->route('meta_tag')->id,
+            'name' => 'nullable|max:50|unique:seo_meta_tags,name,' . $this->route('meta_tag')->id,
+            'property' => 'nullable|max:100|unique:seo_meta_tags,property,' . $this->route('meta_tag')->id,
             'status' => 'required|max:50',
             'group' => 'nullable|max:50',
             'input_type' => 'required|max:50',

@@ -3,6 +3,7 @@
 namespace SEO\Http\Requests\Images;
 
 use Illuminate\Foundation\Http\FormRequest;
+use SEO\Models\PageImage;
 
 class Create extends FormRequest 
 {
@@ -14,7 +15,7 @@ class Create extends FormRequest
      */
     public function authorize() 
     {
-        return true;
+        return auth()->user()->can('create',PageImage::class);
     }
 
     /**

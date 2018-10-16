@@ -3,8 +3,9 @@
 namespace SEO\Http\Requests\Settings;
 
 use Illuminate\Foundation\Http\FormRequest;
+use SEO\Models\Setting;
 
-class Index extends FormRequest 
+class Index extends FormRequest
 {
 
     /**
@@ -12,9 +13,9 @@ class Index extends FormRequest
      *
      * @return bool
      */
-    public function authorize() 
+    public function authorize()
     {
-        return true;
+        return auth()->user()->can('index', Setting::class);
     }
 
     /**
@@ -22,7 +23,7 @@ class Index extends FormRequest
      *
      * @return array
      */
-    public function rules() 
+    public function rules()
     {
         return [
 
@@ -30,14 +31,14 @@ class Index extends FormRequest
     }
 
     /**
-    * Get the error messages for the defined validation rules.
-    *
-    * @return array
-    */
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [
-     
+
         ];
     }
 

@@ -3,6 +3,7 @@
 namespace SEO\Http\Requests\SiteMaps;
 
 use Illuminate\Foundation\Http\FormRequest;
+use SEO\Models\Setting;
 
 class Update extends FormRequest
 {
@@ -14,7 +15,7 @@ class Update extends FormRequest
      */
     public function authorize()
     {
-        return auth()->check();
+        return auth()->user()->can('index', Setting::class);
     }
 
     /**

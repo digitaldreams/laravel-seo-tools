@@ -5,9 +5,31 @@ namespace SEO;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Gate;
+use SEO\Models\MetaTag;
+use SEO\Models\Page;
+use SEO\Models\PageImage;
+use SEO\Models\Setting;
+use App\Policies\Seo\ImagePolicy;
+use App\Policies\Seo\MetaTagPolicy;
+use App\Policies\Seo\PagePolicy;
+use App\Policies\Seo\SettingPolicy;
 
 class SeoServiceProvider extends ServiceProvider
 {
+    /**
+     * The policy mPermitings for the Permitlication.
+     *
+     * @var array
+     */
+    protected $policies = [
+        //'Model' => 'Policies\ModelPolicy',
+        Setting::class => SettingPolicy::class,
+        Page::class => PagePolicy::class,
+        MetaTag::class => MetaTagPolicy::class,
+        PageImage::class => ImagePolicy::class
+    ];
+
     /**
      *
      */
@@ -18,8 +40,11 @@ class SeoServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'seo');
         $this->publishes([
             __DIR__ . '/../config/seo.php' => config_path('seo.php'),
-            __DIR__ . '/../resources/views' => resource_path('views/vendor/seo')
+            __DIR__ . '/../resources/views' => resource_path('views/vendor/seo'),
         ]);
+        $this->publishes([
+            __DIR__ . '/Policies' => base_path('app/Policies/Seo')
+        ], 'seo-policies');
     }
 
     /**
@@ -27,6 +52,7 @@ class SeoServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->registerPolicies();
         $this->mergeConfigFrom(
             __DIR__ . '/../config/seo.php', 'seo'
         );
@@ -44,6 +70,18 @@ class SeoServiceProvider extends ServiceProvider
             }
 
         });
+    }
+
+    /**
+     * Register the Permitlication's policies.
+     *
+     * @return void
+     */
+    public function registerPolicies()
+    {
+        foreach ($this->policies as $key => $value) {
+            Gate::policy($key, $value);
+        }
     }
 
     /**

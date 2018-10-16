@@ -3,8 +3,9 @@
 namespace SEO\Http\Requests\Pages;
 
 use Illuminate\Foundation\Http\FormRequest;
+use SEO\Models\Page;
 
-class Create extends FormRequest 
+class Create extends FormRequest
 {
 
     /**
@@ -12,9 +13,9 @@ class Create extends FormRequest
      *
      * @return bool
      */
-    public function authorize() 
+    public function authorize()
     {
-        return true;
+        return auth()->user()->can('create', Page::class);
     }
 
     /**
@@ -22,7 +23,7 @@ class Create extends FormRequest
      *
      * @return array
      */
-    public function rules() 
+    public function rules()
     {
         return [
 
@@ -30,14 +31,14 @@ class Create extends FormRequest
     }
 
     /**
-    * Get the error messages for the defined validation rules.
-    *
-    * @return array
-    */
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [
-     
+
         ];
     }
 

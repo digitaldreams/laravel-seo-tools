@@ -3,6 +3,7 @@
 namespace SEO\Http\Requests\Pages;
 
 use Illuminate\Foundation\Http\FormRequest;
+use SEO\Models\Page;
 
 class Upload extends FormRequest
 {
@@ -14,7 +15,7 @@ class Upload extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->can('upload', Page::class);
     }
 
     /**

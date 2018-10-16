@@ -22,17 +22,15 @@
     </script>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container">
         <div class="navbar-header">
 
             <!-- Collapsed Hamburger -->
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#app-navbar-collapse">
-                <span class="sr-only">Toggle Navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                    data-target="#app-navbar-collapse" aria-controls="app-navbar-collapse" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
 
             <!-- Branding Image -->
@@ -76,8 +74,28 @@
         </div>
     </div>
 </nav>
-
-@yield('content')
+<main>
+    <div class="container">
+        @if(auth()->check())
+            <nav aria-label="breadcrumb" role="navigation" class="container">
+                <ol class="breadcrumb mb-1" style="font-size: 14px;font-weight: 400;margin: auto">
+                    <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+                    @yield('breadcrumb')
+                    @if(!empty(request('q')))
+                        <li class="breadcrumb-item">
+                            <span class="text-muted">Showing result with keyword <b>{{request('q')}}</b></span>
+                            <button class="btn btn-none p-0 m-0" id="searchCleaner"><i
+                                        class="text-danger fa fa-remove"></i>
+                            </button>
+                        </li>
+                    @endif
+                    <li class="pull-right">@yield('tools')</li>
+                </ol>
+            </nav>
+        @endif
+        @yield('content')
+    </div>
+</main>
 
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

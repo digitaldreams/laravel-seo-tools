@@ -3,7 +3,7 @@ return [
     /**
      * Layout's to be used on package pages
      */
-    'layout' => 'layouts.app',
+    'layout' => 'seo::layouts.app',
     /**
      * Middleware that will wrap up seo routes
      */
@@ -77,10 +77,10 @@ return [
         'prefix' => 'storage',
 
         /**
-         * Which folder on your driver will storaage all the files
+         * Which folder on your driver will storage all the files
          */
         'folder' => 'seo'
     ],
     'models' => [
-    ]
+    ],
 ];
