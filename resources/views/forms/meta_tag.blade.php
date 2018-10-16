@@ -1,6 +1,6 @@
-<form action="{{$route or route('seo::meta-tags.store')}}" method="POST">
+<form action="{{isset($route)?$route : route('seo::meta-tags.store')}}" method="POST">
     {{csrf_field()}}
-    <input type="hidden" name="_method" value="{{$method or 'POST'}}"/>
+    <input type="hidden" name="_method" value="{{isset($method)?$method:'POST' }}"/>
     <div class="row">
         <div class="form-group col-sm-6">
             <div class="input-group input-group-sm">
@@ -77,7 +77,8 @@
                 <input type="text" class="form-control" name="default_value" id="default_value"
                        value="{{old('default_value',$model->default_value)}}" placeholder="Default value"
                        maxlength="255">
-                <span class="input-group-addon" id=" sizing-addon1"><i class="fa fa-info-circle" title="If you want a dropdown selection then seperate each option with | "></i></span>
+                <span class="input-group-addon" id=" sizing-addon1"><i class="fa fa-info-circle"
+                                                                       title="If you want a dropdown selection then seperate each option with | "></i></span>
             </div>
             @if($errors->has('default_value'))
                 <div class="invalid-feedback">

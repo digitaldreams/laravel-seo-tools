@@ -1,6 +1,6 @@
-<form action="{{$route or route('seo::pages.images.store',['page'=>$page->id])}}" method="POST">
+<form action="{{isset($route)?$route: route('seo::pages.images.store',['page'=>$page->id])}}" method="POST">
     {{csrf_field()}}
-    <input type="hidden" name="_method" value="{{$method or 'POST'}}"/>
+    <input type="hidden" name="_method" value="{{isset($method)?$method :'POST' }}"/>
     <div class="row">
         <div class="form-group col-sm-6">
             <div class="input-group input-group-sm">
