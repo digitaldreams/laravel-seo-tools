@@ -4,7 +4,7 @@ Laravel is becoming more and more popular and lots of web application are develo
 ### Installation ###
 ```javascript
   "require": { 
-     "digitaldream/laravel-seo-tools": "dev-master"
+     "digitaldream/laravel-seo-tools": "1.*"
 }
 ```
 #### Settings ###
