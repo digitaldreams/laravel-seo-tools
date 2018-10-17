@@ -197,7 +197,7 @@ class Tag
     {
         if ($this->hasPage()) {
             return $this->make()->asHtml();
-        }
+    }
     }
 
     /**

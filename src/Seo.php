@@ -147,10 +147,13 @@ class Seo
                 $page->saveMeta($metaValues);
 
                 $page->saveMeta(static::upload(request()->file('meta')));
+                // Its time to refresh cache or making new cache
+                $tag = new Tag($page);
+                $tag->make()->save();
             }
             return $page;
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
+            Log::error($e->getMessage() . 'on Line ' . $e->getLine() . ' in ' . $e->getFile());
         }
     }
 
@@ -178,7 +181,7 @@ class Seo
     public static function upload($files)
     {
         $imageMeta = [];
-        $metaImages = request()->file('meta');
+        $metaImages = request()->file('meta', []);
 
         $imageDriver = config('seo.storage.driver', 'public');
         $imagePrefix = config('seo.storage.prefix', 'storage');
