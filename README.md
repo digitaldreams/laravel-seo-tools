@@ -19,6 +19,7 @@ Laravel is becoming more and more popular and lots of web application are develo
     php artisan vendor:publish --provider="SEO\SeoServiceProvider"
 ```
   Please have a look to App\Policies\Seo folder. Adjust permission for seo settings routes.
+  
 03. Run migration
 ```php 
   php artisan migrate
@@ -44,10 +45,13 @@ Laravel is becoming more and more popular and lots of web application are develo
             ]);
            }
 ```
+Do not make your controller dirty. Do not worry [follow this instruction](https://github.com/digitaldreams/laravel-seo-tools/wiki/Setup-Meta-Tag-save-in-background)
+
 07. Finally display tags into your layouts header by this custom blade tag
 ```php
    @seoTags()
 ```
+
 Now visit **/seo/dashboard** from your browser to see seo dashboard and settings
 
 ### Easy to use ###
