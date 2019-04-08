@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 class SeoServiceProvider extends ServiceProvider
 {
     /**
-     * The policy mPermitings for the Permitlication.
+     * The policies
      *
      * @var array
      */
@@ -57,10 +57,11 @@ class SeoServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__ . '/../config/seo.php', 'seo'
         );
-        Blade::directive('seoForm', function ($model) {
+        $blade = app('view')->getEngineResolver()->resolve('blade')->getCompiler();
+        $blade->directive('seoForm', function ($model) {
             return "<?php echo \SEO\Seo::form($model); ?>";
         });
-        Blade::directive('seoTags', function ($model) {
+        $blade->directive('seoTags', function ($model) {
             return "<?php print((new \SEO\Seo())->tags()); ?>";
         });
         Event::listen(['eloquent.saved: *', 'eloquent.created: *'], function ($name, $models) {

@@ -161,6 +161,10 @@ class SiteMap
     public function all()
     {
         $files = [];
+        $xmlDir = public_path(config('seo.sitemap_location'));
+        if (!file_exists($xmlDir)) {
+            mkdir($xmlDir, true);
+        }
         $dirIt = new \DirectoryIterator($this->filePath);
         foreach ($dirIt as $file) {
             if ($file->isDot()) continue;
