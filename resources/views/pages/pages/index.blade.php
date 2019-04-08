@@ -1,34 +1,34 @@
 @extends(config('seo.layout'))
-@section('breadcrumb')
-    <li class="breadcrumb-item">@include('seo::includes.site-nav-dropdown',['menu'=>'Pages'])</li>
-    <li class="breadcrumb-item">Pages</li>
+@section('header')
+    <i class="fa fa-file text-muted"></i> Pages
 @endsection
 @section('tools')
     &nbsp;&nbsp;
-    <a href="{{route('seo::pages.create')}}"><i class="fa fa-plus"></i></a>
-    @if(count(config('seo.linkProviders'))>0)
-        &nbsp;&nbsp;
-        <a href="{{route('seo::pages.generate')}}">Generate Page</a>
-    @endif
-    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#uploadPageCsv">
-        <i class="fa fa-cloud-upload"></i> Upload CSV
-    </button>
-    <a href="{{route('seo::pages.download')}}" class="btn btn-outline-primary btn-sm">
-        <i class="fa fa-download"></i> Download CSV
-    </a>
-    <a href="{{route('seo::pages.zip')}}" class="btn btn-outline-primary btn-sm">
-        <i class="fa fa-file-zip-o"></i> Download Zip
-    </a>
-    @if(config('seo.cache.enable'))
-        <form action="{{route('seo::pages.cache')}}" method="post" style="display: inline">
-            {{csrf_field()}}
-            <input type="submit" value="Refresh Cache" class="btn btn-outline-primary btn-sm">
-        </form>
-    @endif
-    <a href="{{route('seo::pages.bulkEdit')}}" class="btn btn-outline-primary btn-sm">
-        <i class="fa fa-pencil-square-o"></i> Bulk Edit
-    </a>
+    <div class="btn-group">
 
+        @if(count(config('seo.linkProviders'))>0)
+            <a class="btn btn-outline-secondary" href="{{route('seo::pages.generate')}}">Generate Page</a>
+        @endif
+        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#uploadPageCsv">
+            <i class="fa fa-cloud-upload"></i> Upload CSV
+        </button>
+        <a href="{{route('seo::pages.download')}}" class="btn btn-outline-secondary">
+            <i class="fa fa-download"></i> Download CSV
+        </a>
+        <a href="{{route('seo::pages.zip')}}" class="btn btn-outline-secondary">
+            <i class="fa fa-file-zip-o"></i> Download Zip
+        </a>
+        @if(config('seo.cache.enable'))
+            <form action="{{route('seo::pages.cache')}}" method="post" style="display: inline">
+                {{csrf_field()}}
+                <input type="submit" value="Refresh Cache" class="btn btn-outline-secondary">
+            </form>
+        @endif
+        <a href="{{route('seo::pages.bulkEdit')}}" class="btn btn-outline-secondary">
+            <i class="fa fa-pencil-square-o"></i> Bulk Edit
+        </a>
+            <a class="btn btn-outline-secondary" href="{{route('seo::pages.create')}}"><i class="fa fa-plus"></i></a>
+    </div>
 @endsection
 @section('content')
     <div class="row">

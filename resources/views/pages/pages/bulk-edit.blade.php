@@ -1,10 +1,11 @@
 @extends(config('seo.layout'))
-@section('breadcrumb')
-    <li class="breadcrumb-item">@include('seo::includes.site-nav-dropdown',['menu'=>'Pages'])</li>
-    <li class="breadcrumb-item"><a href="{{route('seo::pages.index')}}">Pages</a></li>
+@section('header')
+    <i class="fa fa-pencil text-muted"></i> Pages
 @endsection
 @section('tools')
-    <a href="{{route('seo::pages.create')}}"><i class="fa fa-plus"></i></a>
+    <a class="btn btn-outline-secondary" href="{{route('seo::pages.create')}}">
+        <i class="fa fa-plus"></i> New Page
+    </a>
 @endsection
 @section('content')
     <form action="{{route('seo::pages.bulkUpdate')}}" method="post">

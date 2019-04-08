@@ -1,6 +1,7 @@
 @extends(config('seo.layout'))
-@section('breadcrumb')
-    <li class="breadcrumb-item"> @include('seo::includes.site-nav-dropdown',['menu'=>'Advanced'])</li>
+
+@section('header')
+    <i class="fa fa-lock text-muted"></i> Site Configuration
 @endsection
 @section('tools')
 

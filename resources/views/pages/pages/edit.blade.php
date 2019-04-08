@@ -1,11 +1,11 @@
 @extends(config('seo.layout'))
-@section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{route('seo::dashboard.index')}}"> Dashboard</a></li>
-    <li class="breadcrumb-item"><a href="{{route('seo::pages.index')}}">Pages</a></li>
-    <li class="breadcrumb-item">{{pathinfo($record->path,PATHINFO_BASENAME)}}</li>
+@section('header')
+    <i class="fa fa-pencil"></i> {{$record->title}}
 @endsection
 @section('tools')
-    <a href="{{route('seo::pages.create')}}"><i class="fa fa-plus"></i></a>
+    <a class="btn btn-outline-secondary" href="{{route('seo::pages.create')}}">
+        <i class="fa fa-plus"></i> New Page
+    </a>
 @endsection
 @section('content')
     <div class="row">

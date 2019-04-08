@@ -1,6 +1,6 @@
 @extends(config('seo.layout'))
-@section('breadcrumb')
-    <li class="breadcrumb-item"> @include('seo::includes.site-nav-dropdown',['menu'=>'Social'])</li>
+@section('header')
+    <i class="fa fa-users text-muted"></i> Social Media Setting
 @endsection
 @section('tools')
 

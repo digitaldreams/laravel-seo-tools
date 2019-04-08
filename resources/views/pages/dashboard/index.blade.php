@@ -1,6 +1,7 @@
 @extends(config('seo.layout'))
-@section('breadcrumb')
-    <li class="breadcrumb-item">@include('seo::includes.site-nav-dropdown')</li>
+
+@section('header')
+    <i class="fa fa-home text-muted"></i> Dashboard
 @endsection
 @section('tools')
 @endsection

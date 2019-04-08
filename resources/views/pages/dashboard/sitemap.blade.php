@@ -1,6 +1,6 @@
 @extends(config('seo.layout'))
-@section('breadcrumb')
-    <li class="breadcrumb-item"> @include('seo::includes.site-nav-dropdown',['menu'=>'XML SiteMap'])</li>
+@section('header')
+    <i class="fa fa-code text-muted"></i> XML SiteMap Manger
 @endsection
 @section('tools')
 
