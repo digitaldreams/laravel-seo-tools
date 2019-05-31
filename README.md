@@ -36,8 +36,9 @@ Laravel is becoming more and more popular and lots of web application are develo
  
 06. Save tags into your controller
  ```php
+     
       if ($model->save()) {
-            Seo::save($model, route('blog::posts.show', $model->slug), [
+            \SEO\Seo::save($model, route('blog::posts.show', $model->slug), [
                 'title' => $model->title,
                 'images' => [
                     $model->getImageUrl()
