@@ -15,22 +15,21 @@
                     </h5>
                 </div>
                 <div class="col-sm-6 text-right">
-                    @if(!empty($record->id))
-                        <a target="_blank"
-                           href="https://developers.facebook.com/tools/debug/sharing/?q={{urlencode($record->getFullUrl())}}">
-                            <i class="fa fa-facebook-official"></i> Validate
-                        </a>
-                        &nbsp;&nbsp;
-                        <a href="https://cards-dev.twitter.com/validator" target="_blank">
-                            <i class="fa fa-twitter"></i> Card Validate
-                        </a>
-                        &nbsp;
-                        <a target="_blank"
-                           href="https://developers.google.com/speed/pagespeed/insights/?url={{urlencode($record->getFullUrl())}}">
-                            <i class="fa fa-google"></i> Page Speed
-                        </a>
-                        &nbsp;&nbsp;
-                    @endif
+                    <div class="btn-group">
+                        @if(!empty($record->id))
+                            <a class="btn btn-outline-secondary" target="_blank"
+                               href="https://developers.facebook.com/tools/debug/sharing/?q={{urlencode($record->getFullUrl())}}">
+                                <i class="fa fa-facebook-official"></i> Validate
+                            </a>
+                            <a class="btn btn-outline-secondary" href="https://cards-dev.twitter.com/validator" target="_blank">
+                                <i class="fa fa-twitter"></i> Card Validate
+                            </a>
+                            <a class="btn btn-outline-secondary" target="_blank"
+                               href="https://developers.google.com/speed/pagespeed/insights/?url={{urlencode($record->getFullUrl())}}">
+                                <i class="fa fa-google"></i> Page Speed
+                            </a>
+                        @endif
+                    </div>
                     <label class="" data-toggle="collapse" data-target="#collapseOne"
                            aria-expanded="true"
                            aria-controls="collapseOne">
@@ -113,7 +112,7 @@
                                         <div class="col-sm-4">
                                             <div class="card border-success">
                                                 <div class="card-header bg-transparent border-success">
-                                                   <i class="fa fa-check-square text-success"></i> Good
+                                                    <i class="fa fa-check-square text-success"></i> Good
                                                 </div>
                                                 <div class="card-body text-small">
                                                     <ul class="list-group">
@@ -129,7 +128,7 @@
                                         <div class="col-sm-4">
                                             <div class="card border-warning">
                                                 <div class="card-header bg-transparent border-warning">
-                                                   <i class="fa fa-warning text-warning"></i> Warnings
+                                                    <i class="fa fa-warning text-warning"></i> Warnings
                                                 </div>
                                                 <div class="card-body">
                                                     <ul class="list-group">
@@ -145,7 +144,7 @@
                                         <div class="col-sm-4">
                                             <div class="card border-danger">
                                                 <div class="card-header  bg-transparent border-danger">
-                                                  <i class="fa fa-warning text-danger"></i>  Errors
+                                                    <i class="fa fa-warning text-danger"></i> Errors
                                                 </div>
                                                 <div class="card-body">
                                                     <ul class="list-group">
