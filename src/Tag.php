@@ -162,6 +162,11 @@ class Tag
         if (!empty($json)) {
             $script = '<script type="application/ld+json">' . PHP_EOL;
             $script .= $json . PHP_EOL;
+            $script .= '</script>'. PHP_EOL;
+        }
+        if (!empty($this->page->schema)) {
+            $script .= '<script type="application/ld+json">' . PHP_EOL;
+            $script .= $this->page->schema . PHP_EOL;
             $script .= '</script>';
         }
         return $script;
@@ -197,7 +202,7 @@ class Tag
     {
         if ($this->hasPage()) {
             return $this->make()->asHtml();
-    }
+        }
     }
 
     /**
