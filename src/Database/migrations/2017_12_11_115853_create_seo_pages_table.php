@@ -15,7 +15,7 @@ class CreateSeoPagesTable extends Migration
     {
         Schema::create('seo_pages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('path')->unique();
+            $table->string('path')->unique()->index();
             $table->string('object', 80)->nullable();
             $table->string('object_id', 80)->nullable();
             $table->string('robot_index', 50)->default('noindex')->nullable();

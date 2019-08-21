@@ -16,7 +16,7 @@ class CreateSeoPageImagesTable extends Migration
         Schema::create('seo_page_images', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('page_id')->unsigned();
-            $table->string('src')->nullable();
+            $table->string('src')->nullable()->index();
             $table->string('title', 100)->nullable();
             $table->string('caption', 100)->nullable();
             $table->string('location', 100)->nullable();
