@@ -63,7 +63,13 @@ class PageAnalysis
     public function __construct($url)
     {
         $this->url = $url;
-        $this->htmlContent = @file_get_contents($this->url);
+        $arrContextOptions = array(
+            "ssl" => array(
+                "verify_peer" => false,
+                "verify_peer_name" => false,
+            ),
+        );
+        $this->htmlContent = @file_get_contents($this->url, false, stream_context_create($arrContextOptions));
 
         if ($this->htmlContent) {
             $this->success = true;

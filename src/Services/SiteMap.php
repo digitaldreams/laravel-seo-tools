@@ -163,7 +163,7 @@ class SiteMap
         $files = [];
         $xmlDir = public_path(config('seo.sitemap_location'));
         if (!file_exists($xmlDir)) {
-            mkdir($xmlDir, true);
+            mkdir($xmlDir);
         }
         $dirIt = new \DirectoryIterator($this->filePath);
         foreach ($dirIt as $file) {

@@ -11,9 +11,13 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
           type="text/css"/>
-@yield('css')
-
-<!-- Custom styles for this template -->
+    @yield('css')
+    <style>
+        body {
+            padding-top: 50px !important;
+        }
+    </style>
+    <!-- Custom styles for this template -->
     <link href="{{asset('css/dashboard.css')}}" type="text/css" rel="stylesheet">
 </head>
 <body>
