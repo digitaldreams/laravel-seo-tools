@@ -97,7 +97,7 @@ class PagePolicy
      * @param  Page $page
      * @return mixed
      */
-    public function bulkUpdate(User $user, Page $page)
+    public function bulkUpdate(User $user)
     {
         return false;
     }

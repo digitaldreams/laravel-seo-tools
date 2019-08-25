@@ -6,7 +6,11 @@
     <li class="breadcrumb-item">Images</li>
 
 @endsection
+@section('header')
+    <h3>Images</h3>
+@endsection
 @section('tools')
+    <a href="{{route('seo::pages.show',['page'=>$page->id])}}">Visit Page</a>
     <a href="{{route('seo::pages.images.create',['page'=>$page->id])}}"><i class="fa fa-plus"></i></a>
 @endsection
 @section('content')
@@ -30,5 +34,10 @@
                 </div>
             @endforeach
         @endforeach
+        @if($records->count()==0)
+            <div class="alert alert-info">No Image found. <a href="{{route('seo::pages.images.create',$page->id)}}">Add
+                    One</a>
+            </div>
+        @endif
     </div>
 @endSection

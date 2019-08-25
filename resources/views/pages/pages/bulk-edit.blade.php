@@ -32,13 +32,15 @@
                     </td>
                     <td colspan="2" class="text-right mb-0 pb-0">
                         <div class="btn-group btn-group-toggle btn-group-sm" data-toggle="buttons">
-                            <label class="btn btn-secondary btn-sm  {{$page->robot_index=='index'?'active':''}}">
+                            <label class="btn btn-secondary btn-sm  {{old('robot_index.'.$key,$page->robot_index)=='index'?'active':''}}">
                                 <input type="radio" name="robot_index[{{$key}}]" value="index"
-                                       autocomplete="off" {{$page->robot_index=='index'?'checked':''}} > On
+                                       autocomplete="off" {{old('robot_index.'.$key,$page->robot_index)=='index'?'checked':''}} >
+                                On
                             </label>
-                            <label class="btn btn-secondary btn-sm {{$page->robot_index=='noindex'?'active':''}}">
+                            <label class="btn btn-secondary btn-sm {{old('robot_index.'.$key,$page->robot_index)=='noindex'?'active':''}}">
                                 <input type="radio" name="robot_index[{{$key}}]" value="noindex"
-                                       autocomplete="off" {{$page->robot_index=='noindex'?'checked':''}}> Off
+                                       autocomplete="off" {{old('robot_index.'.$key,$page->robot_index)=='noindex'?'checked':''}}>
+                                Off
                             </label>
                         </div>
                     </td>
@@ -46,10 +48,22 @@
                 <tr>
                     <td class="mb-0 pb-lg-1">
                         <input type="text" name="title[]" value="{{$page->getTitle()}}"
-                               class="form-control form-control-sm" maxlength="70"></td>
+                               class="form-control form-control-sm {{$errors->has('title.'.$key)?'is-invalid':''}}"
+                               maxlength="70">
+                        @if($errors->has('title.'.$key))
+                            <div class="invalid-feedback">
+                                <span>{{$errors->first('title.'.$key)}}</span>
+                            </div>
+                        @endif
+                    </td>
                     <td colspan="4" class="mb-0 pb-lg-1">
                         <textarea name="description[]" maxlength="170"
-                                  class="form-control form-control-sm">{{$page->getDescription()}}</textarea>
+                                  class="form-control form-control-sm {{$errors->has('description.'.$key)?'is-invalid':''}}">{{$page->getDescription()}}</textarea>
+                        @if($errors->has('description.'.$key))
+                            <div class="invalid-feedback">
+                                <span>{{$errors->first('description.'.$key)}}</span>
+                            </div>
+                        @endif
                     </td>
                 </tr>
             @endforeach

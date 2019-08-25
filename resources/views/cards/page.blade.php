@@ -1,6 +1,6 @@
 <div class="card  mb-4">
     <div class="card-header">
-        <a class="" href="{{route('seo::pages.show',$record->id)}}">  #{{$record->id}} {{$record->getTitle()}}</a>
+        <a class="" href="{{route('seo::pages.show',$record->id)}}"> #{{$record->id}} {{$record->getTitle()}}</a>
     </div>
     <div class="card-body">
         <div class="card-text">
@@ -10,7 +10,11 @@
     <div class="card-footer">
         <label class="badge badge-secondary">{{$record->robot_index}}</label>
         <label class="badge badge-secondary">{{$record->robot_follow}}</label>
-        <label class="badge badge-secondary">{{$record->page_images_count}} &nbsp;&nbsp;  <i class="fa fa-image"></i></label>
+        <label class="badge badge-light">
+            <a class="text-primary" href="{{route('seo::pages.images.index',$record->id)}}">
+                {{$record->page_images_count}} &nbsp;&nbsp; <i class="fa fa-image"></i>
+            </a>
+        </label>
 
         <a target="_blank" href="{{url($record->getFullUrl())}}">Visit page</a>
 

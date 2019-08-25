@@ -6,7 +6,11 @@
     <li class="breadcrumb-item"><a href="{{route('seo::pages.images.index',$page->id)}}">Images</a></li>
     <li class="breadcrumb-item">Create</li>
 @endsection
+@section('header')
+    <h3>Add New Image to <i>{{$page->getTitle()}}</i></h3>
+@endsection
 @section('tools')
+    <a href="{{route('seo::pages.show',$page->id)}}">Visit Page</a>
 @endsection
 @section('content')
     <div class="row">

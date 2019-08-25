@@ -3,6 +3,7 @@
 namespace SEO\Http\Requests\Pages;
 
 use Illuminate\Foundation\Http\FormRequest;
+use SEO\Models\Page;
 
 class BulkUpdate extends FormRequest
 {
@@ -14,7 +15,7 @@ class BulkUpdate extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('bulkUpdate', $this->route('page'));
+        return auth()->user()->can('bulkUpdate', Page::class);
     }
 
     /**
