@@ -162,12 +162,12 @@ class Tag
         if (!empty($json)) {
             $script = '<script type="application/ld+json">' . PHP_EOL;
             $script .= $json . PHP_EOL;
-            $script .= '</script>'. PHP_EOL;
+            $script .= '</script>';
         }
         if (!empty($this->page->schema)) {
-            $script .= '<script type="application/ld+json">' . PHP_EOL;
+            $script .= PHP_EOL . '<script type="application/ld+json">' . PHP_EOL;
             $script .= $this->page->schema . PHP_EOL;
-            $script .= '</script>';
+            $script .= '</script>' . PHP_EOL;
         }
         return $script;
     }
@@ -215,16 +215,21 @@ class Tag
             return null;
         }
         $html = $this->asHtml();
-        $dir = rtrim($cache['storage'], "/");
-        if (!file_exists($dir)) {
-            mkdir($dir);
-        }
+        if (config('seo.cache.storage') == 'file') {
+            $dir = rtrim($cache['storage'], "/");
+            if (!file_exists($dir)) {
+                mkdir($dir);
+            }
 
-        $filePath = $dir . '/' . $this->page->id . '.html';
-        $splFile = new \SplFileObject($filePath, 'w+');
-        $splFile->fwrite($html);
-        $splFile->fflush();
-        return $splFile->getFilename();
+            $filePath = $dir . '/' . $this->page->id . '.html';
+            $splFile = new \SplFileObject($filePath, 'w+');
+            $splFile->fwrite($html);
+            $splFile->fflush();
+            return $splFile->getFilename();
+        } else {
+            $this->page->tags = $html;
+            $this->page->save();
+        }
     }
 
     /**

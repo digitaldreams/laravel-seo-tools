@@ -225,11 +225,73 @@ class Page extends Model
                 if ($pageImage->save()) {
                     $ret[] = $pageImage;
                 }
-            } elseif(!empty($image)) {
+            } elseif (!empty($image)) {
                 $ret[] = PageImage::firstOrCreate(['src' => $image, 'page_id' => $this->id]);
             }
         }
         return new Collection($ret);
     }
 
+    /**
+     * @param $builder
+     * @param $keyword
+     * @return
+     */
+    public function scopeSearch($builder, $keyword)
+    {
+        $keyword = trim($keyword);
+        $arr = explode(" ", $keyword);
+        foreach ($arr as $word) {
+            $builder = $builder->where(function ($q) use ($word) {
+                $q->orWhere('title', 'LIKE', "%" . $word . "%")->orWhere("title_source", "LIKE", "%" . $word . "%");
+            });
+        }
+        return $builder;
+    }
+    /**
+     * @return $this
+     */
+    public function destroyImages()
+    {
+        foreach ($this->pageImages as $image) {
+            $image->delete();
+        }
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function destroyMetaTags()
+    {
+        foreach ($this->pageMetaTags as $meta) {
+            $meta->delete();
+        }
+        return $this;
+    }
+
+    public function saveMetaTagByProperty($data)
+    {
+        return $this->saveMetaTags($data, 'property');
+    }
+
+    protected function saveMetaTags($data, $column = 'property')
+    {
+        $retArr = [];
+        foreach ($data as $property => $content) {
+            $metaTag = MetaTag::where($column, $property)->first();
+            if ($metaTag) {
+                $pageMeta = PageMetaTag::firstOrCreate(['seo_page_id' => $this->id, 'seo_meta_tag_id' => $metaTag->id]);
+                $pageMeta->content = $content;
+                $pageMeta->save();
+                $retArr[] = $pageMeta;
+            }
+        }
+        return $retArr;
+    }
+
+    public function saveMetaTagByName($data)
+    {
+        return $this->saveMetaTags($data, 'name');
+    }
 }

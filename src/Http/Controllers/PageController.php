@@ -28,6 +28,7 @@ use SEO\Models\PageMetaTag;
 use SEO\Services\PageAnalysis;
 use SEO\Tag;
 use SEO\Services\KeywordAnalysis;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Description of PageController
@@ -39,19 +40,31 @@ class PageController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  Index $request
+     * @param Index $request
      * @return Response
      */
     public function index(Index $request)
     {
-        return view('seo::pages.pages.index', ['records' => Page::withCount(['pageImages'])->paginate(6)]);
+        $q = $request->get('search');
+        $object = $request->get('object');
+        $builder = Page::withCount(['pageImages']);
+        if (!empty($q)) {
+            $builder = $builder->search($q);
+        }
+        if (!empty($object)) {
+            $builder = $builder->where('object', $object);
+        }
+        return view('seo::pages.pages.index', [
+            'objects' => DB::table('seo_pages')->distinct()->get(['object'])->pluck('object')->toArray(),
+            'records' => $builder->latest()->paginate(6)
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  Show $request
-     * @param  Page $page
+     * @param Show $request
+     * @param Page $page
      * @return Response
      * @throws \Exception
      */
@@ -74,7 +87,7 @@ class PageController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param  Create $request
+     * @param Create $request
      * @return Response
      */
     public function create(Create $request)
@@ -102,7 +115,7 @@ class PageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Store $request
+     * @param Store $request
      * @return Response
      */
     public function store(Store $request)
@@ -124,8 +137,8 @@ class PageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Edit $request
-     * @param  Page $page
+     * @param Edit $request
+     * @param Page $page
      * @return Response
      */
     public function edit(Edit $request, Page $page)
@@ -165,8 +178,8 @@ class PageController extends Controller
     /**
      * Update a existing resource in storage.
      *
-     * @param  Update $request
-     * @param  Page $page
+     * @param Update $request
+     * @param Page $page
      * @return Response
      */
     public function update(Update $request, Page $page)
@@ -212,8 +225,8 @@ class PageController extends Controller
     /**
      * Delete a  resource from  storage.
      *
-     * @param  Request $request
-     * @param  Page $page
+     * @param Request $request
+     * @param Page $page
      * @return Response
      * @throws \Exception
      */
@@ -400,5 +413,12 @@ class PageController extends Controller
 
         $zip->close();
         return response()->download($zipname);
+    }
+
+    public function updateSavedTags(Edit $request, Page $page)
+    {
+        $tag = new Tag($page);
+        $tag->make()->save();
+        return redirect()->back()->with('app_message', 'Page tags successfully updated');
     }
 }

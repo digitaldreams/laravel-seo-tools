@@ -44,10 +44,13 @@ class Seo
         $this->page = Page::whereIn('path', [trim($path, "/"), "/" . $path, url($path)])->first();
 
         if ($this->page) {
-            $this->filePath = rtrim(config('seo.cache.storage'), "/") . '/' . $this->page->id . '.html';
 
-            if (file_exists($this->filePath)) {
-                $this->splFileObject = new \SplFileObject($this->filePath, 'r');
+            if (config('seo.cache.driver') == 'file') {
+                $this->filePath = rtrim(config('seo.cache.storage'), "/") . '/' . $this->page->id . '.html';
+
+                if (file_exists($this->filePath)) {
+                    $this->splFileObject = new \SplFileObject($this->filePath, 'r');
+                }
             }
         }
     }
@@ -57,7 +60,9 @@ class Seo
      */
     public function tags()
     {
+
         $cache = $this->cache();
+
         if (!empty($cache)) {
             return $cache;
         }
@@ -113,9 +118,7 @@ class Seo
         try {
             $imageMeta = [];
             $images = [];
-
             $fillable = request()->get('page', []);
-
 
             if (isset($data['images'])) {
                 $images = $data['images'];
@@ -140,7 +143,7 @@ class Seo
             if ($page->save()) {
                 if (!empty($images)) {
 
-                    $page->saveImagesFromArray($images);
+                    $page->destroyImages()->saveImagesFromArray($images);
                 }
                 $metaValues = request()->get('meta', []);
 
@@ -170,6 +173,9 @@ class Seo
             if (($modifiedTimeStamp + $cacheTime) > $currentTime) {
                 return $this->splFileObject->fread($this->splFileObject->getSize());
             }
+        } elseif (config('seo.cache.driver') == 'database' && is_object($this->page) && !empty($this->page->tags)) {
+
+            return $this->page->tags;
         }
         return false;
     }

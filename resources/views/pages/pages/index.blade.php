@@ -27,10 +27,42 @@
         <a href="{{route('seo::pages.bulkEdit')}}" class="btn btn-outline-secondary">
             <i class="fa fa-pencil-square-o"></i> Bulk Edit
         </a>
-            <a class="btn btn-outline-secondary" href="{{route('seo::pages.create')}}"><i class="fa fa-plus"></i></a>
+        <a class="btn btn-outline-secondary" href="{{route('seo::pages.create')}}"><i class="fa fa-plus"></i></a>
     </div>
 @endsection
 @section('content')
+    <form method="get" class="m-form">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group m-form__group">
+                    <div class="input-group">
+                        <div class="input-group-append">
+                            <select name="object" class="form-control">
+                                <option value="">All</option>
+                                @foreach($objects as $object)
+                                    <option value="{{$object}}"
+                                            {{request('object')==$object?'selected':''}}>
+                                        {{$object}}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <input type="text" name="search" class="form-control"
+                               value="{{$_GET['search']??''}}"
+                               placeholder="Search for .. product name, brand, model">
+                        <div class="input-group-append">
+                            <button class="btn btn-light text-primary m--font-boldest" type="submit"><i
+                                        class="fa fa-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 text-right">
+                {!! $records->appends(['object'=>request('object'),'search'=>request('search')])->render() !!}
+            </div>
+        </div>
+    </form>
     <div class="row">
         @foreach($records as $record)
             <div class="col-sm-6">
