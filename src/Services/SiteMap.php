@@ -88,6 +88,10 @@ class SiteMap
         $url->addChild('lastmod', $page->getLastModifiedDate());
         $url->addChild('changefreq', $page->getChangeFrequency());
         $url->addChild('priority', $page->getPriority());
+        foreach ($page->pageImages as $image) {
+            $imageXml = $url->addChild('image:image', '', static::ImageNs);
+            $this->singleImage($imageXml, $image);
+        }
         return $url;
     }
 
