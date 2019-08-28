@@ -1,4 +1,4 @@
-<form action="{{isset($route)?$route: route('seo::pages.store')}}" method="POST">
+<form action="{{isset($route)?$route: route('seo::pages.store')}}" method="POST" enctype="multipart/form-data">
     {{csrf_field()}}
     <input type="hidden" name="_method" value="{{isset($method)?$method:'POST'}}"/>
     @include('seo::includes.page_meta_tags')

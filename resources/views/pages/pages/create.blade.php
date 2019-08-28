@@ -3,6 +3,8 @@
     <i class="fa fa-plus text-muted"></i> New Page
 @endsection
 @section('tools')
+    <input type="submit" class="btn btn-primary" form="SeoFormPage" value="Save"/>
+
 @endsection
 @section('content')
     <div class="row">

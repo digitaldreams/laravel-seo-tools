@@ -2,8 +2,8 @@
     <div class="form-group col-sm-6">
         <label for="page_title">Title <i class="fa fa-info" title="This will be shown on browser tab."></i></label>
         <input type="text" class="form-control" name="page[title]" id="page_title"
-               value="{{old('page.title',$model->getTitle())}}"
-               placeholder="" maxlength="100">
+               value="{{old('page.title',$model->getTitle())}}" required
+               placeholder="Page Title" maxlength="100">
 
         @if($errors->has('page.title'))
             <span class="form-control-feedback">

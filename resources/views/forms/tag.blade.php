@@ -2,11 +2,11 @@
     <label for="{{$tag->id}}">{{$tag->input_label}}</label>
     <br/>
     @if($tag->input_type=='file')
-        <div class="custom-file">
-            <input type="file" id="Image" name="meta[{{$tag->id}}]" class="custom-file-input form-control-lg">
-            <span class="custom-file-control">
+        <div class="">
+            <input type="file" id="Image" name="meta[{{$tag->id}}]" class="form-control-lg">
+            <span class="">
                 @if(!empty($tag->content))
-                    {{pathinfo($tag->content,PATHINFO_BASENAME)}}
+                    <img src="{{$tag->content}}" width="120px">
                 @endif
             </span>
         </div>

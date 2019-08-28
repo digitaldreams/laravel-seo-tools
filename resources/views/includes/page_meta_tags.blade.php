@@ -21,7 +21,8 @@
                                href="https://developers.facebook.com/tools/debug/sharing/?q={{urlencode($record->getFullUrl())}}">
                                 <i class="fa fa-facebook-official"></i> Validate
                             </a>
-                            <a class="btn btn-outline-secondary" href="https://cards-dev.twitter.com/validator" target="_blank">
+                            <a class="btn btn-outline-secondary" href="https://cards-dev.twitter.com/validator"
+                               target="_blank">
                                 <i class="fa fa-twitter"></i> Card Validate
                             </a>
                             <a class="btn btn-outline-secondary" target="_blank"
@@ -62,12 +63,10 @@
                     <a class="nav-item nav-link" id="nav-page-tab" data-toggle="tab" href="#nav-meta" role="tab"
                        aria-controls="nav-meta">Others
                     </a>
-                    @if(!empty($record->id))
-                        <a class="nav-item nav-link" id="nav-keyword-tab" data-toggle="tab" href="#nav-keyword-analysis"
-                           role="tab"
-                           aria-controls="nav-meta"><i class="fa fa-search"></i> Keyword Analysis
-                        </a>
-                    @endif
+                    <a class="nav-item nav-link" id="nav-keyword-tab" data-toggle="tab" href="#nav-keyword-analysis"
+                       role="tab"
+                       aria-controls="nav-meta"><i class="fa fa-search"></i> Keyword Analysis
+                    </a>
                 </nav>
                 <div class="tab-content mt-3" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-global" role="tabpanel"
@@ -90,77 +89,76 @@
                     <div class="tab-pane fade hide" id="nav-meta" role="tabpanel" aria-labelledby="nav-page-tab">
                         @include('seo::forms.fields.page_meta_others')
                     </div>
-                    @if(!empty($record->id))
-                        <div class="tab-pane fade hide" id="nav-keyword-analysis" role="tabpanel"
-                             aria-labelledby="nav-keyword-tab">
 
-                            <div class="form-group form-group-sm">
-                                <label class="" for="page_focus_keyword">Focus Keyword</label>
-                                <input type="text" name="page[focus_keyword]" value="{{$record->focus_keyword}}"
-                                       placeholder="e.g. Travel"
-                                       class="form-control">
+                    <div class="tab-pane fade hide" id="nav-keyword-analysis" role="tabpanel"
+                         aria-labelledby="nav-keyword-tab">
 
-                                @if($errors->has('page.robot_index'))
-                                    <span class="form-control-feedback">
+                        <div class="form-group form-group-sm">
+                            <label class="" for="page_focus_keyword">Focus Keyword</label>
+                            <input type="text" name="page[focus_keyword]" value="{{$record->focus_keyword}}"
+                                   placeholder="e.g. Travel"
+                                   class="form-control">
+
+                            @if($errors->has('page.robot_index'))
+                                <span class="form-control-feedback">
                                         <strong>{{ $errors->first('page.focus_keyword') }}</strong>
                                     </span>
-                                @endif
-                            </div>
-                            @if(!empty($keywordAnalysis))
-                                <div class="row">
-                                    @if(isset($keywordAnalysis['good']) && !empty($keywordAnalysis['good']))
-                                        <div class="col-sm-4">
-                                            <div class="card border-success">
-                                                <div class="card-header bg-transparent border-success">
-                                                    <i class="fa fa-check-square text-success"></i> Good
-                                                </div>
-                                                <div class="card-body text-small">
-                                                    <ul class="list-group">
-                                                        @foreach($keywordAnalysis['good'] as $msg)
-                                                            <li class="list-group-item">{{$msg}}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                    @if(isset($keywordAnalysis['warnings']) && !empty($keywordAnalysis['warnings']))
-                                        <div class="col-sm-4">
-                                            <div class="card border-warning">
-                                                <div class="card-header bg-transparent border-warning">
-                                                    <i class="fa fa-warning text-warning"></i> Warnings
-                                                </div>
-                                                <div class="card-body">
-                                                    <ul class="list-group">
-                                                        @foreach($keywordAnalysis['warnings'] as $msg)
-                                                            <li class="list-group-item">{{$msg}}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                    @if(isset($keywordAnalysis['errors']) && !empty($keywordAnalysis['errors']))
-                                        <div class="col-sm-4">
-                                            <div class="card border-danger">
-                                                <div class="card-header  bg-transparent border-danger">
-                                                    <i class="fa fa-warning text-danger"></i> Errors
-                                                </div>
-                                                <div class="card-body">
-                                                    <ul class="list-group">
-                                                        @foreach($keywordAnalysis['errors'] as $msg)
-                                                            <li class="list-group-item">{{$msg}}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-
-                                </div>
                             @endif
                         </div>
-                    @endif
+                        @if(!empty($keywordAnalysis) && !empty($record->id))
+                            <div class="row">
+                                @if(isset($keywordAnalysis['good']) && !empty($keywordAnalysis['good']))
+                                    <div class="col-sm-4">
+                                        <div class="card border-success">
+                                            <div class="card-header bg-transparent border-success">
+                                                <i class="fa fa-check-square text-success"></i> Good
+                                            </div>
+                                            <div class="card-body text-small">
+                                                <ul class="list-group">
+                                                    @foreach($keywordAnalysis['good'] as $msg)
+                                                        <li class="list-group-item">{{$msg}}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                                @if(isset($keywordAnalysis['warnings']) && !empty($keywordAnalysis['warnings']))
+                                    <div class="col-sm-4">
+                                        <div class="card border-warning">
+                                            <div class="card-header bg-transparent border-warning">
+                                                <i class="fa fa-warning text-warning"></i> Warnings
+                                            </div>
+                                            <div class="card-body">
+                                                <ul class="list-group">
+                                                    @foreach($keywordAnalysis['warnings'] as $msg)
+                                                        <li class="list-group-item">{{$msg}}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                                @if(isset($keywordAnalysis['errors']) && !empty($keywordAnalysis['errors']))
+                                    <div class="col-sm-4">
+                                        <div class="card border-danger">
+                                            <div class="card-header  bg-transparent border-danger">
+                                                <i class="fa fa-warning text-danger"></i> Errors
+                                            </div>
+                                            <div class="card-body">
+                                                <ul class="list-group">
+                                                    @foreach($keywordAnalysis['errors'] as $msg)
+                                                        <li class="list-group-item">{{$msg}}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

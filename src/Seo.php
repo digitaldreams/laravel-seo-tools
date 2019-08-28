@@ -11,6 +11,7 @@ namespace SEO;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use SEO\Models\Page;
+use SEO\Models\PageImage;
 use SEO\Services\KeywordAnalysis;
 
 class Seo
@@ -181,13 +182,13 @@ class Seo
     }
 
     /**
-     * @param $files
+     * @param $metaImages
+     * @param $model
      * @return array
      */
-    public static function upload($files)
+    public static function upload($metaImages, $model = '')
     {
         $imageMeta = [];
-        $metaImages = request()->file('meta', []);
 
         $imageDriver = config('seo.storage.driver', 'public');
         $imagePrefix = config('seo.storage.prefix', 'storage');
@@ -195,7 +196,14 @@ class Seo
 
         foreach ($metaImages as $id => $img) {
             $path = $img->store($imageFolder, $imageDriver);
-            $imageMeta[$id] = asset($imagePrefix . '/' . $path);
+            $imageSrc = asset($imagePrefix . '/' . $path);
+            $imageMeta[$id] = $imageSrc;
+            if ($model instanceof Page) {
+                $pageImageModel = PageImage::firstOrCreate(['src' => $imageSrc, 'page_id' => $model->id]);
+                $pageImageModel->title = $model->title;
+                $pageImageModel->caption = $pageImageModel->title;
+                $pageImageModel->save();
+            }
         }
         return $imageMeta;
     }

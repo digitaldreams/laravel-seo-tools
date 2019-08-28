@@ -13,7 +13,6 @@ use SEO\Http\Requests\Pages\Create;
 use SEO\Http\Requests\Pages\Destroy;
 use SEO\Http\Requests\Pages\Download;
 use SEO\Http\Requests\Pages\Edit;
-use SEO\Http\Requests\Pages\Image;
 use SEO\Http\Requests\Pages\Index;
 use SEO\Http\Requests\Pages\Show;
 use SEO\Http\Requests\Pages\Store;
@@ -27,6 +26,7 @@ use SEO\Models\PageImage;
 use SEO\Models\PageMetaTag;
 use SEO\Services\PageAnalysis;
 use SEO\Tag;
+use SEO\Seo;
 use SEO\Services\KeywordAnalysis;
 use Illuminate\Support\Facades\DB;
 
@@ -93,7 +93,7 @@ class PageController extends Controller
     public function create(Create $request)
     {
         $page = new Page();
-        $metaTags = $page->metaTags();
+        $metaTags = $page->pageLevel();
 
         if (isset($metaTags['og'])) {
             $og = $metaTags['og'];
@@ -125,7 +125,9 @@ class PageController extends Controller
 
         if ($model->save()) {
             $model->saveMeta(request()->get('meta', []));
-
+            $model->saveMeta(Seo::upload(request()->file('meta',[]), $model));
+            $tag = new Tag($model);
+            $tag->make()->save();
             session()->flash(config('seo.flash_message'), 'Page saved successfully');
             return redirect()->route('seo::pages.index');
         } else {
@@ -188,7 +190,9 @@ class PageController extends Controller
 
         if ($page->save()) {
             $page->saveMeta(request()->get('meta', []));
-
+            $page->saveMeta(Seo::upload(request()->file('meta',[]), $page));
+            $tag = new Tag($page);
+            $tag->make()->save();
             session()->flash(config('seo.flash_message'), 'Page successfully updated');
             return redirect()->route('seo::pages.index');
         } else {
@@ -217,6 +221,9 @@ class PageController extends Controller
                 $pageModel->description = $page['description'];
                 $pageModel->robot_index = !empty($page['robot_index']) ? $page['robot_index'] : 'noindex';
                 $pageModel->save();
+                $tag = new Tag($pageModel);
+                $tag->make()->save();
+
             }
         }
         return redirect()->back()->with(config('seo.flash_message'), 'Pages saved successfully');
