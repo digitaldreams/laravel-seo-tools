@@ -19,15 +19,14 @@
             <label for="facebook_default_image" class="col-sm-2 col-form-label"><i class="fa fa-facebook-official"></i>
                 Facebook Default Image</label>
             <div class="col-sm-10">
-                <div class="custom-file">
+                <div class="">
                     <input type="file" id="facebook_default_image" name="settings[facebook_default_image][value]"
-                           class="custom-file-input form-control-lg"
+                           class="form-control-lg"
                            placeholder="e.g. Upload your image">
-                    <span class="custom-file-control">
-                    {{pathinfo($model->getValueByKey('facebook_default_image'),PATHINFO_BASENAME)}}
-            </span>
+                    @if($url=$model->getValueByKey('facebook_default_image'))
+                        <img src="{{$url}}" width="120px">
+                    @endif
                 </div>
-
             </div>
         </div>
 
@@ -50,13 +49,13 @@
             <label for="facebook_default_image" class="col-sm-2 col-form-label"><i class="fa fa-facebook-official"></i>
                 Twitter Default Image</label>
             <div class="col-sm-10">
-                <div class="custom-file">
+                <div class="">
                     <input type="file" id="twitter_default_image" name="settings[twitter_default_image][value]"
-                           class="custom-file-input form-control-lg"
+                           class="form-control-lg"
                            placeholder="e.g. Upload your image">
-                    <span class="custom-file-control">
-                    {{pathinfo($model->getValueByKey('twitter_default_image'),PATHINFO_BASENAME)}}
-            </span>
+                    @if($turl=$model->getValueByKey('twitter_default_image'))
+                        <img src="{{$turl}}" width="120px">
+                    @endif
                 </div>
 
             </div>
@@ -74,19 +73,7 @@
             </div>
         </div>
 
-        <div class="form-group row">
-            <label for="google_plus_url" class="col-sm-2 col-form-label"><i class="fa fa-google-plus-official"></i>
-                Google + URL</label>
-            <div class="col-sm-10">
-                <div class="input-group">
-                    <input type="url" class="form-control" value="{{$model->getValueByKey('google_plus_url')}}"
-                           id="google_plus_url" name="settings[google_plus_url][value]"
-                           placeholder="Google Plus profile url">
-
-                </div>
-            </div>
-        </div>
-
+        
         <div class="form-group row">
             <label for="linkedin_url" class="col-sm-2 col-form-label"><i class="fa fa-linkedin"></i>
                 LinkedIn URL</label>
