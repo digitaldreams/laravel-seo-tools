@@ -73,7 +73,7 @@
             </div>
         </div>
 
-        
+
         <div class="form-group row">
             <label for="linkedin_url" class="col-sm-2 col-form-label"><i class="fa fa-linkedin"></i>
                 LinkedIn URL</label>

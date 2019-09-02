@@ -3,6 +3,7 @@
 
 namespace SEO\Services;
 
+use Illuminate\Support\Facades\Log;
 use SEO\Models\PageImage;
 use SEO\Models\Setting;
 use SEO\Models\Page;
@@ -84,15 +85,20 @@ class SiteMap
      */
     private function singlePage($url, $page)
     {
-        $url->addChild('loc', $page->getFullUrl());
-        $url->addChild('lastmod', $page->getLastModifiedDate());
-        $url->addChild('changefreq', $page->getChangeFrequency());
-        $url->addChild('priority', $page->getPriority());
-        foreach ($page->pageImages as $image) {
-            $imageXml = $url->addChild('image:image', '', static::ImageNs);
-            $this->singleImage($imageXml, $image);
+        try {
+            $url->addChild('loc', $page->getFullUrl());
+            $url->addChild('lastmod', $page->getLastModifiedDate());
+            $url->addChild('changefreq', $page->getChangeFrequency());
+            $url->addChild('priority', $page->getPriority());
+            foreach ($page->pageImages as $image) {
+                $imageXml = $url->addChild('image:image', '', static::ImageNs);
+                $this->singleImage($imageXml, $image);
+            }
+            return $url;
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return $url;
         }
-        return $url;
     }
 
     /**
@@ -114,7 +120,7 @@ class SiteMap
     }
 
     /**
-     * @param  \SimpleXMLElement $url
+     * @param \SimpleXMLElement $url
      * @param Page $page
      */
     protected function pageImages($url, $page)
@@ -133,21 +139,26 @@ class SiteMap
      */
     protected function singleImage($imageXml, $image)
     {
-        $imageXml->addChild('image:loc', $image->getFullUrl(), static::ImageNs);
-        $caption = $image->getCaption();
-        $title = $image->getTitle();
-        $location = $image->getLocation();
+        try {
+            $imageXml->addChild('image:loc', $image->getFullUrl(), static::ImageNs);
+            $caption = $image->getCaption();
+            $title = $image->getTitle();
+            $location = $image->getLocation();
 
-        if (!empty($caption)) {
-            $imageXml->addChild('image:caption', $caption, static::ImageNs);
+            if (!empty($caption)) {
+                $imageXml->addChild('image:caption', htmlspecialchars($caption), static::ImageNs);
+            }
+            if (!empty($title)) {
+                $imageXml->addChild('image:title', htmlspecialchars($title), static::ImageNs);
+            }
+            if (!empty($location)) {
+                $imageXml->addChild('image:geo_location', htmlspecialchars($location), static::ImageNs);
+            }
+            return $imageXml;
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return $imageXml;
         }
-        if (!empty($title)) {
-            $imageXml->addChild('image:title', $title, static::ImageNs);
-        }
-        if (!empty($location)) {
-            $imageXml->addChild('image:geo_location', $location, static::ImageNs);
-        }
-        return $imageXml;
     }
 
     /**
@@ -176,5 +187,37 @@ class SiteMap
             $files[] = asset(trim(config('seo.sitemap_location'), "/") . '/' . $file->getBasename());
         }
         return $files;
+    }
+
+    /**
+     *
+     */
+    public function mergeIntoOne()
+    {
+        $template = __DIR__ . '/../../resources/assets/sitemap-group.xml';
+        $groupXml = simplexml_load_file($template);
+        $files = $this->all();
+        foreach ($files as $file) {
+            $sitemap = $groupXml->addChild('sitemap');
+            $sitemap->addChild('loc', $file);
+            $sitemap->addChild('lastmod', date('Y-m-d'));
+        }
+        $filePath = $this->filePath . '/sitemap.xml';
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+        $groupXml->saveXML($filePath);
+        return $this;
+    }
+
+    public function destroyAll()
+    {
+        $dirIt = new \DirectoryIterator($this->filePath);
+        foreach ($dirIt as $file) {
+            if ($file->isDot()) continue;
+            if ($file->getExtension() != 'xml') continue;
+            unlink($file->getRealPath());
+        }
+        return $this;
     }
 }

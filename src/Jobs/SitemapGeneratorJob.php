@@ -36,7 +36,8 @@ class SitemapGeneratorJob implements ShouldQueue
     public function handle()
     {
         $siteMap = new SiteMap();
-        $siteMap->page();
+        $siteMap->destroyAll();
+        $siteMap->page()->mergeIntoOne();
     }
 
 }
