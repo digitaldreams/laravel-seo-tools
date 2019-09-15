@@ -1,6 +1,8 @@
 # Laravel Seo Tools #
 Laravel is becoming more and more popular and lots of web application are developing. In most of the web application there need some SEO work for thir marketing purpose. There are some tools but those are not suitable for non programmer. Everything can be control via dashboard  like  [Wordpress Yoast](https://yoast.com/)
 
+[See Demo](https://github.com/digitaldreams/laravel-seo-tools-demo)
+
 ### Installation ###
 ```javascript
   "require": { 
