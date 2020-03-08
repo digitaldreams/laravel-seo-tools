@@ -1,5 +1,5 @@
 # Laravel Seo Tools #
-Laravel is becoming more and more popular and lots of web application are developing. In most of the web application there need some SEO work for thir marketing purpose. There are some tools but those are not suitable for non programmer. Everything can be control via dashboard  like  [Wordpress Yoast](https://yoast.com/)
+Laravel is becoming more and more popular and lots of web application are developing. In most of the web application there need some SEO work for their marketing purpose. There are some tools but those are not suitable for non programmer. Everything can be control via dashboard  like  [Wordpress Yoast](https://yoast.com/)
 
 [See Demo](https://github.com/digitaldreams/laravel-seo-tools-demo)
 
@@ -61,7 +61,7 @@ Now visit **/seo/dashboard** from your browser to see seo dashboard and settings
 Target user of this tool is non programmer. So they can able to add/modify on page SEO tags and do some necessary action that can give full control how this page will be appear by Search Engine. 
 
 ### Social media sharing ###
-Everybody loves to share their page or content in Socail media. By using tools you can able to manage how your page looks like in Facebook, Twitter and others and what image will be shown, which title and description are shown and many more. 
+Everybody loves to share their page or content in social media. By using this tools you can able to manage how your page looks like in Facebook, Twitter and others and what image will be shown, which title and description are shown and many more. 
 <img src="https://image.ibb.co/e2yAzT/social_media.png" alt="social_media" border="0">
 
 ### Page management ###
@@ -70,20 +70,20 @@ Also it can be set via programatically for example when a post is published it w
 <img src="https://image.ibb.co/j8Jom8/page_management.png" alt="page_management" border="0">
 
 ### Submit company or personal information to Google ###
- For business or ecommerce we often see support email, telephone and some other extra information like ther facebook, Twiteer account in google search. This can be done schema.org tags. To make this super simple there have few input field that you can easily fill and save. 
-Behind the scene everyting will be done for you. 
+ For business or ecommerce we often see support email, telephone and some other extra information like their Facebook, Twitter account in google search. This can be done schema.org tags. To make this super simple there have few input field that you can easily fill and save. 
+Behind the scene everything will be done for you. 
 <img src="https://image.ibb.co/frTceT/company_personal_info.png" alt="company_personal_info" border="0">
 
 ### Webmaster tools ###
 Sometimes web master need ftp or file access because they need to add some verification code into your site. Using this tools they can simply add this from dashboard. Like Google Verification code
 <img src="https://image.ibb.co/mUkZR8/webmaster_tools.png" alt="webmaster_tools" border="0">
 ### Sitemap generator ###
-Sitemap are the key to search engine. Search engline will crawl your website according to this. It will be created automatically for you. Also you can set pririty and change frequency of your page. 
+Sitemap are the key to search engine. Search engine will crawl your website according to this. It will be created automatically for you. Also you can set pririty and change frequency of your page. 
 <img src="https://image.ibb.co/jQGKto/site_map.png" alt="site_map" border="0">
 
 
 ### Robot.txt and .htaccess file customization ###
-Web master sometings need to have access to robot.txt and .htaccess. Now it can be done via dashboard. Although its require expertise knowledge to modify this files. 
+Web master sometimes need to have access to robot.txt and .htaccess. Now it can be done via dashboard. Although it requires expertise knowledge to modify this files. 
 <img src="https://image.ibb.co/hM3ceT/robot_htaccess.png" alt="robot_htaccess" border="0">
 
 ### Meta tag management ###
