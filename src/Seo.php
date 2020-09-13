@@ -193,7 +193,7 @@ class Seo
         $imageDriver = config('seo.storage.driver', 'public');
         $imagePrefix = config('seo.storage.prefix', 'storage');
         $imageFolder = config('seo.storage.folder', 'seo');
-
+        if(!is_array($metaImages)) return $imageMeta;
         foreach ($metaImages as $id => $img) {
             $path = $img->store($imageFolder, $imageDriver);
             $imageSrc = asset($imagePrefix . '/' . $path);
