@@ -82,7 +82,7 @@ class SeoServiceProvider extends ServiceProvider
                         continue;
                     }
                     $jobClass = $modelConfig[$modelClassName]['job'];
-                    dispatch(new $jobClass($model));
+                    $jobClass::dispatch($model)->onConnection('sync');
                 }
             }
 
