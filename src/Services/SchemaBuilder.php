@@ -43,7 +43,7 @@ class SchemaBuilder
         $arr = [];
 
         if (!empty($this->settings['ownership_type'])) {
-            $arr['@context'] = 'http://schema.org';
+            $arr['@context'] = 'https://schema.org';
             $arr['@type'] = $this->settings['ownership_type'];
             $arr['name'] = $this->settings['ownership_name'];
             $arr['url'] = $this->settings['ownership_url'];
