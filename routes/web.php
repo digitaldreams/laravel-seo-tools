@@ -1,7 +1,7 @@
 <?php
 Route::group([
     'prefix' => 'seo', 'as' => 'seo::',
-    'middleware' => ['web', config('seo.middleware', 'auth')],
+    'middleware' => ['web', config('seo.middleware.web', 'auth')],
     'namespace' => '\SEO\Http\Controllers'], function () {
     Route::get('analysis', ['uses' => 'AnalysisController@index', 'analysis.index']);
     Route::get('dashboard', ['uses' => 'DashboardController@index', 'as' => 'dashboard.index']);

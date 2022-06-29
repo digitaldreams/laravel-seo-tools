@@ -19,8 +19,8 @@
     }
   ],
   "require": {
-    "php": ">=7.0.0",
-    "laravel/framework": ">=5.5",
+    "php": ">=8.0.0",
+    "laravel/framework": "^8.0|^9.0",
     "digitaldream/data-converter": ">=1.0"
   },
   "require-dev": {

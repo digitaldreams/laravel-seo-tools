@@ -4,26 +4,21 @@ return [
      * Layout's to be used on package pages
      */
     'layout' => 'seo::layouts.app',
+
     /**
      * Middleware that will wrap up seo routes
      */
-    'middleware' => 'auth',
+    'middleware' => [
+        'web' => ['web','auth'],
+        'api' => ['auth:sanctum'],
+    ],
+
     /**
      *
      */
     'linkProviders' => [
 
     ],
-    /**
-     * Name of the flash variable that holds success message
-     */
-    'flash_message' => 'permit_message',
-
-    /**
-     * Name of the flash variable that holds error message
-     */
-    'flash_error' => 'permit_error',
-
     /**
      * Full path where robot.txt file will be saved.
      */
@@ -62,7 +57,7 @@ return [
          *
          * Expire in seconds. Default it would be one hour
          */
-        'expire' => 3600
+        'expire' => 3600,
     ],
 
     /**
@@ -83,7 +78,7 @@ return [
         /**
          * Which folder on your driver will storage all the files
          */
-        'folder' => 'seo'
+        'folder' => 'seo',
     ],
     'models' => [
 
