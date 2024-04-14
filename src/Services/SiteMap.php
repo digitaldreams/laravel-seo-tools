@@ -10,7 +10,7 @@ use SEO\Models\Page;
 
 class SiteMap
 {
-    const ImageNs = 'http://www.google.com/schemas/sitemap-image/1.1';
+    public const ImageNs = 'http://www.google.com/schemas/sitemap-image/1.1';
     protected $pages;
     protected $perPage;
     protected $total;
@@ -26,7 +26,7 @@ class SiteMap
     {
         $pageLimit = !empty($limit) && is_int($limit) ? $limit : (new Setting())->getValueByKey('entries_per_sitemap');
         $this->perPage = !empty($pageLimit) ? $pageLimit : 1000;
-        $this->filePath = !empty($filePath) ? path_info($filePath, PATHINFO_DIRNAME) : public_path(trim(config('seo.sitemap_location'), "/"));
+        $this->filePath = !empty($filePath) ? path_info($filePath, PATHINFO_DIRNAME) : public_path(trim((string) config('seo.sitemap_location'), "/"));
     }
 
     /**
@@ -146,13 +146,13 @@ class SiteMap
             $location = $image->getLocation();
 
             if (!empty($caption)) {
-                $imageXml->addChild('image:caption', htmlspecialchars($caption), static::ImageNs);
+                $imageXml->addChild('image:caption', htmlspecialchars((string) $caption), static::ImageNs);
             }
             if (!empty($title)) {
-                $imageXml->addChild('image:title', htmlspecialchars($title), static::ImageNs);
+                $imageXml->addChild('image:title', htmlspecialchars((string) $title), static::ImageNs);
             }
             if (!empty($location)) {
-                $imageXml->addChild('image:geo_location', htmlspecialchars($location), static::ImageNs);
+                $imageXml->addChild('image:geo_location', htmlspecialchars((string) $location), static::ImageNs);
             }
             return $imageXml;
         } catch (\Exception $e) {
@@ -184,7 +184,7 @@ class SiteMap
         foreach ($dirIt as $file) {
             if ($file->isDot()) continue;
             if ($file->getExtension() != 'xml') continue;
-            $files[] = asset(trim(config('seo.sitemap_location'), "/") . '/' . $file->getBasename());
+            $files[] = asset(trim((string) config('seo.sitemap_location'), "/") . '/' . $file->getBasename());
         }
         return $files;
     }

@@ -27,7 +27,7 @@ class PagePolicy
      */
     public function index(User $user)
     {
-        return false;
+        return true;
     }
 
     /**

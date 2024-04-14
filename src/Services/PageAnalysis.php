@@ -41,11 +41,6 @@ class PageAnalysis
     protected $data = [];
 
     /**
-     * @var
-     */
-    protected $url;
-
-    /**
      * @var int
      */
     protected $resourceSize = 0;
@@ -60,15 +55,12 @@ class PageAnalysis
      * PageAnalysis constructor.
      * @param $url
      */
-    public function __construct($url)
+    public function __construct(/**
+     * @var
+     */
+    protected $url)
     {
-        $this->url = $url;
-        $arrContextOptions = array(
-            "ssl" => array(
-                "verify_peer" => false,
-                "verify_peer_name" => false,
-            ),
-        );
+        $arrContextOptions = ["ssl" => ["verify_peer" => false, "verify_peer_name" => false]];
         $this->htmlContent = @file_get_contents($this->url, false, stream_context_create($arrContextOptions));
 
         if ($this->htmlContent) {
@@ -138,7 +130,7 @@ class PageAnalysis
     public function fromCache()
     {
         if (Cache::has($this->url)) {
-            $this->data = json_decode(Cache::get($this->url), true);
+            $this->data = json_decode((string) Cache::get($this->url), true);
         } else {
             $this->fetch();
         }
@@ -212,7 +204,7 @@ class PageAnalysis
                     $link[$attr->name] = $attr->nodeValue;
                 }
             }
-            $link['text'] = trim($tag->nodeValue);
+            $link['text'] = trim((string) $tag->nodeValue);
             $links[] = $link;
         }
         return $links;
@@ -225,7 +217,7 @@ class PageAnalysis
      */
     public function isInternal($url)
     {
-        return parse_url($url, PHP_URL_HOST) == $this->host;
+        return parse_url((string) $url, PHP_URL_HOST) == $this->host;
     }
 
     /**
@@ -255,9 +247,9 @@ class PageAnalysis
                     $mg['src'] = $this->linkBuilder($mg['src']);
                     $info = @getimagesize($mg['src']);
                     if (!empty($info)) {
-                        $mg['width'] = isset($info[0]) ? $info[0] : '';
-                        $mg['height'] = isset($info[1]) ? $info[1] : '';
-                        $mg['mime'] = isset($info['mime']) ? $info['mime'] : '';
+                        $mg['width'] = $info[0] ?? '';
+                        $mg['height'] = $info[1] ?? '';
+                        $mg['mime'] = $info['mime'] ?? '';
 
                         if ($size) {
                             $sizeKb = round(Helper::fileSize($mg['src']) / 1000);
@@ -337,7 +329,7 @@ class PageAnalysis
     protected function getDomain()
     {
         $ret = '';
-        $parts = parse_url($this->url);
+        $parts = parse_url((string) $this->url);
         if (isset($parts['scheme']) && !empty($parts['scheme'])) {
             $this->scheme = $parts['scheme'];
             $ret = $this->scheme . "://";
@@ -356,8 +348,8 @@ class PageAnalysis
      */
     protected function linkBuilder($url)
     {
-        $linkHost=parse_url($url, PHP_URL_HOST);
-        return empty($linkHost) ? $this->doman . '/' . ltrim($url, "/") : $url;
+        $linkHost=parse_url((string) $url, PHP_URL_HOST);
+        return empty($linkHost) ? $this->doman . '/' . ltrim((string) $url, "/") : $url;
     }
 
 }

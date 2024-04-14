@@ -44,7 +44,7 @@ class SeoServiceProvider extends ServiceProvider
             __DIR__ . '/../resources/views' => resource_path('views/vendor/seo'),
         ]);
         $this->publishes([
-            __DIR__ . '/Policies' => base_path('app/Policies/Seo')
+            __DIR__ . '/../Policies' => base_path('app/Policies/Seo')
         ], 'seo-policies');
     }
 
@@ -58,18 +58,14 @@ class SeoServiceProvider extends ServiceProvider
             __DIR__ . '/../config/seo.php', 'seo'
         );
         $blade = app('view')->getEngineResolver()->resolve('blade')->getCompiler();
-        $blade->directive('seoForm', function ($model) {
-            return "<?php echo \SEO\Seo::form($model); ?>";
-        });
-        $blade->directive('seoTags', function ($model) {
-            return "<?php print((new \SEO\Seo())->tags()); ?>";
-        });
+        $blade->directive('seoForm', fn($model) => "<?php echo \SEO\Seo::form($model); ?>");
+        $blade->directive('seoTags', fn($model) => "<?php print((new \SEO\Seo())->tags()); ?>");
         Event::listen(['eloquent.saved: *', 'eloquent.created: *'], function ($name, $models) {
             $modelConfig = config('seo.models');
             $modelNames = array_keys($modelConfig);
 
             foreach ($models as $model) {
-                $modelClassName = get_class($model);
+                $modelClassName = $model::class;
                 if (in_array($modelClassName, $modelNames)) {
                     if (isset($modelConfig[$modelClassName]['route'])) {
                         $routes = $modelConfig[$modelClassName]['route'];

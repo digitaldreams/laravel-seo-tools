@@ -60,7 +60,6 @@ class Tag
 
     /**
      * Tag constructor.
-     * @param Page $page
      */
     public function __construct(Page $page)
     {
@@ -111,7 +110,7 @@ class Tag
      */
     protected function webmaster()
     {
-        $webmaster_tools = isset($this->meta['webmaster_tools']) ? $this->meta['webmaster_tools'] : [];
+        $webmaster_tools = $this->meta['webmaster_tools'] ?? [];
         $this->generator($webmaster_tools);
         return $this;
     }
@@ -122,8 +121,8 @@ class Tag
      */
     protected function og()
     {
-        $og = isset($this->meta['og']) ? $this->meta['og'] : [];
-        $article = isset($this->meta['article']) ? $this->meta['article'] : [];
+        $og = $this->meta['og'] ?? [];
+        $article = $this->meta['article'] ?? [];
         $og = array_merge($og, $article);
         $this->generator($og);
 
@@ -136,7 +135,7 @@ class Tag
      */
     protected function twitter()
     {
-        $twitter = isset($this->meta['twitter']) ? $this->meta['twitter'] : [];
+        $twitter = $this->meta['twitter'] ?? [];
         $this->generator($twitter);
         return $this;
     }
@@ -216,7 +215,7 @@ class Tag
         }
         $html = $this->asHtml();
         if (config('seo.cache.storage') == 'file') {
-            $dir = rtrim($cache['storage'], "/");
+            $dir = rtrim((string) $cache['storage'], "/");
             if (!file_exists($dir)) {
                 mkdir($dir);
             }

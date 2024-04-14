@@ -23,7 +23,7 @@ class Helper
             $size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
 
             return $size;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return false;
         }
     }

@@ -22,7 +22,6 @@ class LinkTagController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  Index $request
      * @return \Illuminate\Http\Response
      */
     public function index(Index $request)
@@ -33,7 +32,6 @@ class LinkTagController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param  Create $request
      * @return \Illuminate\Http\Response
      */
     public function create(Create $request)
@@ -46,7 +44,6 @@ class LinkTagController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Store $request
      * @return \Illuminate\Http\Response
      */
     public function store(Store $request)
@@ -57,18 +54,18 @@ class LinkTagController extends Controller
         if ($model->save()) {
 
             session()->flash('app_message', 'LinkTag saved successfully');
+
             return redirect()->route('seo_link_tags.index');
         } else {
             session()->flash('app_message', 'Something is wrong while saving LinkTag');
         }
+
         return redirect()->back();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Edit $request
-     * @param  LinkTag $linktag
      * @return \Illuminate\Http\Response
      */
     public function edit(Edit $request, LinkTag $linktag)
@@ -76,15 +73,12 @@ class LinkTagController extends Controller
 
         return view('linktag.edit', [
             'model' => $linktag,
-
         ]);
     }
 
     /**
      * Update a existing resource in storage.
      *
-     * @param  Update $request
-     * @param  LinkTag $linktag
      * @return \Illuminate\Http\Response
      */
     public function update(Update $request, LinkTag $linktag)
@@ -92,7 +86,6 @@ class LinkTagController extends Controller
         $linktag->fill($request->all());
 
         if ($linktag->save()) {
-
             session()->flash('app_message', 'LinkTag successfully updated');
             return redirect()->route('seo_link_tags.index');
         } else {
@@ -104,8 +97,6 @@ class LinkTagController extends Controller
     /**
      * Delete a  resource from  storage.
      *
-     * @param  Destroy $request
-     * @param  LinkTag $linktag
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */

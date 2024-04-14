@@ -15,8 +15,6 @@ class PageUploadJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $filePath;
-
     protected $filters = [
         'id',
         'path',
@@ -37,9 +35,8 @@ class PageUploadJob implements ShouldQueue
      *
      * @param $filePath
      */
-    public function __construct($filePath)
+    public function __construct(protected $filePath)
     {
-        $this->filePath = $filePath;
     }
 
     /**
@@ -57,7 +54,7 @@ class PageUploadJob implements ShouldQueue
             if (isset($page['id'])) {
                 $model = Page::find($page['id']);
             } elseif (isset($page['path'])) {
-                $model = Page::whereIn('path', [trim($page['path'], "/"), "/" . trim($page['path'], "/"), url($page['path'])])->first();
+                $model = Page::whereIn('path', [trim((string) $page['path'], "/"), "/" . trim((string) $page['path'], "/"), url($page['path'])])->first();
             }
             if (!$model) {
                 $model = new Page();
@@ -68,8 +65,8 @@ class PageUploadJob implements ShouldQueue
             }
             if ($model->fill($page)->save()) {
                 if (!empty($images)) {
-                    if (strripos($images, "|") !== false) {
-                        $images = explode("|", $images);
+                    if (strripos((string) $images, "|") !== false) {
+                        $images = explode("|", (string) $images);
                     } else {
                         $images = [$images];
                     }

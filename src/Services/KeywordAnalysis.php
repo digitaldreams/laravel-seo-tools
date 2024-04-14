@@ -11,11 +11,6 @@ namespace SEO\Services;
 class KeywordAnalysis extends PageAnalysis
 {
     /**
-     * @var
-     */
-    protected $keyword;
-
-    /**
      * @var array
      */
     protected $good = [];
@@ -36,10 +31,12 @@ class KeywordAnalysis extends PageAnalysis
      * @param $keyword
      * @param bool $size
      */
-    public function __construct($url, $keyword, $size = false)
+    public function __construct($url, /**
+     * @var
+     */
+    protected $keyword, $size = false)
     {
         parent::__construct($url);
-        $this->keyword = $keyword;
         $this->fetchBasic($size);
     }
 
@@ -61,7 +58,7 @@ class KeywordAnalysis extends PageAnalysis
      */
     public function density()
     {
-        $keywordWord = str_word_count($this->keyword);
+        $keywordWord = str_word_count((string) $this->keyword);
         $pageWord = str_word_count($this->textContent());
 
         return round(($keywordWord / $pageWord) * 100, 2);
@@ -115,7 +112,7 @@ class KeywordAnalysis extends PageAnalysis
      */
     public function inHeadings()
     {
-        $h1 = isset($this->data['headings']['h1']) ? $this->data['headings']['h1'] : [];
+        $h1 = $this->data['headings']['h1'] ?? [];
         if (is_array($h1) && count($h1) > 0) {
             $matches = $this->find(array_shift($h1));
             if ($matches > 0) {
@@ -126,7 +123,7 @@ class KeywordAnalysis extends PageAnalysis
         } else {
             $this->warnings[] = 'No h1 tag found in this page';
         }
-        $h2 = isset($this->data['headings']['h2']) ? $this->data['headings']['h2'] : [];
+        $h2 = $this->data['headings']['h2'] ?? [];
         $h2Found = 0;
 
         foreach ($h2 as $text) {
@@ -139,7 +136,7 @@ class KeywordAnalysis extends PageAnalysis
             $this->good[] = 'Keyword found on h2 tag';
         }
 
-        $h3 = isset($this->data['headings']['h3']) ? $this->data['headings']['h3'] : [];
+        $h3 = $this->data['headings']['h3'] ?? [];
         $h3Found = 0;
 
         foreach ($h3 as $text) {
@@ -198,7 +195,7 @@ class KeywordAnalysis extends PageAnalysis
      */
     public function find($string)
     {
-        preg_match_all('/(' . $this->keyword . ')/i', $string, $matches, PREG_SET_ORDER);
+        preg_match_all('/(' . $this->keyword . ')/i', (string) $string, $matches, PREG_SET_ORDER);
         return count($matches);
     }
 

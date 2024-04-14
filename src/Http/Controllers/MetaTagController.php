@@ -25,7 +25,6 @@ class MetaTagController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  Index $request
      * @return Response
      */
     public function index(Index $request)
@@ -37,7 +36,6 @@ class MetaTagController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param  Create $request
      * @return Response
      */
     public function create(Create $request)
@@ -50,7 +48,6 @@ class MetaTagController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Store $request
      * @return Response
      */
     public function store(Store $request)
@@ -71,8 +68,6 @@ class MetaTagController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Edit $request
-     * @param  MetaTag $meta_tag
      * @return Response
      */
     public function edit(Edit $request, MetaTag $meta_tag)
@@ -85,8 +80,6 @@ class MetaTagController extends Controller
     /**
      * Update a existing resource in storage.
      *
-     * @param  Update $request
-     * @param  MetaTag $meta_tag
      * @return Response
      */
     public function update(Update $request, MetaTag $meta_tag)
@@ -104,7 +97,6 @@ class MetaTagController extends Controller
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function global(Request $request)
@@ -121,8 +113,6 @@ class MetaTagController extends Controller
     /**
      * Delete a  resource from  storage.
      *
-     * @param  Destroy $request
-     * @param  MetaTag $meta_tag
      * @return Response
      * @throws \Exception
      */

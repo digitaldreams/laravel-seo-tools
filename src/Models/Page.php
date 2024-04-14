@@ -197,11 +197,7 @@ class Page extends Model
         return $retArr;
     }
 
-    /**
-     * @param array $images
-     * @return Collection
-     */
-    public function saveImagesFromArray(array $images)
+    public function saveImagesFromArray(array $images): \Illuminate\Support\Collection
     {
         $ret = [];
 
@@ -239,7 +235,7 @@ class Page extends Model
      */
     public function scopeSearch($builder, $keyword)
     {
-        $keyword = trim($keyword);
+        $keyword = trim((string) $keyword);
         $arr = explode(" ", $keyword);
         foreach ($arr as $word) {
             $builder = $builder->where(function ($q) use ($word) {

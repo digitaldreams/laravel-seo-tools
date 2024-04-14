@@ -42,12 +42,12 @@ class Seo
     {
         $this->request = app('request');
         $path = $this->request->path();
-        $this->page = Page::whereIn('path', [trim($path, "/"), "/" . $path, url($path)])->first();
+        $this->page = Page::whereIn('path', [trim((string) $path, "/"), "/" . $path, url($path)])->first();
 
         if ($this->page) {
 
             if (config('seo.cache.driver') == 'file') {
-                $this->filePath = rtrim(config('seo.cache.storage'), "/") . '/' . $this->page->id . '.html';
+                $this->filePath = rtrim((string) config('seo.cache.storage'), "/") . '/' . $this->page->id . '.html';
 
                 if (file_exists($this->filePath)) {
                     $this->splFileObject = new \SplFileObject($this->filePath, 'r');
@@ -79,7 +79,7 @@ class Seo
     public static function form(Model $model)
     {
         $page = Page::firstOrNew([
-            'object' => get_class($model),
+            'object' => $model::class,
             'object_id' => $model->getKey()
         ]);
         $keywordAnalysis = false;
@@ -109,7 +109,6 @@ class Seo
     }
 
     /**
-     * @param Model $model
      * @param $url
      * @param array $data
      * @return Page
@@ -127,12 +126,12 @@ class Seo
             }
 
             $page = Page::firstOrNew([
-                'object' => get_class($model),
+                'object' => $model::class,
                 'object_id' => $model->getKey()
             ]);
 
             $page->path = $url;
-            $page->object = get_class($model);
+            $page->object = $model::class;
             $page->object_id = $model->getKey();
 
             foreach ($fillable as $column => $value) {

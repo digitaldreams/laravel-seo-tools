@@ -100,17 +100,17 @@ class PageGeneratorJob implements ShouldQueue
         $priority = $setting->getValueByKey('page_priority');
 
         $path = $link['link'];
-        $object = isset($link['object']) ? $link['object'] : null;
-        $objectId = isset($link['object_id']) ? $link['object_id'] : null;
+        $object = $link['object'] ?? null;
+        $objectId = $link['object_id'] ?? null;
         $page = Page::firstOrNew(['object' => $object, 'object_id' => $objectId]);
 
         $page->path = $path;
         $page->canonical_url = $path;
-        $page->title_source = isset($link['title']) ? substr($link['title'], 0, 70) : '';
-        $page->description_source = isset($link['description']) ? substr($link['description'], 0, 150) : '';
+        $page->title_source = isset($link['title']) ? substr((string) $link['title'], 0, 70) : '';
+        $page->description_source = isset($link['description']) ? substr((string) $link['description'], 0, 150) : '';
 
-        $page->created_at = isset($link['created_at']) ? $link['created_at'] : '';
-        $page->updated_at = isset($link['updated_at']) ? $link['updated_at'] : '';
+        $page->created_at = $link['created_at'] ?? '';
+        $page->updated_at = $link['updated_at'] ?? '';
         $page->change_frequency = !empty($changeFrequency) ? $changeFrequency : 'monthly';
         $page->priority = (!empty($priority) && $priority < 1.1) ? $priority : 0.5;
 

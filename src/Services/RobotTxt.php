@@ -47,9 +47,8 @@ class RobotTxt
 
     /**
      * @param string $mode
-     * @return \SplFileObject
      */
-    public function file($mode = 'w+')
+    public function file($mode = 'w+'): \SplFileObject
     {
         return new \SplFileObject($this->path, $mode);
 

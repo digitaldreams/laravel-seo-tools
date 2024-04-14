@@ -40,7 +40,6 @@ class PageController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Index $request
      * @return Response
      */
     public function index(Index $request)
@@ -63,8 +62,6 @@ class PageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Show $request
-     * @param Page $page
      * @return Response
      * @throws \Exception
      */
@@ -81,13 +78,13 @@ class PageController extends Controller
             $data['result'] = $pageAnalysis->run()->result();
             $data['success'] = true;
         }
+
         return view('seo::pages.pages.show', $data);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @param Create $request
      * @return Response
      */
     public function create(Create $request)
@@ -115,7 +112,6 @@ class PageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Store $request
      * @return Response
      */
     public function store(Store $request)
@@ -133,14 +129,13 @@ class PageController extends Controller
         } else {
             session()->flash(config('seo.flash_error'), 'Something is wrong while saving Page');
         }
+
         return redirect()->back();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Edit $request
-     * @param Page $page
      * @return Response
      */
     public function edit(Edit $request, Page $page)
@@ -180,8 +175,6 @@ class PageController extends Controller
     /**
      * Update a existing resource in storage.
      *
-     * @param Update $request
-     * @param Page $page
      * @return Response
      */
     public function update(Update $request, Page $page)
@@ -198,11 +191,11 @@ class PageController extends Controller
         } else {
             session()->flash(config('seo.flash_error'), 'Something is wrong while updating Page');
         }
+
         return redirect()->back();
     }
 
     /**
-     * @param BulkUpdate $update
      * @return \Illuminate\Http\RedirectResponse
      */
     public function bulkUpdate(BulkUpdate $update)
@@ -233,7 +226,6 @@ class PageController extends Controller
      * Delete a  resource from  storage.
      *
      * @param Request $request
-     * @param Page $page
      * @return Response
      * @throws \Exception
      */
@@ -249,7 +241,6 @@ class PageController extends Controller
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function generate(Request $request)
@@ -259,8 +250,6 @@ class PageController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param Page $page
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function meta(Request $request, Page $page)
@@ -288,8 +277,6 @@ class PageController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param Page $page
      * @return \Illuminate\Http\RedirectResponse
      */
     public function saveMeta(Request $request, Page $page)
@@ -301,7 +288,6 @@ class PageController extends Controller
 
     /**
      * Upload pages from csv,excel
-     * @param Upload $upload
      * @return \Illuminate\Http\RedirectResponse
      */
     public function upload(Upload $upload)
@@ -323,7 +309,6 @@ class PageController extends Controller
     /**
      * Download page as csv
      *
-     * @param Download $download
      * @return \Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function download(Download $download)
@@ -362,7 +347,6 @@ class PageController extends Controller
 
     /**
      * @param Image $image
-     * @param Page $page
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function images(Image $image, Page $page)
@@ -388,7 +372,7 @@ class PageController extends Controller
     public function zip()
     {
         if (!file_exists(storage_path('download'))) {
-            mkdir(storage_path('download'));
+            mkdir(storage_path('download'),755);
         }
         $zipname = storage_path('download/pages.zip');
 

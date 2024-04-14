@@ -27,7 +27,7 @@ class DashboardController
             'page_total' => Page::count(),
             'meta_tag_total' => MetaTag::count(),
             'setting_total' => Setting::count(),
-            'webmasterTags' => isset($metaTags['webmaster_tools']) ? $metaTags['webmaster_tools'] : []
+            'webmasterTags' => $metaTags['webmaster_tools'] ?? []
         ];
         return view('seo::pages.dashboard.index', $data);
     }
@@ -40,8 +40,8 @@ class DashboardController
         $metaTags = MetaTag::forGlobal();
         $data = [
             'records' => Setting::paginate(10),
-            'og' => isset($metaTags['og']) ? $metaTags['og'] : [],
-            'twitter' => isset($metaTags['twitter']) ? $metaTags['twitter'] : [],
+            'og' => $metaTags['og'] ?? [],
+            'twitter' => $metaTags['twitter'] ?? [],
             'model' => new Setting(),
         ];
         return view('seo::pages.dashboard.social', $data);
