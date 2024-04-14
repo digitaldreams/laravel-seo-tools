@@ -61,9 +61,9 @@ class SettingPolicy
      * @param  Setting $setting
      * @return mixed
      */
-    public function store(User $user, Setting $setting)
+    public function create(User $user)
     {
-        return false;
+        return true;
     }
 
     /**
